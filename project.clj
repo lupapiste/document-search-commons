@@ -1,6 +1,10 @@
 (defproject lupapiste/document-search-commons "0.1.0"
   :description "Common document search related code shared between lupadoku and onkalo applications"
   :url "http://www.lupapiste.fi"
+  :license {:name "Eclipse Public License"
+            :url "http://www.eclipse.org/legal/epl-v10.html"
+            :distribution :repo}
+  :scm {:url "https://deus.solita.fi/Solita/projects/lupapiste/repositories/document-search-commons/tree/master"}
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [lupapiste/commons "0.6.51"]
 
