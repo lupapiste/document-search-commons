@@ -117,7 +117,8 @@
                                        (let [name (:name usage)]
                                          {(t name) name})) usages/rakennuksen-kayttotarkoitus))]
          [cb/combobox usage-map 5 true :usage])]]
-     (when (get-in @state/config [:config :onkalo-enabled?])
+     (when (and (get-in @state/config [:config :onkalo-enabled?])
+                (get-in @state/config [:config :lupapiste-enabled?]))
        [:div.targets
         [:h4 (t "Haun kohdejärjestelmät")]
         [:div

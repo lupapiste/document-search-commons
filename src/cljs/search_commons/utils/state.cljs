@@ -122,7 +122,8 @@
                                :took nil
                                :onkalo-took nil
                                :onkalo-results []})
-  (when (contains? (:targets @search-query) :lupapiste)
+  (when (and (contains? (:targets @search-query) :lupapiste)
+             (get-in @config [:config :lupapiste-enabled?]))
     (search-lupapiste))
   (when (and (contains? (:targets @search-query) :onkalo)
              (get-in @config [:config :onkalo-enabled?]))
