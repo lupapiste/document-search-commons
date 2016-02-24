@@ -106,9 +106,10 @@
 
       [time/timespan]
 
-      [:div.filter-option
-       [:label (t "Toimenpide")]
-       [cb/combobox (into {} (map (fn [oper] {(t oper) oper}) @state/operations)) 5 false :operation]]
+      (when (seq @state/operations)
+        [:div.filter-option
+         [:label (t "Toimenpide")]
+         [cb/combobox (into {} (map (fn [oper] {(t oper) oper}) @state/operations)) 5 false :operation]])
 
       [:div.filter-option
        [:label (t "Käyttötarkoitus")]
