@@ -1,4 +1,4 @@
-(defproject lupapiste/document-search-commons "0.1.3"
+(defproject lupapiste/document-search-commons "0.1.4"
   :description "Common document search related code shared between lupadoku and onkalo applications"
   :url "http://www.lupapiste.fi"
   :license {:name "Eclipse Public License"
@@ -21,5 +21,22 @@
                  [cljsjs/moment "2.10.6-2"]
                  [cljsjs/openlayers "3.13.0"]
                  [tailrecursion/cljson "1.0.7"]]
+  :plugins [[lein-scss "0.2.3" :exclusions [org.clojure/clojure]]]
+  :profiles {:uberjar {:aot :all
+                       :prep-tasks ^:replace ["clean"
+                                              ["scss" ":prod" "once"]
+                                              "javac"
+                                              "compile"]}}
   :source-paths ["src/clj" "src/cljc" "src/cljs"]
-  :cljsbuild {:builds {:dev {:source-paths ["src/cljc" "src/cljs"]}}})
+  :cljsbuild {:builds {:dev {:source-paths ["src/cljc" "src/cljs"]}}}
+  :clean-targets ^{:protect false} ["resources/public/css/main.css.map"
+                                    :target-path]
+  :scss {:builds
+         {:dev  {:source-dir "scss/"
+                 :dest-dir   "resources/public/css/"
+                 :executable "sass"
+                 :args       ["-r" "compass-core" "-t" "nested" "--compass" "--sourcemap=file"]}
+          :prod {:source-dir "scss/"
+                 :dest-dir   "resources/public/css/"
+                 :executable "sass"
+                 :args       ["-r" "compass-core" "-t" "compressed" "--compass" "--sourcemap=none"]}}})

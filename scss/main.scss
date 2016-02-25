@@ -1,0 +1,73 @@
+@import "partials/project-setup";
+@import "partials/lupapiste/_frameless";
+@import "compass/css3";
+@import "compass/css3/user-interface";
+@import "compass/typography/links/link-colors";
+
+@mixin clearfix {
+  *zoom: 1;
+  &:before, &:after {
+    content: "";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+@mixin spite-bg {
+  background-image: url('/document-search/img/icons-sprite-1.17.png');
+  background-repeat: no-repeat;
+}
+
+@import "partials/lupapiste/_reset";
+
+@import "partials/lupapiste/_base";
+
+@import "partials/lupapiste/_theme";
+@import "partials/lupapiste/_typography";
+@import "partials/lupapiste/_icons";
+@import "partials/lupapiste/_lupicons";
+@import "partials/lupapiste/_buttons";
+@import "partials/lupapiste/_forms";
+@import "partials/lupapiste/_responsive";
+
+@import "partials/lupapiste/_header";
+@import "partials/lupapiste/_footer";
+
+@import "partials/_theme";
+@import "partials/_icons";
+@import "partials/_animation";
+@import "partials/_search-form";
+@import "partials/_search-results";
+@import "partials/_combobox";
+
+@import "partials/_map.scss";
+
+body {
+  margin: 0;
+  min-height: 0;
+  min-width: 768px;
+  height: auto;
+}
+
+.app-container {
+  position: relative;
+  min-height: 96vh;
+  padding-bottom: 260px;
+}
+
+.wrapper {
+  @include clearfix;
+  margin: 60px auto 0 auto;
+  padding: 12px 0 0 6px;
+  max-width: $application-max-width;
+}
+
+.header-icon {
+  margin-right: 3px;
+}
+
+nav .nav-wrapper .header-menu {
+  margin-top: 2px;
+}

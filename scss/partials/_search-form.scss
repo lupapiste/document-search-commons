@@ -1,0 +1,109 @@
+.search {
+  margin-bottom: 20px;
+
+  .search-text {
+    input {
+      display: inline-block;
+      box-sizing: border-box;
+      line-height: 1.8em;
+      padding: 2px 4px 4px;
+      width: 49%;
+    }
+    .search-button {
+      max-width: 16.2%;
+    }
+    .map-search {
+      .chevron {
+        float: left;
+        margin-top: 3px;
+        margin-right: -12px;
+        font-size: 18px;
+      }
+    }
+    button {
+      float: right;
+      margin-left: 4px;
+      &.clear {
+        background-color: rgb(255, 144, 141);
+        color: #ffffff;
+        text-shadow: none;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .search-options {
+    @include clearfix;
+
+    margin: 10px 0;
+
+    .search-fields, .search-filter {
+      @include clearfix;
+      float: left;
+      width: 50%;
+
+      .half {
+        float: left;
+        width: 50%;
+
+        [type="checkbox"] {
+          margin: 0 6px 4px 0;
+        }
+      }
+
+      .checkboxes {
+        @include clearfix;
+      }
+
+      .organization-select {
+        @include clearfix;
+        margin: 1em 0;
+        width: 100%;
+        select {
+          margin-top: 5px;
+          width: 50%;
+        }
+      }
+
+      .filter-option {
+        display: inline-block;
+        width: 50%;
+        &:nth-child(even) {
+          padding-left: 5px;
+        }
+        &:nth-child(odd) {
+          padding-right: 5px;
+        }
+        select, .combobox {
+          width: 100%;
+        }
+        label {
+          display: block;
+        }
+        input {
+          box-sizing: border-box;
+          display: inline-block;
+          line-height: 1.8em;
+        }
+      }
+      .timespan {
+        input {
+          width: 48%;
+        }
+        .end-date {
+          float: right;
+        }
+        .date-separator {
+          display: inline-block;
+          text-align: center;
+          vertical-align: top;
+          width: 4%;
+        }
+      }
+
+      .targets {
+        margin-top: 1em;
+      }
+    }
+  }
+}
