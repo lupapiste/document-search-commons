@@ -22,11 +22,7 @@
                  [cljsjs/openlayers "3.13.0"]
                  [tailrecursion/cljson "1.0.7"]]
   :plugins [[lein-scss "0.2.3" :exclusions [org.clojure/clojure]]]
-  :profiles {:uberjar {:aot :all
-                       :prep-tasks ^:replace ["clean"
-                                              ["scss" ":prod" "once"]
-                                              "javac"
-                                              "compile"]}}
+  :aot :all
   :source-paths ["src/clj" "src/cljc" "src/cljs"]
   :cljsbuild {:builds {:dev {:source-paths ["src/cljc" "src/cljs"]}}}
   :clean-targets ^{:protect false} ["resources/public/css/main.css.map"
