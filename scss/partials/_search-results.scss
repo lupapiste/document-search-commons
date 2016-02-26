@@ -226,6 +226,22 @@
         .archive-data {
           margin-top: 15px;
         }
+        .metadata-editor-container {
+          .editor {
+            .editor-header {
+              min-height: unset;
+              font-size: 1.2em;
+              padding: 10px;
+              .edit-button-container {
+                font-size: 1.2em;
+              }
+            }
+            .editor-form .editor-buttons .save {
+              float: none;
+              width: 100%;
+            }
+          }
+        }
       }
       .building-table {
         width: 100%;

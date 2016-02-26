@@ -31,6 +31,7 @@
 @import "partials/lupapiste/_buttons";
 @import "partials/lupapiste/_forms";
 @import "partials/lupapiste/_responsive";
+@import "partials/lupapiste/_metadata-editor";
 
 @import "partials/lupapiste/_header";
 @import "partials/lupapiste/_footer";
@@ -70,4 +71,9 @@ body {
 
 nav .nav-wrapper .header-menu {
   margin-top: 2px;
+}
+
+nav .brand a img.onkalo-logo {
+  width: auto;
+  margin-left: 0;
 }
