@@ -2428,6 +2428,8 @@ footer ul li {
         .result-view-container .result-view .result-view-content .metadata .metadata-editor-container .editor .editor-form .editor-buttons .save {
           float: none;
           width: 100%; }
+        .result-view-container .result-view .result-view-content .metadata .metadata-editor-container .editor .year-label {
+          margin-left: 5px; }
       .result-view-container .result-view .result-view-content .building-table {
         width: 100%; }
         .result-view-container .result-view .result-view-content .building-table th {
