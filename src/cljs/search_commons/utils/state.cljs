@@ -178,3 +178,10 @@
                    (reset! config data)
                    (load-saved-search))
         :headers (language-header)}))
+
+(defn update-onkalo-result-metadata [id new-s2-metadata]
+  (map (fn [result]
+         (if (= id (:id result))
+           (assoc result :metadata new-s2-metadata)
+           result))
+       (:onkalo-results @search-results)))

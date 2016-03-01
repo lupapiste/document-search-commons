@@ -5,6 +5,8 @@
 //
 // Styleguide 3.1
 
+$icon-pad: 10px;
+
 [type=submit], .btn, button {
   background: darken($lp-light-grey, 15%);
   text-align: center;
@@ -40,7 +42,7 @@
     color: darken($lp-light-grey, 30%);
     -webkit-box-shadow:none;
     box-shadow:none;
-    background: $lp-light-grey;
+    background: $gray221;
   }
 
   &.block{
@@ -125,7 +127,6 @@ button[disabled] {
 
 .btn-primary {
   background: $lp-green;
-  text-transform:uppercase;
   color: white;
   text-shadow: none;
   font-weight: normal;
@@ -148,7 +149,6 @@ button[disabled] {
 .btn-decline {
   background: red;
   color: white;
-  text-transform:uppercase;
 }
 
 // ajax loader for buttons
@@ -270,4 +270,58 @@ a.command {
   &:before { content: "["; }
   &:after { content: "]"; }
   white-space: nowrap;
+}
+
+@mixin rotate-frames( $name ) {
+  @-webkit-keyframes #{$name} {
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+  @-moz-keyframes #{$name} {
+    100% {
+      -moz-transform: rotate(360deg);
+    }
+  }
+  @keyframes #{$name}  {
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform:rotate(360deg);
+    }
+  }
+}
+
+@mixin rotate( $name, $speed: 4s ) {
+  -webkit-animation: $name $speed linear infinite;
+  -moz-animation: $name $speed linear infinite;
+  animation: $name $speed linear infinite;
+}
+
+@include rotate-frames( spin );
+
+.spin {
+  @include rotate( spin );
+  vertical-align: middle;
+}
+
+i.wait {
+  display: none;
+  padding: 0 !important;
+}
+
+.waiting {
+  i {
+    display: none;
+  }
+  i.wait {
+    display: table-cell;
+  }
+}
+
+.waiting .wait + span {
+  padding-left: $icon-pad;
+}
+
+span + .waiting.wait {
+  padding-right: $icon-pad;
 }

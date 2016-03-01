@@ -796,7 +796,7 @@ h1 .icon {
     color: #aaaaaa;
     -webkit-box-shadow: none;
     box-shadow: none;
-    background: #f6f6f6; }
+    background: #dddddd; }
   [type=submit].block, .btn.block, button.block {
     display: block; }
   [type=submit] span:nth-child(1), .btn span:nth-child(1), button span:nth-child(1) {
@@ -855,7 +855,6 @@ button[disabled] {
 
 .btn-primary {
   background: #04c714;
-  text-transform: uppercase;
   color: white;
   text-shadow: none;
   font-weight: normal; }
@@ -868,8 +867,7 @@ button[disabled] {
 
 .btn-decline {
   background: red;
-  color: white;
-  text-transform: uppercase; }
+  color: white; }
 
 .button-loader {
   white-space: nowrap;
@@ -949,6 +947,37 @@ a.command {
     content: "["; }
   a.command:after {
     content: "]"; }
+
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg); } }
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg); } }
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+.spin {
+  -webkit-animation: spin 4s linear infinite;
+  -moz-animation: spin 4s linear infinite;
+  animation: spin 4s linear infinite;
+  vertical-align: middle; }
+
+i.wait {
+  display: none;
+  padding: 0 !important; }
+
+.waiting i {
+  display: none; }
+.waiting i.wait {
+  display: table-cell; }
+
+.waiting .wait + span {
+  padding-left: 10px; }
+
+span + .waiting.wait {
+  padding-right: 10px; }
 
 legend {
   font-size: 21.6px;
@@ -2425,11 +2454,22 @@ footer ul li {
           padding: 10px; }
           .result-view-container .result-view .result-view-content .metadata .metadata-editor-container .editor .editor-header .edit-button-container {
             font-size: 1.2em; }
-        .result-view-container .result-view .result-view-content .metadata .metadata-editor-container .editor .editor-form .editor-buttons .save {
-          float: none;
-          width: 100%; }
         .result-view-container .result-view .result-view-content .metadata .metadata-editor-container .editor .year-label {
           margin-left: 5px; }
+        .result-view-container .result-view .result-view-content .metadata .metadata-editor-container .editor .editor-buttons {
+          font-size: 1.3em;
+          line-height: normal; }
+          .result-view-container .result-view .result-view-content .metadata .metadata-editor-container .editor .editor-buttons .btn-primary {
+            width: auto;
+            height: 40px; }
+          .result-view-container .result-view .result-view-content .metadata .metadata-editor-container .editor .editor-buttons i {
+            font-size: 22px;
+            margin: 0;
+            line-height: normal;
+            padding: 3px 15px 3px 0;
+            vertical-align: middle; }
+          .result-view-container .result-view .result-view-content .metadata .metadata-editor-container .editor .editor-buttons span {
+            display: table-cell; }
       .result-view-container .result-view .result-view-content .building-table {
         width: 100%; }
         .result-view-container .result-view .result-view-content .building-table th {
