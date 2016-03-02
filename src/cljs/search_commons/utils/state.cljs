@@ -23,7 +23,7 @@
 
 (defonce search-results (reagent/atom empty-search-results))
 
-(defonce selected-result (reagent/atom []))
+(defonce selected-result-id (reagent/atom nil))
 
 (def empty-search-query
   {:text nil
@@ -63,6 +63,15 @@
     (let [{:keys [results onkalo-results]} @search-results
           mongo-ids (into #{} (map :id results))]
       (remove #(contains? mongo-ids (:id %)) onkalo-results))))
+
+(defn find-result [id results]
+  (first (filter #(= id (:id %)) results)))
+
+(def selected-result
+  (reaction
+    (let [id @selected-result-id
+          {:keys [results onkalo-results]} @search-results]
+      (when id (or (find-result id results) (find-result id onkalo-results))))))
 
 (def total-result-count
   (reaction
@@ -180,8 +189,10 @@
         :headers (language-header)}))
 
 (defn update-onkalo-result-metadata [id new-s2-metadata]
-  (map (fn [result]
-         (if (= id (:id result))
-           (assoc result :metadata new-s2-metadata)
-           result))
-       (:onkalo-results @search-results)))
+  (swap! search-results (fn [{:keys [onkalo-results] :as res}]
+                          (->> onkalo-results
+                               (map (fn [result]
+                                      (if (= id (:id result))
+                                        (assoc result :metadata new-s2-metadata)
+                                        result)))
+                               (assoc res :onkalo-results)))))
