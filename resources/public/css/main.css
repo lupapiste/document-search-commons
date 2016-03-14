@@ -2354,7 +2354,8 @@ footer ul li {
       margin-right: 55px;
       font-size: 18px;
       font-weight: normal;
-      background-color: #555555; }
+      background-color: #555555;
+      color: #f6f6f6; }
       .result-list-container .result-list .result-application .application-separator a {
         color: #f6f6f6;
         text-decoration: none; }
