@@ -243,248 +243,6 @@ i {
 .error-text {
   color: red; }
 
-.icon, .icon-small, .icon-tiny, .icon-large, .ui-icon {
-  display: inline-block;
-  background-image: url("/document-search/img/icons-sprite-1.17.png");
-  background-repeat: no-repeat;
-  overflow: hidden; }
-
-.icon {
-  height: 20px;
-  width: 20px;
-  overflow: hidden; }
-  .icon.inline-left {
-    margin-right: 6px;
-    float: left;
-    margin-top: 6px; }
-  .icon.inline-right {
-    margin-right: 6px;
-    float: right;
-    margin-top: 6px; }
-  .icon.document-orange {
-    background-position: 0px 0px;
-    width: 24px;
-    height: 24px; }
-  .icon.logout {
-    background-position: 0px -100px;
-    width: 24px;
-    height: 24px; }
-  .icon.person-orange {
-    background-position: 0px -200px;
-    width: 24px;
-    height: 24px; }
-  .icon.drill-down-orange {
-    background-position: 0px -300px;
-    width: 18px;
-    height: 18px; }
-  .icon.drill-right-orange {
-    background-position: 0px -400px;
-    width: 12px;
-    height: 12px; }
-  .icon.drill-right-grey {
-    background-position: 0px -500px;
-    width: 12px;
-    height: 12px; }
-  .icon.drill-right-black {
-    background-position: 0px -600px;
-    width: 12px;
-    height: 12px; }
-  .icon.drill-right-white {
-    background-position: 0px -700px;
-    width: 12px;
-    height: 12px; }
-  .icon.drill-down-grey {
-    background-position: 0px -800px;
-    width: 12px;
-    height: 12px; }
-  .icon.drill-down-white {
-    background-position: 0px -900px;
-    width: 12px;
-    height: 12px; }
-  .icon.drill-down-black {
-    background-position: 0px -5700px;
-    width: 12px;
-    height: 12px; }
-  .icon.drill-left-grey {
-    background-position: 0px -1600px;
-    width: 12px;
-    height: 12px; }
-  .icon.drill-left-black {
-    background-position: 0px -1700px;
-    width: 12px;
-    height: 12px; }
-  .icon.drill-left-all-black {
-    background-position: 0px -2000px;
-    width: 10px;
-    height: 12px; }
-  .icon.drill-left-black-bigger {
-    background-position: 0px -3100px;
-    width: 12px;
-    height: 12px; }
-  .icon.drill-down-black-smaller {
-    background-position: 0px -3400px;
-    width: 9px;
-    height: 8px; }
-  .icon.drill-up-black-smaller {
-    background-position: 0px -3300px;
-    width: 9px;
-    height: 8px; }
-  .icon.add {
-    background-position: 0px -2200px;
-    width: 15px;
-    height: 15px; }
-  .icon.search {
-    background-position: 0px -2300px;
-    width: 14px;
-    height: 14px; }
-  .icon.missing {
-    background-position: 0px -2400px;
-    width: 16px;
-    height: 16px; }
-  .icon.ok {
-    background-position: 0px -2500px;
-    width: 16px;
-    height: 16px; }
-  .icon.info-indicator {
-    background-position: 0px -2600px;
-    width: 16px;
-    height: 16px; }
-  .icon.remove {
-    background-position: 0px -2700px;
-    width: 15px;
-    height: 15px; }
-  .icon.wait {
-    background-position: 0px -2800px; }
-  .icon.info-big {
-    background-position: 0px -2900px;
-    width: 30px;
-    height: 32px;
-    margin-left: -6px;
-    margin-bottom: -6px; }
-  .icon.help {
-    background-position: 0px -2900px;
-    width: 30px;
-    height: 32px;
-    overflow: visible; }
-  .icon.new {
-    background-position: 0px -3000px;
-    width: 16px;
-    height: 16px; }
-  .icon.print {
-    background-position: 0px -3500px;
-    width: 16px;
-    height: 15px; }
-  .icon.send {
-    background-position: 0px -3600px;
-    height: 15px;
-    width: 17px; }
-  .icon.approve {
-    background-position: 0px -3700px;
-    height: 17px;
-    width: 17px; }
-  .icon.stamp {
-    background-position: 0px -3800px;
-    height: 16px;
-    width: 16px; }
-  .icon.add-grey {
-    background-position: 0px -3900px;
-    height: 16px;
-    width: 16px; }
-  .icon.complement {
-    background-position: 0px -4000px;
-    height: 16px;
-    width: 16px; }
-  .icon.remove-grey {
-    background-position: 0px -4100px;
-    cursor: pointer;
-    height: 16px;
-    width: 16px; }
-  .icon.edit {
-    background-position: 0px -4200px;
-    cursor: pointer; }
-  .icon.refresh-grey {
-    background-position: 0px -4697px;
-    width: 16px;
-    height: 16px; }
-  .icon.signed {
-    background-position: 0px -4900px;
-    width: 18px;
-    height: 18px; }
-  .icon.signed-white {
-    background-position: 0px -5800px;
-    width: 16px;
-    height: 16px; }
-  .icon.stamped {
-    background-position: 0px -5000px;
-    height: 18px;
-    width: 18px; }
-  .icon.transfered {
-    background-position: 0px -5100px;
-    height: 17px;
-    width: 25px; }
-  .icon.mark-seen {
-    background-position: 0px -5198px;
-    width: 25px;
-    height: 15px; }
-  .icon.urgent {
-    width: 24px;
-    height: 24px;
-    background-position: 0px -5300px; }
-  .icon.hold {
-    width: 24px;
-    height: 24px;
-    background-position: 0px -5500px; }
-  .icon.verdict-attachment {
-    width: 8px;
-    height: 18px;
-    background-position: 0px -5900px; }
-  .icon.scroll-up {
-    background-position: 0px -6100px;
-    width: 24px;
-    height: 19px; }
-  .icon.approve-grey {
-    background-position: 0px -6200px;
-    width: 16px;
-    height: 16px; }
-  .icon.help-new {
-    background-position: 0px -6300px;
-    width: 24px;
-    height: 24px; }
-  .icon.toj {
-    background-position: 0px -6400px;
-    width: 24px;
-    height: 24px; }
-  .icon.archive {
-    background-position: 0px -6500px;
-    width: 24px;
-    height: 24px; }
-  .icon.star-selected {
-    background-position: 0px -6600px;
-    width: 18px;
-    height: 18px; }
-  .icon.star-unselected {
-    background-position: 0px -6700px;
-    width: 18px;
-    height: 18px; }
-  .icon:hover {
-    background-position-x: -100px; }
-
-[type=submit] .icon.left-align, .btn .icon.left-align, button .icon.left-align {
-  position: absolute;
-  left: 12px;
-  bottom: 0;
-  top: 0;
-  margin: auto; }
-[type=submit] .icon.right-align, .btn .icon.right-align, button .icon.right-align {
-  position: absolute;
-  right: 6px;
-  bottom: 0;
-  top: 0;
-  margin: auto; }
-
-h1 .icon {
-  margin-right: 3px; }
-
 @font-face {
   font-family: 'lupapiste';
   src: url("../fonts/lupapiste.eot?-189xv0");
@@ -1049,8 +807,6 @@ input[readonly], textarea[readonly] {
   box-shadow: 1px 1px 2px #4f4f4f;
   white-space: nowrap; }
   .form-indicator .icon {
-    background-image: url("/document-search/img/icons-sprite-1.17.png");
-    background-repeat: no-repeat;
     display: none;
     height: 24px;
     width: 24px;
@@ -1410,8 +1166,6 @@ input.form-input.long {
     border-top: 14px solid #4f4f4f; }
   .form-help:before {
     content: " ";
-    background-image: url("/document-search/img/icons-sprite-1.17.png");
-    background-repeat: no-repeat;
     width: 16px;
     height: 16px;
     background-position: 0px -2700px;
@@ -1438,36 +1192,12 @@ input.form-input.long {
     border-right: 14px solid #4f4f4f; }
   .form-full-width .form-help:before {
     content: " ";
-    background-image: url("/document-search/img/icons-sprite-1.17.png");
-    background-repeat: no-repeat;
     width: 16px;
     height: 16px;
     background-position: 0px -2700px;
     position: absolute;
     top: 6px;
     right: 6px; }
-
-.approval-approved:after {
-  content: " ";
-  background-image: url("/document-search/img/icons-sprite-1.17.png");
-  background-repeat: no-repeat;
-  width: 16px;
-  height: 16px;
-  background-position: 0px -2500px;
-  display: inline-block;
-  margin-left: 6px;
-  vertical-align: text-bottom; }
-
-.approval-rejected:after {
-  content: " ";
-  background-image: url("/document-search/img/icons-sprite-1.17.png");
-  background-repeat: no-repeat;
-  width: 16px;
-  height: 16px;
-  background-position: 0px -2400px;
-  display: inline-block;
-  margin-left: 6px;
-  vertical-align: text-bottom; }
 
 #neighbor-show [type="checkbox"]:disabled {
   position: relative;
@@ -2320,7 +2050,7 @@ footer ul li {
           background-color: #f7ac2e; }
         .result-list-container .result-list .result-item .result-item-data .result-type {
           position: relative;
-          background-image: url("/document-search/img/icon-document.svg");
+          background-image: url("../img/icon-document.svg");
           background-repeat: no-repeat;
           background-size: contain;
           height: 70px;

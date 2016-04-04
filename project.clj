@@ -1,4 +1,4 @@
-(defproject lupapiste/document-search-commons "0.1.10"
+(defproject lupapiste/document-search-commons "0.1.11"
   :description "Common document search related code shared between lupadoku and onkalo applications"
   :url "http://www.lupapiste.fi"
   :license {:name "Eclipse Public License"

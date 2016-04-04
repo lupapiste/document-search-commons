@@ -15,18 +15,12 @@
   }
 }
 
-@mixin spite-bg {
-  background-image: url('/document-search/img/icons-sprite-1.17.png');
-  background-repeat: no-repeat;
-}
-
 @import "partials/lupapiste/_reset";
 
 @import "partials/lupapiste/_base";
 
 @import "partials/lupapiste/_theme";
 @import "partials/lupapiste/_typography";
-@import "partials/lupapiste/_icons";
 @import "partials/lupapiste/_lupicons";
 @import "partials/lupapiste/_buttons";
 @import "partials/lupapiste/_forms";
