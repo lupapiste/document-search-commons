@@ -94,7 +94,7 @@
       [:div.filter-option
        [:label (t "Asiakirjatyyppi")]
 
-       (let [type-group-and-docs (partition 2 attachment-types/Rakennusluvat)
+       (let [type-group-and-docs (partition 2 attachment-types/Rakennusluvat-v2)
              type-map (->> (map (fn [[type-group docs]]
                                   (map (fn [type-id]
                                          (let [type-vec [type-group type-id]
