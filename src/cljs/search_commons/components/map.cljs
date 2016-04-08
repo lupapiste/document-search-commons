@@ -21,12 +21,14 @@
             [ol.style.Stroke]
             [ol.style.Style]
             [ol.style.Text]
+            [ol.style.Icon]
             [ol.tilegrid.WMTS]
             [ajax.core :refer [GET]]
             [clojure.string :as s]
             [reagent.core :as reagent]
             [search-commons.utils.i18n :refer [t]]
-            [search-commons.utils.state :as state]))
+            [search-commons.utils.state :as state]
+            [search-commons.routing :as routing]))
 
 (def suomen-extent
   "Suomalaisissa kartoissa olevan projektion raja-arvot."
@@ -87,19 +89,28 @@
 
 (def style-cache (atom {}))
 
-(defn cluster-style [feature]
+(defn single-item-style []
+  {:image (ol.style.Icon. #js {:src (routing/path "/img/map-marker-big.png")})})
+
+(defn cluster-style [size]
+  {:image (ol.style.Circle. #js {:radius 18
+                                 :stroke (ol.style.Stroke. #js {:color "#000"})
+                                 :fill (ol.style.Fill. #js {:color "#F79226"})})
+   :text (ol.style.Text. #js {:text (str size)
+                              :font "18px 'Source Sans Pro', sans-serif"
+                              :fill (ol.style.Fill. #js {:color "#000"})})})
+
+(defn get-cluster-style [feature]
   (let [size (-> feature (.get "features") (.-length))]
     (or (get @style-cache size)
-        (-> (->> (ol.style.Style. #js {:image (ol.style.Circle. #js {:radius 15
-                                                                     :stroke (ol.style.Stroke. #js {:color "#fff"})
-                                                                     :fill (ol.style.Fill. #js {:color "#3399CC"})})
-                                       :text (ol.style.Text. #js {:text (str size)
-                                                                  :fill (ol.style.Fill. #js {:color "#fff"})})})
+        (-> (->> (ol.style.Style. (clj->js (if (= 1 size)
+                                             (single-item-style)
+                                             (cluster-style size))))
                  (swap! style-cache assoc size))
             (get size)))))
 
 (def cluster-layer (ol.layer.Vector. #js {:source (make-cluster-source)
-                                          :style cluster-style}))
+                                          :style  get-cluster-style}))
 
 (add-watch state/search-results :result-coordinates (fn [& _] (.setSource cluster-layer (make-cluster-source))))
 
@@ -128,7 +139,6 @@
                                                                       :requestEncoding "KVP"})
                                                        :maxResolution 4
                                                        })
-             ;features (ol.Collection. #js [(ol.Feature. #js {:geometry (ol.geom.Polygon.  (clj->js [[[370000 6685600] [375999 6685600] [375999 6689800] [370000 6689800] [370000 6685600]]]))})])
 
              drawing-source (ol.source.Vector. #js {:wrapX false
                                                     :features #js [(ol.Feature. #js {:geometry (ol.geom.Polygon. (clj->js (:coordinates @state/search-query)))})]})
