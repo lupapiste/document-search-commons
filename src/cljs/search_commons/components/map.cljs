@@ -15,10 +15,12 @@
             [ol.proj]
             [ol.source.Vector]
             [ol.source.WMTS]
+            [ol.source.Cluster]
             [ol.style.Circle]
             [ol.style.Fill]
             [ol.style.Stroke]
             [ol.style.Style]
+            [ol.style.Text]
             [ol.tilegrid.WMTS]
             [ajax.core :refer [GET]]
             [clojure.string :as s]
@@ -73,6 +75,33 @@
 (defn map-click [event]
   (when (= (-> event .-map .getInteractions .getLength) 2)
     (get-property-id (-> event .-coordinate js->clj))))
+
+(defn make-features []
+  (map (fn [[x y]] (ol.Feature. (ol.geom.Point. #js [x y]))) @state/result-coordinates))
+
+(defn make-cluster-source []
+  (let [point-features (ol.Collection. (clj->js (make-features)))
+        point-source (ol.source.Vector. #js {:features point-features})]
+    (ol.source.Cluster. #js {:distance 40
+                             :source point-source})))
+
+(def style-cache (atom {}))
+
+(defn cluster-style [feature]
+  (let [size (-> feature (.get "features") (.-length))]
+    (or (get @style-cache size)
+        (-> (->> (ol.style.Style. #js {:image (ol.style.Circle. #js {:radius 15
+                                                                     :stroke (ol.style.Stroke. #js {:color "#fff"})
+                                                                     :fill (ol.style.Fill. #js {:color "#3399CC"})})
+                                       :text (ol.style.Text. #js {:text (str size)
+                                                                  :fill (ol.style.Fill. #js {:color "#fff"})})})
+                 (swap! style-cache assoc size))
+            (get size)))))
+
+(def cluster-layer (ol.layer.Vector. #js {:source (make-cluster-source)
+                                          :style cluster-style}))
+
+(add-watch state/search-results :result-coordinates (fn [& _] (.setSource cluster-layer (make-cluster-source))))
 
 (defn ol-map []
   (reagent/create-class
@@ -157,7 +186,7 @@
                          :view (ol.View. #js {:center (clj->js (map-center))
                                               :zoom 8
                                               :projection projektio})
-                         :layers #js [map-layer drawing-layer map-layer-kiinteisto]
+                         :layers #js [map-layer drawing-layer map-layer-kiinteisto cluster-layer]
                          :interactions interactions})
            (.on "singleclick" map-click))))
 

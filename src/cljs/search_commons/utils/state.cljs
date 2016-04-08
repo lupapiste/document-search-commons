@@ -196,3 +196,9 @@
                                         (assoc result :metadata new-s2-metadata)
                                         result)))
                                (assoc res :onkalo-results)))))
+
+(def result-coordinates
+  (reaction
+    (let [{:keys [results]} @search-results]
+      (-> (map :location results)
+          (concat (map :location-etrs-tm35fin @unique-onkalo-results))))))
