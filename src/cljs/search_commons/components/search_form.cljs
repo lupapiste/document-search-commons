@@ -38,7 +38,7 @@
      (t "Tyhjennä")]
     [:button.map-search.search-button {:on-click (handler-fn (swap! state/show-search-map not))}
      [:span.chevron {:class (if @state/show-search-map "lupicon-chevron-down" "lupicon-chevron-right")}]
-     [:span (t "Karttahaku")]]
+     [:span (t "Kartta")]]
     [:button.search-button {:disabled (search-disabled?)
                             :on-click state/new-search}
      (t "Hae")]
