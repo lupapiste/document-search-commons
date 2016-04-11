@@ -189,6 +189,7 @@
                                                      (set! (.-title button) new-title)
                                                      (.preventDefault evt))))
                               div)]
+         (.setSource cluster-layer (make-cluster-source))
 
          (doto
            (ol/Map. #js {:controls (-> (ol.control.defaults) (.extend (clj->js [(ol.control.Control. #js {"element" custom-buttons})])))

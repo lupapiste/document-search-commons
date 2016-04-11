@@ -171,7 +171,7 @@
 
 (defn load-saved-search []
   (when-let [saved @saved-search]
-    (if-not (string/blank? (:text saved))
+    (if-not (and (string/blank? (:text saved)) (empty? (:coordinates saved)))
       (do (reset! search-query saved)
           (reset-date-atoms)
           (when (seq (:coordinates saved))
