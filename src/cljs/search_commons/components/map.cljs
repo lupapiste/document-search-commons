@@ -109,44 +109,38 @@
                  (swap! style-cache assoc size))
             (get size)))))
 
-(def cluster-layer (ol.layer.Vector. #js {:source (make-cluster-source)
-                                          :style  get-cluster-style}))
-
-(add-watch state/search-results :result-coordinates (fn [& _] (.setSource cluster-layer (make-cluster-source))))
-
 (defn ol-map []
   (reagent/create-class
     {:component-did-mount
      (fn [this]
        (let [map-layer (ol.layer.Tile. #js {:source (ol.source.WMTS.
-                                                      #js {:url (proxy-url "wmts/maasto")
-                                                           :attributions #js [(ol.Attribution. #js {:html "MML"})]
-                                                           :matrixSet "ETRS-TM35FIN"
-                                                           :style "default"
-                                                           :projection "EPSG:3067"
-                                                           :format "image/png"
-                                                           :tileGrid (make-tilegrid)
-                                                           :layer "taustakartta"
+                                                      #js {:url             (proxy-url "wmts/maasto")
+                                                           :attributions    #js [(ol.Attribution. #js {:html "MML"})]
+                                                           :matrixSet       "ETRS-TM35FIN"
+                                                           :style           "default"
+                                                           :projection      "EPSG:3067"
+                                                           :format          "image/png"
+                                                           :tileGrid        (make-tilegrid)
+                                                           :layer           "taustakartta"
                                                            :requestEncoding "KVP"})})
-             map-layer-kiinteisto (ol.layer.Tile. #js {:source (ol.source.WMTS.
-                                                                 #js {:url (proxy-url "wmts/kiinteisto")
-                                                                      :attributions #js [(ol.Attribution. #js {:html "MML"})] :matrixSet "ETRS-TM35FIN"
-                                                                      :style "default"
-                                                                      :projection "EPSG:3067"
-                                                                      :format "image/png"
-                                                                      :tileGrid (make-tilegrid)
-                                                                      :layer "kiinteistojaotus"
-                                                                      :requestEncoding "KVP"})
-                                                       :maxResolution 4
-                                                       })
+             map-layer-kiinteisto (ol.layer.Tile. #js {:source        (ol.source.WMTS.
+                                                                        #js {:url             (proxy-url "wmts/kiinteisto")
+                                                                             :attributions    #js [(ol.Attribution. #js {:html "MML"})] :matrixSet "ETRS-TM35FIN"
+                                                                             :style           "default"
+                                                                             :projection      "EPSG:3067"
+                                                                             :format          "image/png"
+                                                                             :tileGrid        (make-tilegrid)
+                                                                             :layer           "kiinteistojaotus"
+                                                                             :requestEncoding "KVP"})
+                                                       :maxResolution 4})
 
-             drawing-source (ol.source.Vector. #js {:wrapX false
+             drawing-source (ol.source.Vector. #js {:wrapX    false
                                                     :features #js [(ol.Feature. #js {:geometry (ol.geom.Polygon. (clj->js (:coordinates @state/search-query)))})]})
 
              drawing-layer (ol.layer.Vector. #js {:source drawing-source
-                                                  :style (ol.style.Style. #js {:fill (ol.style.Fill. #js {:color "rgba(255, 255, 255, 0.2)"})
-                                                                               :stroke (ol.style.Stroke. #js {:color "#ffcc33" :width 2})
-                                                                               :image (ol.style.Circle. #js {:radius 7 :fill (ol.style.Fill. #js {:color "#ffcc33"})})})})
+                                                  :style  (ol.style.Style. #js {:fill   (ol.style.Fill. #js {:color "rgba(255, 255, 255, 0.2)"})
+                                                                                :stroke (ol.style.Stroke. #js {:color "#ffcc33" :width 2})
+                                                                                :image  (ol.style.Circle. #js {:radius 7 :fill (ol.style.Fill. #js {:color "#ffcc33"})})})})
              features (doto (ol.Collection.)
                         (.on "add" (fn [event]
                                      (swap! state/search-query update-in [:coordinates] conj (-> event
@@ -156,8 +150,8 @@
                                                                                                  js->clj
                                                                                                  first))
                                      (.preventDefault event))))
-             drawing-interaction (ol.interaction.Draw. #js {:source drawing-source
-                                                            :type "Polygon"
+             drawing-interaction (ol.interaction.Draw. #js {:source   drawing-source
+                                                            :type     "Polygon"
                                                             :features features
                                                             })
 
@@ -188,18 +182,30 @@
                                                      (set! (.-className button) new-class)
                                                      (set! (.-title button) new-title)
                                                      (.preventDefault evt))))
-                              div)]
-         (.setSource cluster-layer (make-cluster-source))
+                              div)
+             cluster-source (make-cluster-source)
+             cluster-layer (ol.layer.Vector. #js {:source cluster-source
+                                                  :style  get-cluster-style})
+             map-view (ol.View. #js {:center     (clj->js (map-center))
+                                     :zoom       8
+                                     :projection projektio})
+             map-object (ol/Map. #js {:controls     (-> (ol.control.defaults) (.extend (clj->js [(ol.control.Control. #js {"element" custom-buttons})])))
+                                      :target       "map"
+                                      :view         map-view
+                                      :layers       #js [map-layer drawing-layer map-layer-kiinteisto cluster-layer]
+                                      :interactions interactions})
+             fitting-fn (fn [src]
+                          (let [source-extent (.getExtent (.getSource src))]
+                            (when-not (= js/Infinity (.abs js/Math (first source-extent)))
+                              (.fit map-view source-extent (.getSize map-object) #js {:minResolution 1
+                                                                                      :padding #js [20 20 20 20]}))))]
 
-         (doto
-           (ol/Map. #js {:controls (-> (ol.control.defaults) (.extend (clj->js [(ol.control.Control. #js {"element" custom-buttons})])))
-                         :target "map"
-                         :view (ol.View. #js {:center (clj->js (map-center))
-                                              :zoom 8
-                                              :projection projektio})
-                         :layers #js [map-layer drawing-layer map-layer-kiinteisto cluster-layer]
-                         :interactions interactions})
-           (.on "singleclick" map-click))))
+         (.on map-object "singleclick" map-click)
+         (fitting-fn cluster-source)
+         (add-watch state/search-results :result-coordinates (fn [& _]
+                                                               (let [new-source (make-cluster-source)]
+                                                                 (.setSource cluster-layer new-source)
+                                                                 (fitting-fn new-source))))))
 
      :reagent-render
      (fn [this]
