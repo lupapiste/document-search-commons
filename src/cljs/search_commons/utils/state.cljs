@@ -200,5 +200,6 @@
 (def result-coordinates
   (reaction
     (let [{:keys [results]} @search-results]
-      (-> (map :location results)
-          (concat (map :location-etrs-tm35fin @unique-onkalo-results))))))
+      (->> (map :location-etrs-tm35fin @unique-onkalo-results)
+           (concat (map :location results))
+           (remove nil?)))))

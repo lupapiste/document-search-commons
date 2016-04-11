@@ -109,6 +109,27 @@
                  (swap! style-cache assoc size))
             (get size)))))
 
+(def cluster-layer (ol.layer.Vector. #js {:source (make-cluster-source)
+                                          :style  get-cluster-style}))
+
+(def map-view-atom (atom nil))
+
+(def map-object-atom (atom nil))
+
+(defn fit-map [src view map-obj]
+  (let [source-extent (.getExtent (.getSource src))]
+    (when-not (some #(#{js/Infinity 0} (.abs js/Math %)) source-extent)
+      (.fit view source-extent (.getSize map-obj) #js {:minResolution 1
+                                                       :padding #js [20 20 20 20]}))))
+
+(defn update-map-features [component]
+  (let [coordinates (-> component reagent/props :data)]
+    (if (seq coordinates)
+      (let [new-source (make-cluster-source)]
+        (.setSource cluster-layer new-source)
+        (fit-map new-source @map-view-atom @map-object-atom))
+      (.setSource cluster-layer nil))))
+
 (defn ol-map []
   (reagent/create-class
     {:component-did-mount
@@ -183,30 +204,20 @@
                                                      (set! (.-title button) new-title)
                                                      (.preventDefault evt))))
                               div)
-             cluster-source (make-cluster-source)
-             cluster-layer (ol.layer.Vector. #js {:source cluster-source
-                                                  :style  get-cluster-style})
-             map-view (ol.View. #js {:center     (clj->js (map-center))
-                                     :zoom       8
-                                     :projection projektio})
-             map-object (ol/Map. #js {:controls     (-> (ol.control.defaults) (.extend (clj->js [(ol.control.Control. #js {"element" custom-buttons})])))
-                                      :target       "map"
-                                      :view         map-view
-                                      :layers       #js [map-layer drawing-layer map-layer-kiinteisto cluster-layer]
-                                      :interactions interactions})
-             fitting-fn (fn [src]
-                          (let [source-extent (.getExtent (.getSource src))]
-                            (when-not (= js/Infinity (.abs js/Math (first source-extent)))
-                              (.fit map-view source-extent (.getSize map-object) #js {:minResolution 1
-                                                                                      :padding #js [20 20 20 20]}))))]
-
-         (.on map-object "singleclick" map-click)
-         (fitting-fn cluster-source)
-         (add-watch state/search-results :result-coordinates (fn [& _]
-                                                               (let [new-source (make-cluster-source)]
-                                                                 (.setSource cluster-layer new-source)
-                                                                 (fitting-fn new-source))))))
+             cluster-source (make-cluster-source)]
+         (.setSource cluster-layer cluster-source)
+         (reset! map-view-atom (ol.View. #js {:center     (clj->js (map-center))
+                                              :zoom       8
+                                              :projection projektio}))
+         (reset! map-object-atom (ol/Map. #js {:controls     (-> (ol.control.defaults) (.extend (clj->js [(ol.control.Control. #js {"element" custom-buttons})])))
+                                               :target       "map"
+                                               :view         @map-view-atom
+                                               :layers       #js [map-layer drawing-layer map-layer-kiinteisto cluster-layer]
+                                               :interactions interactions}))
+         (.on @map-object-atom "singleclick" map-click)
+         (fit-map cluster-source @map-view-atom @map-object-atom)))
 
      :reagent-render
      (fn [this]
-       [:div.map {:id "map"}])}))
+       [:div.map {:id "map"}])
+     :component-did-update update-map-features}))
