@@ -197,9 +197,9 @@
                                         result)))
                                (assoc res :onkalo-results)))))
 
-(def result-coordinates
+(def results-for-map
   (reaction
     (let [{:keys [results]} @search-results]
-      (->> (map :location-etrs-tm35fin @unique-onkalo-results)
-           (concat (map :location results))
+      (->> (map (fn [{:keys [id location-etrs-tm35fin]}] {:id id :location location-etrs-tm35fin}) @unique-onkalo-results)
+           (concat (map #(select-keys % [:id :location]) results))
            (remove nil?)))))

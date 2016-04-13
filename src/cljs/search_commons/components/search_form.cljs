@@ -43,7 +43,7 @@
                             :on-click state/new-search}
      (t "Hae")]
     (when (and @state/show-search-map (get-in @state/config [:config :cdn-host]))
-      [map/ol-map {:data @state/result-coordinates}])]
+      [map/ol-map {:data @state/results-for-map}])]
    [:div.search-options
     [:div.search-fields
      [:h4 (t "Rajoita haku seuraaviin kenttiin")]

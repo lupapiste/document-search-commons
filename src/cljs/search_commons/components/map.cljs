@@ -10,6 +10,7 @@
             [ol.interaction.DragPan]
             [ol.interaction.Draw]
             [ol.interaction.MouseWheelZoom]
+            [ol.interaction.Select]
             [ol.layer.Tile]
             [ol.layer.Vector]
             [ol.proj]
@@ -75,11 +76,11 @@
 
 
 (defn map-click [event]
-  (when (= (-> event .-map .getInteractions .getLength) 2)
-    (get-property-id (-> event .-coordinate js->clj))))
+  (get-property-id (-> event .-coordinate js->clj)))
 
 (defn make-features []
-  (map (fn [[x y]] (ol.Feature. (ol.geom.Point. #js [x y]))) @state/result-coordinates))
+  (map (fn [{id :id [x y] :location}] (ol.Feature. #js {:geometry (ol.geom.Point. #js [x y])
+                                                        :file-id id})) @state/results-for-map))
 
 (defn make-cluster-source []
   (let [point-features (ol.Collection. (clj->js (make-features)))
@@ -92,25 +93,24 @@
 (defn single-item-style []
   {:image (ol.style.Icon. #js {:src (routing/path "/img/map-marker-big.png")})})
 
-(defn cluster-style [size]
+(defn cluster-style [selected? size]
   {:image (ol.style.Circle. #js {:radius 18
-                                 :stroke (ol.style.Stroke. #js {:color "#000"})
-                                 :fill (ol.style.Fill. #js {:color "#F79226"})})
+                                 :stroke (ol.style.Stroke. #js {:color "#303030" :width 3})
+                                 :fill (ol.style.Fill. #js {:color (if selected? "#FFE236" "#F79226")})})
    :text (ol.style.Text. #js {:text (str size)
                               :font "18px 'Source Sans Pro', sans-serif"
                               :fill (ol.style.Fill. #js {:color "#000"})})})
 
-(defn get-cluster-style [feature]
-  (let [size (-> feature (.get "features") (.-length))]
-    (or (get @style-cache size)
-        (-> (->> (ol.style.Style. (clj->js (if (= 1 size)
-                                             (single-item-style)
-                                             (cluster-style size))))
-                 (swap! style-cache assoc size))
-            (get size)))))
+(defn get-cluster-style [selected? feature]
+  (let [size (-> feature (.get "features") (.-length))
+        cache-key (str size selected?)]
+    (or (get @style-cache cache-key)
+        (-> (->> (ol.style.Style. (clj->js (cluster-style selected? size)))
+                 (swap! style-cache assoc cache-key))
+            (get cache-key)))))
 
 (def cluster-layer (ol.layer.Vector. #js {:source (make-cluster-source)
-                                          :style  get-cluster-style}))
+                                          :style  (partial get-cluster-style false)}))
 
 (def map-view-atom (atom nil))
 
@@ -129,6 +129,8 @@
         (.setSource cluster-layer new-source)
         (fit-map new-source @map-view-atom @map-object-atom))
       (.setSource cluster-layer nil))))
+
+(def drawing-enabled? (atom true))
 
 (defn ol-map []
   (reagent/create-class
@@ -171,12 +173,18 @@
                                                                                                  js->clj
                                                                                                  first))
                                      (.preventDefault event))))
+
              drawing-interaction (ol.interaction.Draw. #js {:source   drawing-source
                                                             :type     "Polygon"
                                                             :features features
-                                                            })
+                                                            :condition (fn [event]
+                                                                         (not (.hasFeatureAtPixel @map-object-atom (.-pixel event) (fn [layer-candidate] (= layer-candidate cluster-layer)))))})
 
-             interactions (ol.Collection. #js [(ol.interaction.DragPan.) (ol.interaction.MouseWheelZoom.) drawing-interaction])
+             select-interaction (ol.interaction.Select. #js {:multi true
+                                                             :layers #js [cluster-layer]
+                                                             :style (partial get-cluster-style true)})
+
+             interactions (ol.Collection. #js [(ol.interaction.DragPan.) (ol.interaction.MouseWheelZoom.) select-interaction drawing-interaction])
 
              custom-buttons (let [class (.createAttribute js/document "class")
                                   iclass (.createAttribute js/document "class")
@@ -189,22 +197,23 @@
                               (set! (.-value iclass) "icon-flow-line")
                               (.setAttributeNode div class)
                               (.setAttributeNode button iclass)
+                              (.setAttribute button "title" (t "Rajaa hakualue"))
                               (.addEventListener button "click"
                                                  (fn [evt]
-                                                   (let [class-now (-> evt (.-currentTarget) (.-className))
-                                                         new-class (if (= class-now "icon-flow-line") "icon-location" "icon-flow-line")
-                                                         new-title (if (= class-now "icon-flow-line") (t "Poimi kiinteistörekisterinumero") (t "Rajaa hakualue"))
-                                                         ]
+                                                   (swap! drawing-enabled? not)
+                                                   (let [new-class (if @drawing-enabled? "icon-flow-line" "icon-location")
+                                                         new-title (if @drawing-enabled? (t "Rajaa hakualue") (t "Poimi kiinteistörekisterinumero"))]
                                                      (.clear drawing-source)
-                                                     (swap! state/search-query assoc :coordinates nil)
-                                                     (if (= new-class "icon-flow-line")
+                                                     (swap! state/search-query assoc :coordinates [])
+                                                     (if @drawing-enabled?
                                                        (.push interactions drawing-interaction)
                                                        (.pop interactions))
                                                      (set! (.-className button) new-class)
-                                                     (set! (.-title button) new-title)
+                                                     (.setAttribute button "title" new-title)
                                                      (.preventDefault evt))))
                               div)
-             cluster-source (make-cluster-source)]
+             cluster-source (make-cluster-source)
+             selected-features (.getFeatures select-interaction)]
          (.setSource cluster-layer cluster-source)
          (reset! map-view-atom (ol.View. #js {:center     (clj->js (map-center))
                                               :zoom       8
@@ -212,9 +221,18 @@
          (reset! map-object-atom (ol/Map. #js {:controls     (-> (ol.control.defaults) (.extend (clj->js [(ol.control.Control. #js {"element" custom-buttons})])))
                                                :target       "map"
                                                :view         @map-view-atom
-                                               :layers       #js [map-layer drawing-layer map-layer-kiinteisto cluster-layer]
+                                               :layers       #js [map-layer map-layer-kiinteisto drawing-layer cluster-layer]
                                                :interactions interactions}))
-         (.on @map-object-atom "singleclick" map-click)
+
+         (.on selected-features "add" (fn [event] (let [cluster (-> event .-target (.item 0))
+                                                        features (.get cluster "features")]
+                                                      (doseq [feature features]
+                                                        (println (.get feature "file-id"))))))
+
+         (.on @map-object-atom "singleclick" (fn [event]
+                                               (when-not (or @drawing-enabled?
+                                                             (.hasFeatureAtPixel @map-object-atom (.-pixel event) (fn [layer-candidate] (= layer-candidate cluster-layer))))
+                                                 (map-click event))))
          (fit-map cluster-source @map-view-atom @map-object-atom)))
 
      :reagent-render
