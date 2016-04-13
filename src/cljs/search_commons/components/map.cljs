@@ -132,6 +132,15 @@
 
 (def drawing-enabled? (atom true))
 
+(defn selected-ids-to-state [event]
+  (->> (-> event .-target)
+       (.getArray)
+       (map #(js->clj (.get % "features")))
+       (flatten)
+       (map #(.get % "file-id"))
+       (set)
+       (reset! state/map-selected-result-ids)))
+
 (defn ol-map []
   (reagent/create-class
     {:component-did-mount
@@ -224,10 +233,8 @@
                                                :layers       #js [map-layer map-layer-kiinteisto drawing-layer cluster-layer]
                                                :interactions interactions}))
 
-         (.on selected-features "add" (fn [event] (let [cluster (-> event .-target (.item 0))
-                                                        features (.get cluster "features")]
-                                                      (doseq [feature features]
-                                                        (println (.get feature "file-id"))))))
+         (.on selected-features "add" selected-ids-to-state)
+         (.on selected-features "remove" selected-ids-to-state)
 
          (.on @map-object-atom "singleclick" (fn [event]
                                                (when-not (or @drawing-enabled?

@@ -58,11 +58,28 @@
 
 (defonce show-search-map (reagent/atom false))
 
-(def unique-onkalo-results
+(defonce map-selected-result-ids (reagent/atom #{}))
+
+(def unique-results
   (reaction
     (let [{:keys [results onkalo-results]} @search-results
-          mongo-ids (into #{} (map :id results))]
-      (remove #(contains? mongo-ids (:id %)) onkalo-results))))
+          mongo-ids (into #{} (map :id results))
+          unique-onkalo-results (remove #(contains? mongo-ids (:id %)) onkalo-results)]
+      (concat results unique-onkalo-results))))
+
+(def filtered-results
+  (reaction
+    (if (empty? @map-selected-result-ids)
+      @unique-results
+      (filter #(contains? @map-selected-result-ids (:id %)) @unique-results))))
+
+(def result-groups
+  (reaction
+    (reduce
+      (fn [acc {:keys [grouping-key] :as val}]
+        (update acc grouping-key concat [val]))
+      {}
+      @filtered-results)))
 
 (defn find-result [id results]
   (first (filter #(= id (:id %)) results)))
@@ -75,7 +92,7 @@
 
 (def total-result-count
   (reaction
-    (+ (count (:results @search-results)) (count @unique-onkalo-results))))
+    (count @unique-results)))
 
 (add-watch show-search-map :set-coordinates #(swap! search-query (fn [v] (if %4
                                                                            v
@@ -199,7 +216,5 @@
 
 (def results-for-map
   (reaction
-    (let [{:keys [results]} @search-results]
-      (->> (map (fn [{:keys [id location-etrs-tm35fin]}] {:id id :location location-etrs-tm35fin}) @unique-onkalo-results)
-           (concat (map #(select-keys % [:id :location]) results))
-           (remove nil?)))))
+    (->> (map #(select-keys % [:id :location]) @unique-results)
+         (remove nil?))))

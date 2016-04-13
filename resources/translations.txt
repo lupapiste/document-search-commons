@@ -90,3 +90,5 @@
 "building.nationalId" "sv" ""
 "Hankkeen suunnittelijat" "fi" "Hankkeen suunnittelijat"
 "Hankkeen suunnittelijat" "sv" ""
+"Karttavalinta" "fi" "Karttavalinta"
+"Karttavalinta" "sv" ""
