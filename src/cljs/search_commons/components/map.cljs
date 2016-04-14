@@ -141,6 +141,17 @@
        (set)
        (reset! state/map-selected-result-ids)))
 
+(def selected-features (doto (ol.Collection.)
+                         (.on "add" selected-ids-to-state)
+                         (.on "remove" selected-ids-to-state)))
+
+(add-watch
+  state/map-selected-result-ids
+  :map-filter-reset
+  (fn [_ _ _ nv]
+    (when (and (zero? (count nv)) (> (.getLength selected-features) 0))
+      (.clear selected-features))))
+
 (defn ol-map []
   (reagent/create-class
     {:component-did-mount
@@ -191,7 +202,8 @@
 
              select-interaction (ol.interaction.Select. #js {:multi true
                                                              :layers #js [cluster-layer]
-                                                             :style (partial get-cluster-style true)})
+                                                             :style (partial get-cluster-style true)
+                                                             :features selected-features})
 
              interactions (ol.Collection. #js [(ol.interaction.DragPan.) (ol.interaction.MouseWheelZoom.) select-interaction drawing-interaction])
 
@@ -221,8 +233,7 @@
                                                      (.setAttribute button "title" new-title)
                                                      (.preventDefault evt))))
                               div)
-             cluster-source (make-cluster-source)
-             selected-features (.getFeatures select-interaction)]
+             cluster-source (make-cluster-source)]
          (.setSource cluster-layer cluster-source)
          (reset! map-view-atom (ol.View. #js {:center     (clj->js (map-center))
                                               :zoom       8
@@ -232,9 +243,6 @@
                                                :view         @map-view-atom
                                                :layers       #js [map-layer map-layer-kiinteisto drawing-layer cluster-layer]
                                                :interactions interactions}))
-
-         (.on selected-features "add" selected-ids-to-state)
-         (.on selected-features "remove" selected-ids-to-state)
 
          (.on @map-object-atom "singleclick" (fn [event]
                                                (when-not (or @drawing-enabled?

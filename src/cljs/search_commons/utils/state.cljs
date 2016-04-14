@@ -178,7 +178,8 @@
   (reset! show-search-map false)
   (reset! search-results empty-search-results)
   (reset! last-search empty-search-query)
-  (reset! search-query empty-search-query))
+  (reset! search-query empty-search-query)
+  (reset! map-selected-result-ids #{}))
 
 (defn reset-date-atoms []
   (let [query @search-query]
