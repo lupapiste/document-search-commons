@@ -244,10 +244,17 @@
                                                :layers       #js [map-layer map-layer-kiinteisto drawing-layer cluster-layer]
                                                :interactions interactions}))
 
-         (.on @map-object-atom "singleclick" (fn [event]
-                                               (when-not (or @drawing-enabled?
-                                                             (.hasFeatureAtPixel @map-object-atom (.-pixel event) (fn [layer-candidate] (= layer-candidate cluster-layer))))
-                                                 (map-click event))))
+         (doto @map-object-atom
+           (.on "singleclick" (fn [event]
+                                (when-not (or @drawing-enabled?
+                                              (.hasFeatureAtPixel @map-object-atom (.-pixel event) (fn [layer-candidate] (= layer-candidate cluster-layer))))
+                                  (map-click event))))
+           (.on "pointermove" (fn [event]
+                                (let [pixel (.-pixel event)
+                                      hit (.hasFeatureAtPixel @map-object-atom pixel (fn [layer-candidate] (= layer-candidate cluster-layer)))
+                                      target (.getElementById js/document (.getTarget @map-object-atom))]
+                                  (set! (-> target .-style .-cursor) (if hit "pointer" ""))))))
+
          (fit-map cluster-source @map-view-atom @map-object-atom)))
 
      :reagent-render
