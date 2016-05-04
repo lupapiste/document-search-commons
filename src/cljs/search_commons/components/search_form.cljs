@@ -79,7 +79,19 @@
          [:input {:type      "checkbox"
                   :checked   (contains? (get @state/search-query :fields) :handler)
                   :on-change #(toggle-query-field :handler (.. % -target -checked))}]
-         [:span (t :handler)]]]]]
+         [:span (t :handler)]]]
+       [:div
+        [:label
+         [:input {:type      "checkbox"
+                  :checked   (contains? (get @state/search-query :fields) :foreman)
+                  :on-change #(toggle-query-field :foreman (.. % -target -checked))}]
+         [:span (t :foreman)]]]
+       [:div
+        [:label
+         [:input {:type      "checkbox"
+                  :checked   (contains? (get @state/search-query :fields) :propertyId)
+                  :on-change #(toggle-query-field :propertyId (.. % -target -checked))}]
+         [:span (t :propertyId)]]]]]
      (when (> (count (get-in @state/config [:user :organizations])) 1)
        [:div.organization-select
         [:h4 (t "Hae vain valitun organisaation asiakirjoista")]

@@ -92,3 +92,7 @@
 "Hankkeen suunnittelijat" "sv" ""
 "Karttavalinta" "fi" "Karttavalinta"
 "Karttavalinta" "sv" ""
+"foreman" "fi" "Työnjohtaja"
+"foreman" "sv" ""
+"propertyId" "fi" "Kiinteistötunnus"
+"propertyId" "sv" ""
