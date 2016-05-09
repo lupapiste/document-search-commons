@@ -179,6 +179,8 @@
   (reset! search-results empty-search-results)
   (reset! last-search empty-search-query)
   (reset! search-query empty-search-query)
+  (reset! start-date nil)
+  (reset! end-date nil)
   (reset! map-selected-result-ids #{}))
 
 (defn reset-date-atoms []
