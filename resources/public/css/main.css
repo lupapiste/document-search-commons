@@ -2075,6 +2075,8 @@ footer ul li {
             padding-left: 5px; }
             .result-list-container .result-list .result-item .result-item-data .result-item-text .hover-popout:hover {
               z-index: 5; }
+        .result-list-container .result-list .result-item .result-item-data .result-item-status {
+          font-size: 0.6em; }
       .result-list-container .result-list .result-item:nth-child(even) .result-item-data {
         background-color: white; }
         .result-list-container .result-list .result-item:nth-child(even) .result-item-data.selected {
