@@ -114,6 +114,9 @@
 (defn set-lang! [lang]
   (fetch-translations lang))
 
+(defn search-error-handler [{:keys [status status-text]}]
+  (swap! search-results assoc :loading? false))
+
 (defn search-lupapiste []
   (POST (routing/path "/search")
         {:params @search-query
@@ -125,7 +128,8 @@
                       (swap! search-results merge {:loading? false
                                                    :has-more? has-more?
                                                    :took took
-                                                   :results (concat (:results @search-results) results)})))}))
+                                                   :results (concat (:results @search-results) results)})))
+         :error-handler search-error-handler}))
 
 (defn search-onkalo []
   (POST (routing/path "/search-onkalo")
@@ -135,7 +139,8 @@
                     (swap! search-results merge {:loading? false
                                                  :onkalo-has-more? has-more?
                                                  :onkalo-took took
-                                                 :onkalo-results (concat (:onkalo-results @search-results) results)}))}))
+                                                 :onkalo-results (concat (:onkalo-results @search-results) results)}))
+         :error-handler search-error-handler}))
 
 (defn new-search []
   (swap! search-query assoc :page 0)
