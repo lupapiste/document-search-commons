@@ -152,6 +152,15 @@
     (when (and (zero? (count nv)) (> (.getLength selected-features) 0))
       (.clear selected-features))))
 
+(defn remove-duplicate-consecutive-coords [coords]
+  (reduce
+    (fn [acc coord-pair]
+      (if (= (last acc) coord-pair)
+        acc
+        (concat acc [coord-pair])))
+    []
+    coords))
+
 (defn ol-map []
   (reagent/create-class
     {:component-did-mount
@@ -186,12 +195,14 @@
                                                                                 :image  (ol.style.Circle. #js {:radius 7 :fill (ol.style.Fill. #js {:color "#ffcc33"})})})})
              features (doto (ol.Collection.)
                         (.on "add" (fn [event]
-                                     (swap! state/search-query update-in [:coordinates] conj (-> event
-                                                                                                 .-element
-                                                                                                 .getGeometry
-                                                                                                 .getCoordinates
-                                                                                                 js->clj
-                                                                                                 first))
+                                     (let [new-coords (-> event
+                                                          .-element
+                                                          .getGeometry
+                                                          .getCoordinates
+                                                          js->clj
+                                                          first
+                                                          remove-duplicate-consecutive-coords)]
+                                       (swap! state/search-query update-in [:coordinates] conj new-coords))
                                      (.preventDefault event))))
 
              drawing-interaction (ol.interaction.Draw. #js {:source   drawing-source
