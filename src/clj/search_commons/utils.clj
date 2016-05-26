@@ -1,7 +1,6 @@
 (ns search-commons.utils
   (:require [clojure.string :as s]
-            [clojure.pprint :refer [cl-format]]
-            [monger.operators :refer :all]))
+            [clojure.pprint :refer [cl-format]]))
 
 (def property-id-regex #"(\d{1,3})-(\d{1,3})-(\d{1,4})-(\d{1,4})")
 
