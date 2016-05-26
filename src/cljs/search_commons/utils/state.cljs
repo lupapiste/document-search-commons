@@ -36,6 +36,7 @@
    :type '()
    :coordinates []
    :organization ""
+   :tokenize? false
    :targets #{:lupapiste :onkalo}})
 
 (defonce search-query (reagent/atom empty-search-query))
@@ -183,7 +184,7 @@
   (reset! show-search-map false)
   (reset! search-results empty-search-results)
   (reset! last-search empty-search-query)
-  (reset! search-query empty-search-query)
+  (reset! search-query (assoc empty-search-query :tokenize? (:tokenize? @search-query)))
   (reset! start-date nil)
   (reset! end-date nil)
   (reset! map-selected-result-ids #{}))

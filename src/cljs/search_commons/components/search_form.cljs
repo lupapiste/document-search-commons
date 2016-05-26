@@ -46,6 +46,12 @@
       [map/ol-map {:data @state/results-for-map}])]
    [:div.search-options
     [:div.search-fields
+     [:div.checkboxes
+      [:label
+       [:input {:type      "checkbox"
+                :checked   (not (:tokenize? @state/search-query))
+                :on-change #(swap! state/search-query assoc :tokenize? (not (.. % -target -checked)))}]
+       [:span (t "Hae koko hakulausekkeella ilman tokenisointia")]]]
      [:h4 (t "Rajoita haku seuraaviin kenttiin")]
      [:div.checkboxes
       [:div.half

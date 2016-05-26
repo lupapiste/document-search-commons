@@ -1929,8 +1929,8 @@ footer ul li {
       .search .search-options .search-fields .half, .search .search-options .search-filter .half {
         float: left;
         width: 50%; }
-        .search .search-options .search-fields .half [type="checkbox"], .search .search-options .search-filter .half [type="checkbox"] {
-          margin: 0 6px 4px 0; }
+      .search .search-options .search-fields [type="checkbox"], .search .search-options .search-filter [type="checkbox"] {
+        margin: 0 6px 4px 0; }
       .search .search-options .search-fields .checkboxes, .search .search-options .search-filter .checkboxes {
         *zoom: 1; }
         .search .search-options .search-fields .checkboxes:before, .search .search-options .search-fields .checkboxes:after, .search .search-options .search-filter .checkboxes:before, .search .search-options .search-filter .checkboxes:after {

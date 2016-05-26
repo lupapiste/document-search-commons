@@ -98,3 +98,5 @@
 "Kirjoita hakusana" "sv" "Skriv ett sökord"
 "Kuntalupatunnus" "fi" "Kuntalupatunnus"
 "Kuntalupatunnus" "sv" "Kommuntillståndsbeteckning"
+"Hae koko hakulausekkeella ilman tokenisointia" "fi" "Hae koko hakulausekkeella ilman tokenisointia"
+"Hae koko hakulausekkeella ilman tokenisointia" "sv" ""
