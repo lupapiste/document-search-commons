@@ -83,12 +83,6 @@
        [:div
         [:label
          [:input {:type      "checkbox"
-                  :checked   (contains? (get @state/search-query :fields) :foreman)
-                  :on-change #(toggle-query-field :foreman (.. % -target -checked))}]
-         [:span (t :foreman)]]]
-       [:div
-        [:label
-         [:input {:type      "checkbox"
                   :checked   (contains? (get @state/search-query :fields) :propertyId)
                   :on-change #(toggle-query-field :propertyId (.. % -target -checked))}]
          [:span (t :propertyId)]]]]]
