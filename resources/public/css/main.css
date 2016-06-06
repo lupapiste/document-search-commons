@@ -1893,7 +1893,7 @@ footer ul li {
     box-sizing: border-box;
     line-height: 1.8em;
     padding: 2px 4px 4px;
-    width: 49%; }
+    width: 44%; }
   .search .search-text .search-button {
     max-width: 16.2%; }
   .search .search-text .map-search .chevron {
@@ -1909,6 +1909,12 @@ footer ul li {
       color: #ffffff;
       text-shadow: none;
       font-weight: 600; }
+  .search .search-text .help {
+    color: #f7ac2e;
+    text-decoration: none;
+    display: inline-block;
+    vertical-align: bottom;
+    margin-left: 10px; }
   .search .search-options {
     *zoom: 1;
     margin: 10px 0; }
@@ -2280,7 +2286,9 @@ footer ul li {
     border-right: 1px solid #4f4f4f;
     border-bottom: 1px solid #4f4f4f;
     z-index: 5;
-    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.5); }
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.5);
+    max-height: 200px;
+    overflow-y: auto; }
     .combobox .combobox-results ul {
       padding: 0; }
       .combobox .combobox-results ul li {

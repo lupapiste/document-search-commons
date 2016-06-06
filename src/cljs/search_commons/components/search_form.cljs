@@ -116,14 +116,14 @@
                                            {(t t-key) type-vec})) docs)) type-group-and-docs)
                            (flatten)
                            (into {}))]
-         [cb/combobox type-map 5 false :type])]
+         [cb/combobox type-map false :type])]
 
       [time/timespan]
 
       (when (seq @state/operations)
         [:div.filter-option
          [:label (t "Toimenpide")]
-         [cb/combobox (into {} (map (fn [oper] {(t oper) oper}) @state/operations)) 5 false :operation]])
+         [cb/combobox (into {} (map (fn [oper] {(t oper) oper}) @state/operations)) false :operation]])
 
       [:div.filter-option
        [:label (t "Käyttötarkoitus")]
@@ -131,7 +131,7 @@
        (let [usage-map (into {} (map (fn [usage]
                                        (let [name (:name usage)]
                                          {(t name) name})) usages/rakennuksen-kayttotarkoitus))]
-         [cb/combobox usage-map 5 true :usage])]]
+         [cb/combobox usage-map true :usage])]]
      (when (and (get-in @state/config [:config :onkalo-enabled?])
                 (get-in @state/config [:config :lupapiste-enabled?]))
        [:div.targets
