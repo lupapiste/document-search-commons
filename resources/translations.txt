@@ -99,6 +99,6 @@
 "Kuntalupatunnus" "fi" "Kuntalupatunnus"
 "Kuntalupatunnus" "sv" "Kommuntillståndsbeteckning"
 "Hae koko hakulausekkeella ilman tokenisointia" "fi" "Hae koko tekstiä, ei yksittäisiä sanoja"
-"Hae koko hakulausekkeella ilman tokenisointia" "sv" ""
+"Hae koko hakulausekkeella ilman tokenisointia" "sv" "Sök hela texten, inte enskilda ord"
 "path.guide.document.search" "fi" "/ohjeet/viranomaisille/tiedonhallinta#Dokumenttihaku"
 "path.guide.document.search" "sv" "/ohjeet/viranomaisille/tiedonhallinta#Dokumenttihaku"
