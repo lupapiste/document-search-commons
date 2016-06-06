@@ -30,31 +30,36 @@
                                              (when (and (seq (get o value-kw)) (empty? (get n value-kw)))
                                                (reset! input-value ""))))
     (fn [option-value-map match-anywhere? value-kw]
-      [:div.combobox
-       [:div.combobox-input
-        [:input {:value @input-value
-                 :on-focus (handler-fn
-                             (reset! results (sorted-results option-value-map @input-value match-anywhere?))
-                             (reset! results-visible? true))
-                 :on-blur (handler-fn (reset! results-visible? false))
-                 :on-change (fn [e]
-                              (let [text (.. e -target -value)
-                                    sorted-matches (sorted-results option-value-map text match-anywhere?)]
-                                (reset! input-value text)
-                                (if (and (= (count sorted-matches) 1) (= (.toLowerCase (ffirst sorted-matches)) (.toLowerCase text)))
-                                  (do (reset! results-visible? false)
-                                      (state/update-search-field value-kw (last (first sorted-matches))))
-                                  (do (reset! results-visible? true)
-                                      (reset! results sorted-matches)))
-                                (when (s/blank? text)
-                                  (state/update-search-field value-kw nil))))}]]
+      [:div.combobox.autocomplete-component
+       [:div.combobox-input.autocomplete-selection-wrapper
+        [:span.select-arrow {:class (if @results-visible? "lupicon-chevron-small-up" "lupicon-chevron-small-down")}]
+        [:form {:auto-complete "off"}
+         [:input {:class (when @results-visible? "active")
+                  :value @input-value
+                  :on-focus (handler-fn
+                              (reset! results (sorted-results option-value-map @input-value match-anywhere?))
+                              (reset! results-visible? true))
+                  :on-blur (handler-fn (reset! results-visible? false))
+                  :on-change (fn [e]
+                               (let [text (.. e -target -value)
+                                     sorted-matches (sorted-results option-value-map text match-anywhere?)]
+                                 (reset! input-value text)
+                                 (if (and (= (count sorted-matches) 1) (= (.toLowerCase (ffirst sorted-matches)) (.toLowerCase text)))
+                                   (do (reset! results-visible? false)
+                                       (state/update-search-field value-kw (last (first sorted-matches))))
+                                   (do (reset! results-visible? true)
+                                       (reset! results sorted-matches)))
+                                 (when (s/blank? text)
+                                   (state/update-search-field value-kw nil))))}]]]
        (when @results-visible?
-         [:div.combobox-results
-          [:ul
+         [:div.autocomplete-dropdown
+          [:ul.autocomplete-result
            (doall
              (for [[text value] @results]
-               [:li {:key      value
-                     :on-mouse-down (fn []
-                                      (reset! input-value text)
-                                      (reset! results-visible? false)
-                                      (state/update-search-field value-kw value))} text]))]])])))
+               [:li.autocomplete-result-item
+                {:key      value
+                 :on-mouse-down (fn []
+                                  (reset! input-value text)
+                                  (reset! results-visible? false)
+                                  (state/update-search-field value-kw value))}
+                text]))]])])))

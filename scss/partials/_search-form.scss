@@ -103,8 +103,18 @@
         .date-separator {
           display: inline-block;
           text-align: center;
-          vertical-align: top;
+          vertical-align: middle;
           width: 4%;
+        }
+      }
+
+      input {
+        border: 1px solid $input-border-color;
+        font-size: $font-size-body;
+        min-height: 40px;
+        padding: 0 12px;
+        &.active {
+          border-color: $orange;
         }
       }
 
