@@ -4629,19 +4629,9 @@ footer ul li {
     width: 44%; }
   .search .search-text .search-button {
     width: 16.4%; }
-  .search .search-text .map-search .chevron {
-    float: left;
-    margin-top: 3px;
-    margin-right: -12px;
-    font-size: 18px; }
   .search .search-text button {
     float: right;
     margin-left: 4px; }
-    .search .search-text button.clear {
-      background-color: #ff908d;
-      color: #ffffff;
-      text-shadow: none;
-      font-weight: 600; }
   .search .search-text .help {
     color: #f7ac2e;
     text-decoration: none;

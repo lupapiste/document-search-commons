@@ -21,23 +21,9 @@
     .search-button {
       width: 16.4%;
     }
-    .map-search {
-      .chevron {
-        float: left;
-        margin-top: 3px;
-        margin-right: -12px;
-        font-size: 18px;
-      }
-    }
     button {
       float: right;
       margin-left: 4px;
-      &.clear {
-        background-color: rgb(255, 144, 141);
-        color: #ffffff;
-        text-shadow: none;
-        font-weight: 600;
-      }
     }
     .help {
       color: #f7ac2e;
