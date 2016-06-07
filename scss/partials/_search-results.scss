@@ -189,23 +189,11 @@
             position: relative;
           }
         }
+        .result-button {
+          margin-top: 0.5em;
+        }
         .btn {
-          text-shadow: none;
-          font-size: 1em;
-          color: #ffffff;
-          max-width: 100%;
-          &.view-document {
-            background-color: $orange-dark;
-            &:hover {
-              background-color: $orange;
-            }
-          }
-          &.download-document {
-            background-color: $gray85;
-            &:hover {
-              background-color: $gray119;
-            }
-          }
+          min-width: 200px;
         }
       }
       .metadata {

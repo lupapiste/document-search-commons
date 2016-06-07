@@ -64,6 +64,8 @@
 "Hakutulokset" "sv" "Sökresultat"
 "Lataa dokumentti" "fi" "Lataa dokumentti"
 "Lataa dokumentti" "sv" "Ladda ner dokument"
+"Lataa arkistokappale" "fi" "Lataa arkistokappale"
+"Lataa arkistokappale" "sv" "Ladda ner arkivkopia"
 "Poimi kiinteistörekisterinumero" "fi" "Poimi kiinteistörekisterinumero"
 "Poimi kiinteistörekisterinumero" "sv" "Plocka fastighetsregisternummer"
 "Rajaa hakualue" "fi" "Rajaa hakualue"

@@ -4628,7 +4628,7 @@ footer ul li {
   .search .search-text input {
     width: 44%; }
   .search .search-text .search-button {
-    width: 16.2%; }
+    width: 16.4%; }
   .search .search-text .map-search .chevron {
     float: left;
     margin-top: 3px;
@@ -4908,19 +4908,10 @@ footer ul li {
           .result-view-container .result-view .result-view-content .preview .preview-image .btn, .result-view-container .result-view .result-view-content .preview .preview-image .dataTables_paginate .paginate_disabled_previous, .dataTables_paginate .result-view-container .result-view .result-view-content .preview .preview-image .paginate_disabled_previous, .result-view-container .result-view .result-view-content .preview .preview-image .dataTables_paginate .paginate_disabled_next, .dataTables_paginate .result-view-container .result-view .result-view-content .preview .preview-image .paginate_disabled_next {
             top: -31px;
             position: relative; }
+        .result-view-container .result-view .result-view-content .preview .result-button {
+          margin-top: 0.5em; }
         .result-view-container .result-view .result-view-content .preview .btn, .result-view-container .result-view .result-view-content .preview .dataTables_paginate .paginate_disabled_previous, .dataTables_paginate .result-view-container .result-view .result-view-content .preview .paginate_disabled_previous, .result-view-container .result-view .result-view-content .preview .dataTables_paginate .paginate_disabled_next, .dataTables_paginate .result-view-container .result-view .result-view-content .preview .paginate_disabled_next {
-          text-shadow: none;
-          font-size: 1em;
-          color: #ffffff;
-          max-width: 100%; }
-          .result-view-container .result-view .result-view-content .preview .btn.view-document, .result-view-container .result-view .result-view-content .preview .dataTables_paginate .view-document.paginate_disabled_previous, .dataTables_paginate .result-view-container .result-view .result-view-content .preview .view-document.paginate_disabled_previous, .result-view-container .result-view .result-view-content .preview .dataTables_paginate .view-document.paginate_disabled_next, .dataTables_paginate .result-view-container .result-view .result-view-content .preview .view-document.paginate_disabled_next {
-            background-color: #f39129; }
-            .result-view-container .result-view .result-view-content .preview .btn.view-document:hover, .result-view-container .result-view .result-view-content .preview .dataTables_paginate .view-document.paginate_disabled_previous:hover, .dataTables_paginate .result-view-container .result-view .result-view-content .preview .view-document.paginate_disabled_previous:hover, .result-view-container .result-view .result-view-content .preview .dataTables_paginate .view-document.paginate_disabled_next:hover, .dataTables_paginate .result-view-container .result-view .result-view-content .preview .view-document.paginate_disabled_next:hover {
-              background-color: #f7ac2e; }
-          .result-view-container .result-view .result-view-content .preview .btn.download-document, .result-view-container .result-view .result-view-content .preview .dataTables_paginate .download-document.paginate_disabled_previous, .dataTables_paginate .result-view-container .result-view .result-view-content .preview .download-document.paginate_disabled_previous, .result-view-container .result-view .result-view-content .preview .dataTables_paginate .download-document.paginate_disabled_next, .dataTables_paginate .result-view-container .result-view .result-view-content .preview .download-document.paginate_disabled_next {
-            background-color: #555555; }
-            .result-view-container .result-view .result-view-content .preview .btn.download-document:hover, .result-view-container .result-view .result-view-content .preview .dataTables_paginate .download-document.paginate_disabled_previous:hover, .dataTables_paginate .result-view-container .result-view .result-view-content .preview .download-document.paginate_disabled_previous:hover, .result-view-container .result-view .result-view-content .preview .dataTables_paginate .download-document.paginate_disabled_next:hover, .dataTables_paginate .result-view-container .result-view .result-view-content .preview .download-document.paginate_disabled_next:hover {
-              background-color: #777777; }
+          min-width: 200px; }
       .result-view-container .result-view .result-view-content .metadata {
         float: left;
         width: 50%;
