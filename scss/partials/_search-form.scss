@@ -1,16 +1,25 @@
 .search {
   margin-bottom: 20px;
 
+  input {
+    font-size: $font-size-body;
+    min-height: 40px;
+    box-sizing: border-box;
+    &.active {
+      border-color: $orange;
+    }
+    &:focus {
+      color: $input-focus-color;
+      border-color: $input-focus-border-color;
+    }
+  }
+
   .search-text {
     input {
-      display: inline-block;
-      box-sizing: border-box;
-      line-height: 1.8em;
-      padding: 2px 4px 4px;
       width: 44%;
     }
     .search-button {
-      max-width: 16.2%;
+      width: 16.2%;
     }
     .map-search {
       .chevron {
@@ -34,7 +43,7 @@
       color: #f7ac2e;
       text-decoration: none;
       display: inline-block;
-      vertical-align: bottom;
+      vertical-align: middle;
       margin-left: 10px;
     }
   }
@@ -55,7 +64,7 @@
       }
 
       [type="checkbox"] {
-        margin: 0 6px 4px 0;
+        margin: 0 6px 0 0;
       }
 
       .checkboxes {
@@ -65,10 +74,17 @@
       .organization-select {
         @include clearfix;
         margin: 1em 0;
+        padding: 0;
+        border: 0;
         width: 100%;
-        select {
-          margin-top: 5px;
+        color: $grey-text;
+        .select {
+          position: relative;
           width: 50%;
+          margin-top: 5px;
+          select {
+            width: 100%;
+          }
         }
       }
 
@@ -96,6 +112,11 @@
       .timespan {
         input {
           width: 48%;
+          outline: 0;
+          &:focus {
+            color: $input-focus-color;
+            border-color: $input-focus-border-color;
+          }
         }
         .end-date {
           float: right;
@@ -114,7 +135,7 @@
         min-height: 40px;
         padding: 0 12px;
         &.active {
-          border-color: $orange;
+          border-color: $input-focus-border-color;
         }
       }
 

@@ -34,14 +34,16 @@
              :on-key-down #(when (and (= 13 (.. % -keyCode))
                                    (not (search-disabled?)))
                             (state/new-search))}]
-    [:button.clear.search-button {:on-click state/reset-state}
-     (t "Tyhjennä")]
-    [:button.map-search.search-button {:on-click (handler-fn (swap! state/show-search-map not))}
-     [:span.chevron {:class (if @state/show-search-map "lupicon-chevron-down" "lupicon-chevron-right")}]
+    [:button.search-button.secondary {:on-click state/reset-state}
+     [:i.lupicon-remove]
+     [:span (t "Tyhjennä")]]
+    [:button.map-search.search-button.secondary {:on-click (handler-fn (swap! state/show-search-map not))}
+     [:i {:class (if @state/show-search-map "lupicon-chevron-up" "lupicon-chevron-down")}]
      [:span (t "Kartta")]]
-    [:button.search-button {:disabled (search-disabled?)
-                            :on-click state/new-search}
-     (t "Hae")]
+    [:button.search-button.primary {:disabled (search-disabled?)
+                                    :on-click state/new-search}
+     [:i.lupicon-search]
+     [:span (t "Hae")]]
     [:a.help {:href (t "path.guide.document.search") :target "_blank" :title (t "help")}
      [:span.lupicon-circle-question]]
     (when (and @state/show-search-map (get-in @state/config [:config :cdn-host]))
@@ -95,12 +97,14 @@
                   :on-change #(toggle-query-field :propertyId (.. % -target -checked))}]
          [:span (t :propertyId)]]]]]
      (when (> (count (get-in @state/config [:user :organizations])) 1)
-       [:div.organization-select
+       [:div.organization-select.form-grid
         [:h4 (t "Hae vain valitun organisaation asiakirjoista")]
-        [:select {:on-change #(state/update-search-field :organization (.. % -target -value))
-                  :value (:organization @state/search-query)}
-         [:option {:value ""} (t "Hae kaikista")]
-         (map (fn [[org-id names]] ^{:key org-id} [:option {:value org-id} (:fi names)]) (get-in @state/config [:user :organizations]))]])]
+        [:div.select
+         [:span.select-arrow.lupicon-chevron-small-down]
+         [:select {:on-change #(state/update-search-field :organization (.. % -target -value))
+                   :value (:organization @state/search-query)}
+          [:option {:value ""} (t "Hae kaikista")]
+          (map (fn [[org-id names]] ^{:key org-id} [:option {:value org-id} (:fi names)]) (get-in @state/config [:user :organizations]))]]])]
     [:div.search-filter
      [:h4 (t "Näytä vain ")]
      [:div.filter-options
