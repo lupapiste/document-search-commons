@@ -4748,7 +4748,7 @@ footer ul li {
     .result-summary .search-params div {
       display: inline-block;
       padding: 3px 0 3px 5px;
-      background-color: #f7ac2e;
+      background-color: #fbc732;
       color: #555555;
       margin: 0 5px 5px 0;
       font-size: 14px; }
@@ -4793,7 +4793,7 @@ footer ul li {
         height: 92px;
         width: 100%; }
         .result-list-container .result-list .result-item .result-item-data.selected {
-          background-color: #f7ac2e; }
+          background-color: #fbc732; }
         .result-list-container .result-list .result-item .result-item-data .result-type {
           position: relative;
           background-image: url("../img/icon-document.svg");
@@ -4826,7 +4826,7 @@ footer ul li {
       .result-list-container .result-list .result-item:nth-child(even) .result-item-data {
         background-color: white; }
         .result-list-container .result-list .result-item:nth-child(even) .result-item-data.selected {
-          background-color: #f7ac2e; }
+          background-color: #fbc732; }
     .result-list-container .result-list .result-application .application-separator {
       padding: 10px;
       margin-right: 55px;
@@ -4844,11 +4844,11 @@ footer ul li {
     height: 36px;
     margin: 15px 55px 15px 0; }
     .result-list-container .fetch-more button {
-      background-color: #f7ac2e;
+      background-color: #fbc732;
       color: #ffffff; }
     .result-list-container .fetch-more i {
       margin-top: 3px;
-      color: #f7ac2e;
+      color: #fbc732;
       font-size: 22px; }
 
 .result-view-container {
@@ -4959,7 +4959,7 @@ footer ul li {
   height: 0;
   border-top: 46px solid transparent;
   border-bottom: 46px solid transparent;
-  border-left: 46px solid #f7ac2e; }
+  border-left: 46px solid #fbc732; }
 
 .document-view {
   position: fixed;

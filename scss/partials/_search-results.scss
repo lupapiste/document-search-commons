@@ -23,7 +23,7 @@
     div {
       display: inline-block;
       padding: 3px 0 3px 5px;
-      background-color: $orange;
+      background-color: $orange-light;
       color: $gray85;
       margin: 0 5px 5px 0;
       font-size: 14px;
@@ -33,6 +33,8 @@
     }
   }
 }
+
+$result-highlight: $orange-light;
 
 .result-list-and-item {
   @include clearfix;
@@ -58,7 +60,7 @@
       .result-item-data {
         background-color: $gray246;
         &.selected {
-          background-color: $orange;
+          background-color: $result-highlight;
         }
         padding: 10px;
         float: left;
@@ -107,7 +109,7 @@
         .result-item-data {
           background-color: white;
           &.selected {
-            background-color: $orange;
+            background-color: $result-highlight;
           }
         }
       }
@@ -134,12 +136,12 @@
     text-align: center;
     height: 36px;
     button {
-      background-color: $orange;
+      background-color: $result-highlight;
       color: #ffffff;
     }
     i {
       margin-top: 3px;
-      color: $orange;
+      color: $result-highlight;
       font-size: 22px;
     }
     margin: 15px 55px 15px 0;
@@ -278,7 +280,7 @@
   height: 0;
   border-top: 46px solid transparent;
   border-bottom: 46px solid transparent;
-  border-left: 46px solid $orange;
+  border-left: 46px solid $result-highlight;
 }
 
 .document-view {
