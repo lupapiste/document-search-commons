@@ -106,7 +106,7 @@
           [:option {:value ""} (t "Hae kaikista")]
           (map (fn [[org-id names]] ^{:key org-id} [:option {:value org-id} (:fi names)]) (get-in @state/config [:user :organizations]))]]])]
     [:div.search-filter
-     [:h4 (t "Näytä vain ")]
+     [:h4 (t "Näytä vain")]
      [:div.filter-options
 
       [:div.filter-option
