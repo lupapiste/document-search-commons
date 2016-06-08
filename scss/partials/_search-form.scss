@@ -1,8 +1,9 @@
 .search {
   margin-bottom: 20px;
 
-  input {
+  input[type="text"], input:not([type]) {
     font-size: $font-size-body;
+    border: 1px solid $input-border-color;
     min-height: 40px;
     box-sizing: border-box;
     &.active {
@@ -12,11 +13,16 @@
       color: $input-focus-color;
       border-color: $input-focus-border-color;
     }
+    padding: 0 6px;
   }
 
   .search-text {
-    input {
+    form {
+      display: inline-block;
       width: 44%;
+    }
+    input {
+      width: 100%;
     }
     .search-button {
       width: 16.4%;
@@ -114,17 +120,6 @@
           width: 4%;
         }
       }
-
-      input {
-        border: 1px solid $input-border-color;
-        font-size: $font-size-body;
-        min-height: 40px;
-        padding: 0 12px;
-        &.active {
-          border-color: $input-focus-border-color;
-        }
-      }
-
       .targets {
         margin-top: 1em;
       }

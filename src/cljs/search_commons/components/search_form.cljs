@@ -27,13 +27,14 @@
 (defn input-form []
   [:div.search
    [:div.search-text
-    [:input {:type "text"
+    [:form {:on-submit #(.preventDefault %)}
+     [:input {:type "text"
              :placeholder (t "Kirjoita hakusana")
              :value (:text @state/search-query)
              :on-change #(state/update-search-field :text (.. % -target -value))
              :on-key-down #(when (and (= 13 (.. % -keyCode))
                                    (not (search-disabled?)))
-                            (state/new-search))}]
+                            (state/new-search))}]]
     [:button.search-button.secondary {:on-click state/reset-state}
      [:i.lupicon-remove]
      [:span (t "Tyhjennä")]]

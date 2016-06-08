@@ -4616,17 +4616,22 @@ footer ul li {
     transform: rotate(359deg); } }
 .search {
   margin-bottom: 20px; }
-  .search input {
+  .search input[type="text"], .search input:not([type]) {
     font-size: 15px;
+    border: 1px solid #bbbbbb;
     min-height: 40px;
-    box-sizing: border-box; }
-    .search input.active {
+    box-sizing: border-box;
+    padding: 0 6px; }
+    .search input[type="text"].active, .search input:not([type]).active {
       border-color: #f7ac2e; }
-    .search input:focus {
+    .search input[type="text"]:focus, .search input:not([type]):focus {
       color: #333333;
       border-color: #fbc732; }
-  .search .search-text input {
+  .search .search-text form {
+    display: inline-block;
     width: 44%; }
+  .search .search-text input {
+    width: 100%; }
   .search .search-text .search-button {
     width: 16.4%; }
   .search .search-text button {
@@ -4713,13 +4718,6 @@ footer ul li {
         text-align: center;
         vertical-align: middle;
         width: 4%; }
-      .search .search-options .search-fields input, .search .search-options .search-filter input {
-        border: 1px solid #bbbbbb;
-        font-size: 15px;
-        min-height: 40px;
-        padding: 0 12px; }
-        .search .search-options .search-fields input.active, .search .search-options .search-filter input.active {
-          border-color: #fbc732; }
       .search .search-options .search-fields .targets, .search .search-options .search-filter .targets {
         margin-top: 1em; }
 
