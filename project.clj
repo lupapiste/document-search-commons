@@ -1,12 +1,11 @@
-(defproject lupapiste/document-search-commons "0.3.1"
+(defproject lupapiste/document-search-commons "0.4.0"
   :description "Common document search related code shared between lupadoku and onkalo applications"
   :url "http://www.lupapiste.fi"
-  :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"
+  :license {:name "European Union Public License"
+            :url "https://joinup.ec.europa.eu/community/eupl/og_page/european-union-public-licence-eupl-v11"
             :distribution :repo}
-  :scm {:url "https://deus.solita.fi/Solita/projects/lupapiste/repositories/document-search-commons/tree/master"}
-  :repositories [["solita" "http://mvn.solita.fi/repository/solita"]
-                 ["osgeo" {:url "http://download.osgeo.org/webdav/geotools"}]]
+  :scm {:url "https://github.com/lupapiste/document-search-commons"}
+  :repositories [["osgeo" {:url "http://download.osgeo.org/webdav/geotools"}]]
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [lupapiste/commons "0.7.33" :exclusions [commons-logging commons-codec]]
                  [org.geotools/gt-main "15.0"]
