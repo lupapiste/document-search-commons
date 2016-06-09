@@ -20,7 +20,8 @@
                  [cljs-pikaday "0.1.2"]
                  [cljsjs/moment "2.10.6-4"]
                  [cljsjs/openlayers "3.15.1"]
-                 [tailrecursion/cljson "1.0.7"]]
+                 [tailrecursion/cljson "1.0.7"]
+                 [alandipert/storage-atom "2.0.1"]]
   :plugins [[lein-scss "0.2.3" :exclusions [org.clojure/clojure]]]
   :source-paths ["src/clj" "src/cljc" "src/cljs"]
   :cljsbuild {:builds {:dev {:source-paths ["src/cljc" "src/cljs"]}}}
