@@ -4997,6 +4997,9 @@ footer ul li {
     .document-view .iframe-container img {
       max-width: 100%;
       max-height: 100%; }
+    .document-view .iframe-container .xml-container {
+      background-color: #ffffff;
+      text-align: left; }
 
 .combobox {
   display: inline-block;
