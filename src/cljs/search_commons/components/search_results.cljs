@@ -6,7 +6,8 @@
             [goog.string :as gs]
             [goog.string.format]
             [search-commons.routing :as routing]
-            [clojure.string :as s])
+            [clojure.string :as s]
+            [ajax.core :refer [GET]])
   (:import [goog.i18n DateTimeFormat]))
 
 ;; From sade.property in lupapalvelu
@@ -162,6 +163,21 @@
                                                                           (when-not (= position target-top)
                                                                             (.requestAnimationFrame js/window animate-frame))))]
                                               (animate-frame start))))))))
+
+(def div-content (reagent/atom {:id nil
+                                :text nil}))
+
+(defn fetch-div-content [id url]
+  (when (not= id (:id @div-content))
+    (GET url
+         {:handler (fn [xml-str]
+                     (let [processed-xml (-> (s/replace xml-str #"(<[^>/]+>)" "<div>$1")
+                                             (s/replace #"(</\w+>)" "$1</div>")
+                                             (gs/htmlEscape xml-str)
+                                             (s/replace #"&lt;(/?div)&gt;" "<$1>")
+                                             (s/replace #"(&lt;\?.+\?&gt;)" "<div class=\"xml-header\">$1</div>"))]
+                       (reset! div-content {:id id :text processed-xml})))
+          :headers (state/language-header)})))
 
 (defn search-status []
   [:div.loading

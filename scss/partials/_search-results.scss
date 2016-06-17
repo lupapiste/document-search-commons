@@ -329,8 +329,13 @@ $result-highlight: $orange-light;
       max-height: 100%;
     }
     .xml-container {
-      background-color: #ffffff;
+      padding: 15px;
+      background-color: $gray246;
       text-align: left;
+      div:not(.xml-header) {
+        font-weight: bold;
+        margin-left: 20px;
+      }
     }
   }
 }
