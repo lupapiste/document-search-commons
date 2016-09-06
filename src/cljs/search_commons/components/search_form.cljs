@@ -96,7 +96,13 @@
          [:input {:type      "checkbox"
                   :checked   (contains? (get @state/search-query :fields) :propertyId)
                   :on-change #(toggle-query-field :propertyId (.. % -target -checked))}]
-         [:span (t :propertyId)]]]]]
+         [:span (t :propertyId)]]]
+       [:div
+        [:label
+         [:input {:type      "checkbox"
+                  :checked   (contains? (get @state/search-query :fields) :foreman)
+                  :on-change #(toggle-query-field :foreman (.. % -target -checked))}]
+         [:span (t :foreman)]]]]]
      (when (> (count (get-in @state/config [:user :organizations])) 1)
        [:div.organization-select.form-grid
         [:h4 (t "Hae vain valitun organisaation asiakirjoista")]
