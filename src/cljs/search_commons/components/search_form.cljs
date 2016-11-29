@@ -77,7 +77,13 @@
          [:input {:type      "checkbox"
                   :checked   (contains? (get @state/search-query :fields) :applicant)
                   :on-change #(toggle-query-field :applicant (.. % -target -checked))}]
-         [:span (t :applicant)]]]]
+         [:span (t :applicant)]]]
+       [:div
+        [:label
+         [:input {:type      "checkbox"
+                  :checked   (contains? (get @state/search-query :fields) :tyomaasta-vastaava)
+                  :on-change #(toggle-query-field :tyomaasta-vastaava (.. % -target -checked))}]
+         [:span (t :tyomaasta-vastaava)]]]]
       [:div.half
        [:div
         [:label
@@ -135,6 +141,8 @@
         [:div.filter-option
          [:label (t "Toimenpide")]
          [cb/combobox (into {} (map (fn [oper] {(t oper) oper}) @state/operations)) false :operation]])
+
+      [time/closed-timespan]
 
       [:div.filter-option
        [:label (t "Käyttötarkoitus")]

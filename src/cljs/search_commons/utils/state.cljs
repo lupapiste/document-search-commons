@@ -49,11 +49,19 @@
 
 (defonce start-date (reagent/atom nil))
 
+(defonce closed-start-date (reagent/atom nil))
+
 (add-watch start-date :set-date-from #(swap! search-query assoc-in [:timespan :from] (when %4 (.getTime %4))))
+
+(add-watch closed-start-date :set-closed-date-from #(swap! search-query assoc-in [:timespan :closed-from] (when %4 (.getTime %4))))
 
 (defonce end-date (reagent/atom nil))
 
+(defonce closed-end-date (reagent/atom nil))
+
 (add-watch end-date :set-date-to #(swap! search-query assoc-in [:timespan :to] (when %4 (.getTime %4))))
+
+(add-watch closed-end-date :set-closed-date-to #(swap! search-query assoc-in [:timespan :closed-to] (when %4 (.getTime %4))))
 
 (defonce operations (reagent/atom []))
 
@@ -187,6 +195,8 @@
   (reset! search-query (assoc empty-search-query :tokenize? (:tokenize? @search-query)))
   (reset! start-date nil)
   (reset! end-date nil)
+  (reset! closed-start-date nil)
+  (reset! closed-end-date nil)
   (reset! map-selected-result-ids #{}))
 
 (defn reset-date-atoms []
