@@ -144,13 +144,15 @@
 
       [time/closed-timespan]
 
-      [:div.filter-option
-       [:label (t "Käyttötarkoitus")]
+      (when (some #(= % "R") (get-in @state/config [:user :permit-types]))
+        [:div.filter-option
+         [:label (t "Käyttötarkoitus")]
 
-       (let [usage-map (into {} (map (fn [usage]
-                                       (let [name (:name usage)]
-                                         {(t name) name})) usages/rakennuksen-kayttotarkoitus))]
-         [cb/combobox usage-map true :usage])]]
+         (let [usage-map (into {} (map (fn [usage]
+                                         (let [name (:name usage)]
+                                           {(t name) name})) usages/rakennuksen-kayttotarkoitus))]
+           [cb/combobox usage-map true :usage])])
+      ]
      (when (and (get-in @state/config [:config :onkalo-enabled?])
                 (get-in @state/config [:config :lupapiste-enabled?]))
        [:div.targets
