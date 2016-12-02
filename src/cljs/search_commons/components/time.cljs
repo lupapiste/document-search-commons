@@ -31,3 +31,11 @@
      ^{:key (str "pikaday-start-" react-key)} [(date-selector state/start-date "start-date")]
      [:span.date-separator "–"]
      ^{:key (str "pikaday-end-" react-key)} [(date-selector state/end-date "end-date")]]))
+
+(defn closed-timespan []
+  (let [react-key (str "pikaday-" (-> @state/translations :current-lang name))]
+    [:div.filter-option.timespan
+     [:label (t "Hanke valmistunut aikavälillä")]
+     ^{:key (str "pikaday-start-" react-key)} [(date-selector state/closed-start-date "start-date")]
+     [:span.date-separator "–"]
+     ^{:key (str "pikaday-end-" react-key)} [(date-selector state/closed-end-date "end-date")]]))

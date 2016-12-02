@@ -64,6 +64,12 @@
         (when (:to timespan)
           [:div (t "Päättyen") ": " (format-date (:to timespan))
            [cancel-search-param #(reset! state/end-date nil)]])
+        (when (:closed-from timespan)
+          [:div (t "Valmistunut alkaen") ": " (format-date (:closed-from timespan))
+           [cancel-search-param #(reset! state/closed-start-date nil)]])
+        (when (:closed-to timespan)
+          [:div (t "Valmistunut päättyen") ": " (format-date (:closed-to timespan))
+           [cancel-search-param #(reset! state/closed-end-date nil)]])
         (when operation
           [:div (t "Toimenpide") ": " (t operation)
            [cancel-search-param #(swap! state/search-query assoc :operation nil)]])

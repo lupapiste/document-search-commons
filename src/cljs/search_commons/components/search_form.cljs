@@ -77,7 +77,13 @@
          [:input {:type      "checkbox"
                   :checked   (contains? (get @state/search-query :fields) :applicant)
                   :on-change #(toggle-query-field :applicant (.. % -target -checked))}]
-         [:span (t :applicant)]]]]
+         [:span (t :applicant)]]]
+       [:div
+        [:label
+         [:input {:type      "checkbox"
+                  :checked   (contains? (get @state/search-query :fields) :tyomaasta-vastaava)
+                  :on-change #(toggle-query-field :tyomaasta-vastaava (.. % -target -checked))}]
+         [:span (t :tyomaasta-vastaava)]]]]
       [:div.half
        [:div
         [:label
@@ -136,13 +142,17 @@
          [:label (t "Toimenpide")]
          [cb/combobox (into {} (map (fn [oper] {(t oper) oper}) @state/operations)) false :operation]])
 
-      [:div.filter-option
-       [:label (t "Käyttötarkoitus")]
+      [time/closed-timespan]
 
-       (let [usage-map (into {} (map (fn [usage]
-                                       (let [name (:name usage)]
-                                         {(t name) name})) usages/rakennuksen-kayttotarkoitus))]
-         [cb/combobox usage-map true :usage])]]
+      (when (some #(= % "R") (get-in @state/config [:user :permit-types]))
+        [:div.filter-option
+         [:label (t "Käyttötarkoitus")]
+
+         (let [usage-map (into {} (map (fn [usage]
+                                         (let [name (:name usage)]
+                                           {(t name) name})) usages/rakennuksen-kayttotarkoitus))]
+           [cb/combobox usage-map true :usage])])
+      ]
      (when (and (get-in @state/config [:config :onkalo-enabled?])
                 (get-in @state/config [:config :lupapiste-enabled?]))
        [:div.targets
