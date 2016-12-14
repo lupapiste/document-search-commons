@@ -237,3 +237,6 @@
   (reaction
     (->> (map #(select-keys % [:id :location]) @unique-results)
          (remove nil?))))
+
+(defn selected-language [query]
+  (#{:fi :sv :en} (keyword (first (keys query)))))
