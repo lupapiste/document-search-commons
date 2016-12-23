@@ -24,6 +24,14 @@
                                (:coordinates @state/search-query))
       (empty? (:targets @state/search-query))))
 
+(defn field-limit-checkbox [property-kw]
+  [:div {:key (str (name property-kw) "-prop-checkbox")}
+   [:label
+    [:input {:type      "checkbox"
+             :checked   (contains? (get @state/search-query :fields) property-kw)
+             :on-change #(toggle-query-field property-kw (.. % -target -checked))}]
+    [:span (t property-kw)]]])
+
 (defn input-form []
   [:div.search
    [:div.search-text
@@ -60,55 +68,11 @@
      [:h4 (t "Rajoita haku seuraaviin kenttiin")]
      [:div.checkboxes
       [:div.half
-       [:div
-        [:label
-         [:input {:type      "checkbox"
-                  :checked   (contains? (get @state/search-query :fields) :address)
-                  :on-change #(toggle-query-field :address (.. % -target -checked))}]
-         [:span (t :address)]]]
-       [:div
-        [:label
-         [:input {:type      "checkbox"
-                  :checked   (contains? (get @state/search-query :fields) :attachment.label.contents)
-                  :on-change #(toggle-query-field :attachment.label.contents (.. % -target -checked))}]
-         [:span (t :attachment.label.contents)]]]
-       [:div
-        [:label
-         [:input {:type      "checkbox"
-                  :checked   (contains? (get @state/search-query :fields) :applicant)
-                  :on-change #(toggle-query-field :applicant (.. % -target -checked))}]
-         [:span (t :applicant)]]]
-       [:div
-        [:label
-         [:input {:type      "checkbox"
-                  :checked   (contains? (get @state/search-query :fields) :tyomaasta-vastaava)
-                  :on-change #(toggle-query-field :tyomaasta-vastaava (.. % -target -checked))}]
-         [:span (t :tyomaasta-vastaava)]]]]
+       (doall
+         (map field-limit-checkbox [:address :attachment.label.contents :applicant :tyomaasta-vastaava :projectDescription]))]
       [:div.half
-       [:div
-        [:label
-         [:input {:type      "checkbox"
-                  :checked   (contains? (get @state/search-query :fields) :designer)
-                  :on-change #(toggle-query-field :designer (.. % -target -checked))}]
-         [:span (t :designer)]]]
-       [:div
-        [:label
-         [:input {:type      "checkbox"
-                  :checked   (contains? (get @state/search-query :fields) :handler)
-                  :on-change #(toggle-query-field :handler (.. % -target -checked))}]
-         [:span (t :handler)]]]
-       [:div
-        [:label
-         [:input {:type      "checkbox"
-                  :checked   (contains? (get @state/search-query :fields) :propertyId)
-                  :on-change #(toggle-query-field :propertyId (.. % -target -checked))}]
-         [:span (t :propertyId)]]]
-       [:div
-        [:label
-         [:input {:type      "checkbox"
-                  :checked   (contains? (get @state/search-query :fields) :foreman)
-                  :on-change #(toggle-query-field :foreman (.. % -target -checked))}]
-         [:span (t :foreman)]]]]]
+       (doall
+         (map field-limit-checkbox [:designer :handler :propertyId :foreman]))]]
      (when (> (count (get-in @state/config [:user :organizations])) 1)
        [:div.organization-select.form-grid
         [:h4 (t "Hae vain valitun organisaation asiakirjoista")]
