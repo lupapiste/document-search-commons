@@ -32,6 +32,25 @@
              :on-change #(toggle-query-field property-kw (.. % -target -checked))}]
     [:span (t property-kw)]]])
 
+(defn generate-available-name [name-map text suffix]
+  (let [key (str text " (" suffix ")")]
+    (if (contains? name-map key)
+      (generate-available-name name-map text (inc suffix))
+      key)))
+
+(defn attachment-type-filter []
+  [:div.filter-option
+   [:label (t "Asiakirjatyyppi")]
+   (let [type-map (->> @state/available-attachment-types
+                       (reduce (fn [acc type-vec]
+                                 (let [text (->> (map name type-vec) (string/join ".") t)
+                                       key (if (contains? acc text)
+                                             (generate-available-name acc text 2)
+                                             text)]
+                                   (assoc acc key type-vec)))
+                               {}))]
+     [cb/combobox type-map false :type])])
+
 (defn input-form []
   [:div.search
    [:div.search-text
@@ -73,7 +92,7 @@
       [:div.half
        (doall
          (map field-limit-checkbox [:designer :handler :propertyId :foreman]))]]
-     (when (> (count (get-in @state/config [:user :organizations])) 1)
+     (when (seq (rest (get-in @state/config [:user :organizations])))
        [:div.organization-select.form-grid
         [:h4 (t "Hae vain valitun organisaation asiakirjoista")]
         [:div.select
@@ -81,24 +100,13 @@
          [:select {:on-change #(state/update-search-field :organization (.. % -target -value))
                    :value (:organization @state/search-query)}
           [:option {:value ""} (t "Hae kaikista")]
-          (map (fn [[org-id names]] ^{:key org-id} [:option {:value org-id} (:fi names)]) (get-in @state/config [:user :organizations]))]]])]
+          (->> (get-in @state/config [:user :organizations])
+               (map (fn [[org-id {:keys [name]}]]
+                      ^{:key org-id} [:option {:value org-id} (:fi name)])))]]])]
     [:div.search-filter
      [:h4 (t "Näytä vain")]
      [:div.filter-options
-
-      [:div.filter-option
-       [:label (t "Asiakirjatyyppi")]
-
-       (let [type-group-and-docs (partition 2 attachment-types/Rakennusluvat-v2)
-             type-map (->> (map (fn [[type-group docs]]
-                                  (map (fn [type-id]
-                                         (let [type-vec [type-group type-id]
-                                               t-key (string/join "." (map name type-vec))]
-                                           {(t t-key) type-vec})) docs)) type-group-and-docs)
-                           (flatten)
-                           (into {}))]
-         [cb/combobox type-map false :type])]
-
+      [attachment-type-filter]
       [time/timespan]
 
       (when (seq @state/operations)
@@ -108,7 +116,8 @@
 
       [time/closed-timespan]
 
-      (when (some #(= % "R") (get-in @state/config [:user :permit-types]))
+      (cond
+        (@state/selected-permit-types "R")
         [:div.filter-option
          [:label (t "Käyttötarkoitus")]
 

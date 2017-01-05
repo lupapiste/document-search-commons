@@ -4,7 +4,9 @@
             [ajax.core :refer [GET POST]]
             [reagent.core :as reagent]
             [alandipert.storage-atom :as storage]
-            [clojure.string :as string]))
+            [clojure.string :as string]
+            [lupapiste-commons.attachment-types :as attachment-types]
+            [clojure.set :as set]))
 
 (defonce translations (reagent/atom {:current-lang :unset
                                      :translations {}}))
@@ -89,6 +91,34 @@
         (update acc grouping-key concat [val]))
       {}
       @filtered-results)))
+
+(defn flatten-attachments [groups]
+  (reduce
+    (fn [acc [group values]]
+      (reduce
+        (fn [acc value]
+          (conj acc [group value]))
+        acc
+        values))
+    #{}
+    (partition 2 groups)))
+
+(def selected-permit-types
+  (reaction
+    (let [selected-org (:organization @search-query)
+          all-orgs (get-in @config [:user :organizations])]
+      (->> (if (string/blank? selected-org)
+             all-orgs
+             (filter (fn [[id _]] (= id selected-org)) all-orgs))
+           (map (fn [[_ data]] (:permit-types data)))
+           (apply set/union)))))
+
+(def available-attachment-types
+  (reaction
+    (let [types @selected-permit-types]
+      (cond-> #{}
+              (types "R") (set/union (flatten-attachments attachment-types/Rakennusluvat-v2))
+              (types "YA") (set/union (flatten-attachments attachment-types/YleistenAlueidenLuvat-v2))))))
 
 (defn find-result [id results]
   (first (filter #(= id (:id %)) results)))
