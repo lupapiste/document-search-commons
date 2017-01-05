@@ -7,7 +7,6 @@
             [search-commons.components.time :as time]
             [search-commons.components.combobox :as cb]
             [search-commons.components.map :as map]
-            [lupapiste-commons.attachment-types :as attachment-types]
             [lupapiste-commons.usage-types :as usages]
             [reagent.ratom :refer [make-reaction]])
   (:require-macros [search-commons.utils.macros :refer [handler-fn]]))
@@ -124,8 +123,12 @@
          (let [usage-map (into {} (map (fn [usage]
                                          (let [name (:name usage)]
                                            {(t name) name})) usages/rakennuksen-kayttotarkoitus))]
-           [cb/combobox usage-map true :usage])])
-      ]
+           [cb/combobox usage-map true :usage])]
+
+        (:usage @state/search-query)
+        (do (state/update-search-field :usage nil)
+            nil))]
+
      (when (and (get-in @state/config [:config :onkalo-enabled?])
                 (get-in @state/config [:config :lupapiste-enabled?]))
        [:div.targets
