@@ -101,7 +101,8 @@
           [:option {:value ""} (t "Hae kaikista")]
           (->> (get-in @state/config [:user :organizations])
                (map (fn [[org-id {:keys [name]}]]
-                      ^{:key org-id} [:option {:value org-id} ((:current-lang @state/translations) name)])))]]])]
+                      ^{:key org-id} [:option {:value org-id} ((:current-lang @state/translations) name)]))
+               doall)]]])]
     [:div.search-filter
      [:h4 (t "Näytä vain")]
      [:div.filter-options

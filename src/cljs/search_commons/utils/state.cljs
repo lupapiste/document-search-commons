@@ -115,10 +115,11 @@
 
 (def available-attachment-types
   (reaction
-    (let [types @selected-permit-types]
+    (let [types @selected-permit-types
+          all? (empty? types)]
       (cond-> #{}
-              (types "R") (set/union (flatten-attachments attachment-types/Rakennusluvat-v2))
-              (types "YA") (set/union (flatten-attachments attachment-types/YleistenAlueidenLuvat-v2))))))
+              (or all? (types "R")) (set/union (flatten-attachments attachment-types/Rakennusluvat-v2))
+              (or all? (types "YA")) (set/union (flatten-attachments attachment-types/YleistenAlueidenLuvat-v2))))))
 
 (defn find-result [id results]
   (first (filter #(= id (:id %)) results)))

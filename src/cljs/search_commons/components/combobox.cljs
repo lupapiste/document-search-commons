@@ -26,9 +26,18 @@
         start-text (find-text-for-value option-value-map start-value)
         input-value (reagent/atom (or start-text ""))
         results-visible? (reagent/atom false)]
-    (add-watch state/search-query value-kw (fn [_ _ o n]
-                                             (when (and (seq (get o value-kw)) (empty? (get n value-kw)))
-                                               (reset! input-value ""))))
+    (add-watch state/search-query value-kw (fn [_ _ old-query new-query]
+                                             (let [old-value (value-kw old-query)
+                                                   new-value (value-kw new-query)]
+                                               ; Reset the input field when this key is cleared from search query
+                                               (when
+                                                 (and (if (sequential? old-value)
+                                                        (seq old-value)
+                                                        old-value)
+                                                      (if (sequential? new-value)
+                                                        (empty? new-value)
+                                                        (nil? new-value)))
+                                                 (reset! input-value "")))))
     (fn [option-value-map match-anywhere? value-kw]
       [:div.combobox.autocomplete-component
        [:div.combobox-input.autocomplete-selection-wrapper
