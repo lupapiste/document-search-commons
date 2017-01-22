@@ -1,4 +1,4 @@
-(defproject lupapiste/document-search-commons "0.4.10"
+(defproject lupapiste/document-search-commons "0.4.11"
   :description "Common document search related code shared between lupadoku and onkalo applications"
   :url "http://www.lupapiste.fi"
   :license {:name "European Union Public License"
@@ -7,10 +7,9 @@
   :scm {:url "https://github.com/lupapiste/document-search-commons"}
   :repositories [["osgeo" {:url "http://download.osgeo.org/webdav/geotools"}]]
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [lupapiste/commons "0.7.33" :exclusions [commons-logging commons-codec]]
-                 [org.geotools/gt-main "15.0"]
-                 [org.geotools/gt-referencing "15.0"]
-                 [org.geotools/gt-epsg-wkt "15.0"]
+                 [org.geotools/gt-main "16.1"]
+                 [org.geotools/gt-referencing "16.1"]
+                 [org.geotools/gt-epsg-wkt "16.1"]
 
                  ;; ClojureScript
                  [org.clojure/clojurescript "1.9.36"]
@@ -21,6 +20,7 @@
                  [cljsjs/openlayers "3.15.1"]
                  [tailrecursion/cljson "1.0.7"]
                  [alandipert/storage-atom "2.0.1"]]
+  :profiles {:provided {:dependencies [[lupapiste/commons "0.7.77" :exclusions [commons-logging commons-codec]]]}}
   :plugins [[lein-scss "0.2.3" :exclusions [org.clojure/clojure]]]
   :source-paths ["src/clj" "src/cljc" "src/cljs"]
   :cljsbuild {:builds {:dev {:source-paths ["src/cljc" "src/cljs"]}}}
