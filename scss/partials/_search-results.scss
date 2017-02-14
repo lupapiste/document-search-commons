@@ -87,6 +87,7 @@ $result-highlight: $orange-light;
           }
         }
         .result-item-text {
+          @include clearfix;
           display: block;
           margin-left: 50px;
           position: relative;
@@ -95,9 +96,10 @@ $result-highlight: $orange-light;
             background-color: inherit;
             position: absolute;
             width: 100%;
+            height: 100%;
             padding-left: 5px;
             &:hover {
-              z-index: 5;
+              height: auto;
             }
           }
         }
