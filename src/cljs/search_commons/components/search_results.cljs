@@ -127,7 +127,7 @@
             ^{:key grouping-key}
             [:li.result-application
              [:h4.application-separator
-              (if applicationId
+              (if-not (s/blank? applicationId)
                 [:a {:href (str lupapiste-host "/app/fi/authority#!/application/" applicationId)} applicationId]
                 [:span grouping-key])]
              [:ol.result-list
