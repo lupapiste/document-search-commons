@@ -208,6 +208,13 @@ $result-highlight: $orange-light;
           .metadata-header {
             font-weight: bold;
           }
+          .metadata-long-value {
+            max-height: 95px;
+            overflow: hidden;
+          }
+          .metadata-long-value:hover {
+            max-height: none;
+          }
           .metadata-submap {
             padding: 6px;
             background-color: $gray246;

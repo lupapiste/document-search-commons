@@ -3633,9 +3633,9 @@ input[type=checkbox]:disabled + .checkbox-label:before {
   min-width: 90.90909%;
   max-width: 90.90909%; }
 .form-grid.form-grid--columns-11 > .row .col-11 {
-  width: 100.0%;
-  min-width: 100.0%;
-  max-width: 100.0%; }
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%; }
 
 .form-grid.form-grid--columns-12 > .row .col-1 {
   width: 8.33333%;
@@ -4913,6 +4913,11 @@ footer ul li {
         padding-left: 10px; }
         .result-view-container .result-view .result-view-content .metadata .metadata-item .metadata-header {
           font-weight: bold; }
+        .result-view-container .result-view .result-view-content .metadata .metadata-item .metadata-long-value {
+          max-height: 95px;
+          overflow: hidden; }
+        .result-view-container .result-view .result-view-content .metadata .metadata-item .metadata-long-value:hover {
+          max-height: none; }
         .result-view-container .result-view .result-view-content .metadata .metadata-item .metadata-submap {
           padding: 6px;
           background-color: #f6f6f6;
