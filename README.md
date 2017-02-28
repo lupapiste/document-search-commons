@@ -2,17 +2,14 @@
 
 Common document search related code shared between lupadoku and onkalo applications.
 
-To compile SCSS files to CSS, install the required Ruby dependencies:
+Uberjar build will recompile the SCSS sources to a compressed CSS file, but it can also be done like this:
 
-    gem install bundler
-    bundle install
+    lein sass4clj once
 
-and watch for SCSS changes and compile main.css (`lein scss :dev auto`
-seems not to pick up changes in partials):
+For development time usage, compile SCSS files to CSS uncompressed:
 
-    ./sass-watch.sh
+    lein sass4clj once :output-style :expanded
 
-Uberjar build will recompile the SCSS sources to a compressed CSS file.
 
 ## License
 
