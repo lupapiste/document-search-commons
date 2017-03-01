@@ -1,4 +1,4 @@
-(defproject lupapiste/document-search-commons "0.4.13"
+(defproject lupapiste/document-search-commons "0.5.0"
   :description "Common document search related code shared between lupadoku and onkalo applications"
   :url "http://www.lupapiste.fi"
   :license {:name "European Union Public License"
@@ -21,17 +21,11 @@
                  [tailrecursion/cljson "1.0.7"]
                  [alandipert/storage-atom "2.0.1"]]
   :profiles {:provided {:dependencies [[lupapiste/commons "0.7.81" :exclusions [commons-logging commons-codec]]]}}
-  :plugins [[lein-scss "0.2.3" :exclusions [org.clojure/clojure]]]
+  :plugins [[deraen/lein-sass4clj "0.3.0"]]
   :source-paths ["src/clj" "src/cljc" "src/cljs"]
   :cljsbuild {:builds {:dev {:source-paths ["src/cljc" "src/cljs"]}}}
   :clean-targets ^{:protect false} ["resources/public/css/main.css.map"
                                     :target-path]
-  :scss {:builds
-         {:dev  {:source-dir "scss/"
-                 :dest-dir   "resources/public/css/"
-                 :executable "sass"
-                 :args       ["-r" "compass-core" "-t" "nested" "--compass" "--sourcemap=file"]}
-          :prod {:source-dir "scss/"
-                 :dest-dir   "resources/public/css/"
-                 :executable "sass"
-                 :args       ["-r" "compass-core" "-t" "compressed" "--compass" "--sourcemap=none"]}}})
+  :sass {:target-path  "resources/public/css/"
+         :source-paths ["scss/"]
+         :output-style :compressed})

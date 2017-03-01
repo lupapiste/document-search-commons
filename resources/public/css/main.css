@@ -78,8 +78,6 @@ button, input[type="button"], input[type="reset"], input[type="submit"] {
   -webkit-appearance: button; }
 
 input[type="checkbox"], input[type="radio"] {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
   box-sizing: border-box; }
 
 input[type="search"] {
@@ -156,8 +154,6 @@ body {
     margin-top: 100px; }
 
 .container {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   padding: 12px 6px 0 6px;
   width: 100%;
@@ -249,6 +245,7 @@ i {
   src: url("../fonts/lupapiste.eot?m3znrt#iefix") format("embedded-opentype"), url("../fonts/lupapiste.ttf?m3znrt") format("truetype"), url("../fonts/lupapiste.woff?m3znrt") format("woff"), url("../fonts/lupapiste.svg?m3znrt#lupapiste") format("svg");
   font-weight: normal;
   font-style: normal; }
+
 [class^="lupicon-"], [class*=" lupicon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'lupapiste' !important;
@@ -2083,13 +2080,16 @@ a.link-btn-julkipano {
 @-webkit-keyframes spin {
   100% {
     -webkit-transform: rotate(360deg); } }
+
 @-moz-keyframes spin {
   100% {
     -moz-transform: rotate(360deg); } }
+
 @keyframes spin {
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
+
 .spin {
   -webkit-animation: spin 4s linear infinite;
   -moz-animation: spin 4s linear infinite;
@@ -2102,6 +2102,7 @@ i.wait {
 
 .waiting i {
   display: none; }
+
 .waiting i.wait {
   display: table-cell; }
 
@@ -2151,12 +2152,14 @@ i.toggle {
 
 .inner-margins .btn-base, .inner-margins [type=submit], .inner-margins .btn, .inner-margins .dataTables_paginate .paginate_disabled_previous, .dataTables_paginate .inner-margins .paginate_disabled_previous, .inner-margins .dataTables_paginate .paginate_disabled_next, .dataTables_paginate .inner-margins .paginate_disabled_next, .inner-margins button, .inner-margins .like-btn, .inner-margins a.link-btn, .inner-margins a.link-btn-julkipano, .inner-margins .check-string, .inner-margins .btn, .inner-margins .dataTables_paginate .paginate_disabled_previous, .dataTables_paginate .inner-margins .paginate_disabled_previous, .inner-margins .dataTables_paginate .paginate_disabled_next, .dataTables_paginate .inner-margins .paginate_disabled_next, .inner-margins button, .inner-margins div, .inner-margins a {
   margin-left: 12px; }
+
 .inner-margins :first-child {
   margin-left: 0; }
 
 .inner-margins.stacked .btn-base, .inner-margins.stacked [type=submit], .inner-margins.stacked .btn, .inner-margins.stacked .dataTables_paginate .paginate_disabled_previous, .dataTables_paginate .inner-margins.stacked .paginate_disabled_previous, .inner-margins.stacked .dataTables_paginate .paginate_disabled_next, .dataTables_paginate .inner-margins.stacked .paginate_disabled_next, .inner-margins.stacked button, .inner-margins.stacked .like-btn, .inner-margins.stacked a.link-btn, .inner-margins.stacked a.link-btn-julkipano, .inner-margins.stacked .check-string, .inner-margins.stacked .btn, .inner-margins.stacked .dataTables_paginate .paginate_disabled_previous, .dataTables_paginate .inner-margins.stacked .paginate_disabled_previous, .inner-margins.stacked .dataTables_paginate .paginate_disabled_next, .dataTables_paginate .inner-margins.stacked .paginate_disabled_next, .inner-margins.stacked button, .inner-margins.stacked div, .inner-margins.stacked a {
   margin-left: 0;
   margin-top: 12px; }
+
 .inner-margins.stacked :first-child {
   margin-top: 0; }
 
@@ -2619,6 +2622,7 @@ input.form-input.inline {
 
 .kiintun-and-maaraalatunnus .form-maaraala {
   display: inline; }
+
 .kiintun-and-maaraalatunnus .form-input.text {
   display: inline;
   width: 48px;
@@ -2874,50 +2878,6 @@ div.alleYli-radioGroup {
 
 .checkbox-wrapper--disabled {
   background-color: #f6f6f6; }
-
-label.checkbox-label {
-  width: 100%;
-  display: inline-block; }
-
-.checkbox-label:before {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'lupapiste' !important;
-  speak: none;
-  font-style: normal;
-  font-size: 22px;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  content: "\e603";
-  display: inline-block;
-  margin-right: 10px;
-  vertical-align: top;
-  color: #bbbbbb;
-  cursor: pointer; }
-
-input[type=checkbox]:checked + .checkbox-label:before {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'lupapiste' !important;
-  speak: none;
-  font-style: normal;
-  font-size: 22px;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  content: "\e604";
-  color: #fbc732; }
-
-input[type=checkbox]:disabled + .checkbox-label:before {
-  cursor: initial;
-  color: #bbbbbb; }
 
 .form-grid {
   width: 100%;
@@ -3355,6 +3315,7 @@ input[type=checkbox]:disabled + .checkbox-label:before {
   border: 1px solid #df3215 !important;
   color: #df3215 !important;
   margin-bottom: 0 !important; }
+
 .form-cell--warning .form-cell__message {
   display: inline-block; }
 
@@ -3371,19 +3332,22 @@ input[type=checkbox]:disabled + .checkbox-label:before {
   width: 50%;
   min-width: 50%;
   max-width: 50%; }
+
 .form-grid.form-grid--columns-2 > .row .col-2 {
   width: 100%;
   min-width: 100%;
   max-width: 100%; }
 
 .form-grid.form-grid--columns-3 > .row .col-1 {
-  width: 33.33333%;
-  min-width: 33.33333%;
-  max-width: 33.33333%; }
+  width: 33.33333333%;
+  min-width: 33.33333333%;
+  max-width: 33.33333333%; }
+
 .form-grid.form-grid--columns-3 > .row .col-2 {
-  width: 66.66667%;
-  min-width: 66.66667%;
-  max-width: 66.66667%; }
+  width: 66.66666667%;
+  min-width: 66.66666667%;
+  max-width: 66.66666667%; }
+
 .form-grid.form-grid--columns-3 > .row .col-3 {
   width: 100%;
   min-width: 100%;
@@ -3393,14 +3357,17 @@ input[type=checkbox]:disabled + .checkbox-label:before {
   width: 25%;
   min-width: 25%;
   max-width: 25%; }
+
 .form-grid.form-grid--columns-4 > .row .col-2 {
   width: 50%;
   min-width: 50%;
   max-width: 50%; }
+
 .form-grid.form-grid--columns-4 > .row .col-3 {
   width: 75%;
   min-width: 75%;
   max-width: 75%; }
+
 .form-grid.form-grid--columns-4 > .row .col-4 {
   width: 100%;
   min-width: 100%;
@@ -3410,72 +3377,87 @@ input[type=checkbox]:disabled + .checkbox-label:before {
   width: 20%;
   min-width: 20%;
   max-width: 20%; }
+
 .form-grid.form-grid--columns-5 > .row .col-2 {
   width: 40%;
   min-width: 40%;
   max-width: 40%; }
+
 .form-grid.form-grid--columns-5 > .row .col-3 {
   width: 60%;
   min-width: 60%;
   max-width: 60%; }
+
 .form-grid.form-grid--columns-5 > .row .col-4 {
   width: 80%;
   min-width: 80%;
   max-width: 80%; }
+
 .form-grid.form-grid--columns-5 > .row .col-5 {
   width: 100%;
   min-width: 100%;
   max-width: 100%; }
 
 .form-grid.form-grid--columns-6 > .row .col-1 {
-  width: 16.66667%;
-  min-width: 16.66667%;
-  max-width: 16.66667%; }
+  width: 16.66666667%;
+  min-width: 16.66666667%;
+  max-width: 16.66666667%; }
+
 .form-grid.form-grid--columns-6 > .row .col-2 {
-  width: 33.33333%;
-  min-width: 33.33333%;
-  max-width: 33.33333%; }
+  width: 33.33333333%;
+  min-width: 33.33333333%;
+  max-width: 33.33333333%; }
+
 .form-grid.form-grid--columns-6 > .row .col-3 {
   width: 50%;
   min-width: 50%;
   max-width: 50%; }
+
 .form-grid.form-grid--columns-6 > .row .col-4 {
-  width: 66.66667%;
-  min-width: 66.66667%;
-  max-width: 66.66667%; }
+  width: 66.66666667%;
+  min-width: 66.66666667%;
+  max-width: 66.66666667%; }
+
 .form-grid.form-grid--columns-6 > .row .col-5 {
-  width: 83.33333%;
-  min-width: 83.33333%;
-  max-width: 83.33333%; }
+  width: 83.33333333%;
+  min-width: 83.33333333%;
+  max-width: 83.33333333%; }
+
 .form-grid.form-grid--columns-6 > .row .col-6 {
   width: 100%;
   min-width: 100%;
   max-width: 100%; }
 
 .form-grid.form-grid--columns-7 > .row .col-1 {
-  width: 14.28571%;
-  min-width: 14.28571%;
-  max-width: 14.28571%; }
+  width: 14.28571429%;
+  min-width: 14.28571429%;
+  max-width: 14.28571429%; }
+
 .form-grid.form-grid--columns-7 > .row .col-2 {
-  width: 28.57143%;
-  min-width: 28.57143%;
-  max-width: 28.57143%; }
+  width: 28.57142857%;
+  min-width: 28.57142857%;
+  max-width: 28.57142857%; }
+
 .form-grid.form-grid--columns-7 > .row .col-3 {
-  width: 42.85714%;
-  min-width: 42.85714%;
-  max-width: 42.85714%; }
+  width: 42.85714286%;
+  min-width: 42.85714286%;
+  max-width: 42.85714286%; }
+
 .form-grid.form-grid--columns-7 > .row .col-4 {
-  width: 57.14286%;
-  min-width: 57.14286%;
-  max-width: 57.14286%; }
+  width: 57.14285714%;
+  min-width: 57.14285714%;
+  max-width: 57.14285714%; }
+
 .form-grid.form-grid--columns-7 > .row .col-5 {
-  width: 71.42857%;
-  min-width: 71.42857%;
-  max-width: 71.42857%; }
+  width: 71.42857143%;
+  min-width: 71.42857143%;
+  max-width: 71.42857143%; }
+
 .form-grid.form-grid--columns-7 > .row .col-6 {
-  width: 85.71429%;
-  min-width: 85.71429%;
-  max-width: 85.71429%; }
+  width: 85.71428571%;
+  min-width: 85.71428571%;
+  max-width: 85.71428571%; }
+
 .form-grid.form-grid--columns-7 > .row .col-7 {
   width: 100%;
   min-width: 100%;
@@ -3485,67 +3467,82 @@ input[type=checkbox]:disabled + .checkbox-label:before {
   width: 12.5%;
   min-width: 12.5%;
   max-width: 12.5%; }
+
 .form-grid.form-grid--columns-8 > .row .col-2 {
   width: 25%;
   min-width: 25%;
   max-width: 25%; }
+
 .form-grid.form-grid--columns-8 > .row .col-3 {
   width: 37.5%;
   min-width: 37.5%;
   max-width: 37.5%; }
+
 .form-grid.form-grid--columns-8 > .row .col-4 {
   width: 50%;
   min-width: 50%;
   max-width: 50%; }
+
 .form-grid.form-grid--columns-8 > .row .col-5 {
   width: 62.5%;
   min-width: 62.5%;
   max-width: 62.5%; }
+
 .form-grid.form-grid--columns-8 > .row .col-6 {
   width: 75%;
   min-width: 75%;
   max-width: 75%; }
+
 .form-grid.form-grid--columns-8 > .row .col-7 {
   width: 87.5%;
   min-width: 87.5%;
   max-width: 87.5%; }
+
 .form-grid.form-grid--columns-8 > .row .col-8 {
   width: 100%;
   min-width: 100%;
   max-width: 100%; }
 
 .form-grid.form-grid--columns-9 > .row .col-1 {
-  width: 11.11111%;
-  min-width: 11.11111%;
-  max-width: 11.11111%; }
+  width: 11.11111111%;
+  min-width: 11.11111111%;
+  max-width: 11.11111111%; }
+
 .form-grid.form-grid--columns-9 > .row .col-2 {
-  width: 22.22222%;
-  min-width: 22.22222%;
-  max-width: 22.22222%; }
+  width: 22.22222222%;
+  min-width: 22.22222222%;
+  max-width: 22.22222222%; }
+
 .form-grid.form-grid--columns-9 > .row .col-3 {
-  width: 33.33333%;
-  min-width: 33.33333%;
-  max-width: 33.33333%; }
+  width: 33.33333333%;
+  min-width: 33.33333333%;
+  max-width: 33.33333333%; }
+
 .form-grid.form-grid--columns-9 > .row .col-4 {
-  width: 44.44444%;
-  min-width: 44.44444%;
-  max-width: 44.44444%; }
+  width: 44.44444444%;
+  min-width: 44.44444444%;
+  max-width: 44.44444444%; }
+
 .form-grid.form-grid--columns-9 > .row .col-5 {
-  width: 55.55556%;
-  min-width: 55.55556%;
-  max-width: 55.55556%; }
+  width: 55.55555556%;
+  min-width: 55.55555556%;
+  max-width: 55.55555556%; }
+
 .form-grid.form-grid--columns-9 > .row .col-6 {
-  width: 66.66667%;
-  min-width: 66.66667%;
-  max-width: 66.66667%; }
+  width: 66.66666667%;
+  min-width: 66.66666667%;
+  max-width: 66.66666667%; }
+
 .form-grid.form-grid--columns-9 > .row .col-7 {
-  width: 77.77778%;
-  min-width: 77.77778%;
-  max-width: 77.77778%; }
+  width: 77.77777778%;
+  min-width: 77.77777778%;
+  max-width: 77.77777778%; }
+
 .form-grid.form-grid--columns-9 > .row .col-8 {
-  width: 88.88889%;
-  min-width: 88.88889%;
-  max-width: 88.88889%; }
+  width: 88.88888889%;
+  min-width: 88.88888889%;
+  max-width: 88.88888889%; }
+
 .form-grid.form-grid--columns-9 > .row .col-9 {
   width: 100%;
   min-width: 100%;
@@ -3555,132 +3552,162 @@ input[type=checkbox]:disabled + .checkbox-label:before {
   width: 10%;
   min-width: 10%;
   max-width: 10%; }
+
 .form-grid.form-grid--columns-10 > .row .col-2 {
   width: 20%;
   min-width: 20%;
   max-width: 20%; }
+
 .form-grid.form-grid--columns-10 > .row .col-3 {
   width: 30%;
   min-width: 30%;
   max-width: 30%; }
+
 .form-grid.form-grid--columns-10 > .row .col-4 {
   width: 40%;
   min-width: 40%;
   max-width: 40%; }
+
 .form-grid.form-grid--columns-10 > .row .col-5 {
   width: 50%;
   min-width: 50%;
   max-width: 50%; }
+
 .form-grid.form-grid--columns-10 > .row .col-6 {
   width: 60%;
   min-width: 60%;
   max-width: 60%; }
+
 .form-grid.form-grid--columns-10 > .row .col-7 {
   width: 70%;
   min-width: 70%;
   max-width: 70%; }
+
 .form-grid.form-grid--columns-10 > .row .col-8 {
   width: 80%;
   min-width: 80%;
   max-width: 80%; }
+
 .form-grid.form-grid--columns-10 > .row .col-9 {
   width: 90%;
   min-width: 90%;
   max-width: 90%; }
+
 .form-grid.form-grid--columns-10 > .row .col-10 {
   width: 100%;
   min-width: 100%;
   max-width: 100%; }
 
 .form-grid.form-grid--columns-11 > .row .col-1 {
-  width: 9.09091%;
-  min-width: 9.09091%;
-  max-width: 9.09091%; }
+  width: 9.09090909%;
+  min-width: 9.09090909%;
+  max-width: 9.09090909%; }
+
 .form-grid.form-grid--columns-11 > .row .col-2 {
-  width: 18.18182%;
-  min-width: 18.18182%;
-  max-width: 18.18182%; }
+  width: 18.18181818%;
+  min-width: 18.18181818%;
+  max-width: 18.18181818%; }
+
 .form-grid.form-grid--columns-11 > .row .col-3 {
-  width: 27.27273%;
-  min-width: 27.27273%;
-  max-width: 27.27273%; }
+  width: 27.27272727%;
+  min-width: 27.27272727%;
+  max-width: 27.27272727%; }
+
 .form-grid.form-grid--columns-11 > .row .col-4 {
-  width: 36.36364%;
-  min-width: 36.36364%;
-  max-width: 36.36364%; }
+  width: 36.36363636%;
+  min-width: 36.36363636%;
+  max-width: 36.36363636%; }
+
 .form-grid.form-grid--columns-11 > .row .col-5 {
-  width: 45.45455%;
-  min-width: 45.45455%;
-  max-width: 45.45455%; }
+  width: 45.45454545%;
+  min-width: 45.45454545%;
+  max-width: 45.45454545%; }
+
 .form-grid.form-grid--columns-11 > .row .col-6 {
-  width: 54.54545%;
-  min-width: 54.54545%;
-  max-width: 54.54545%; }
+  width: 54.54545455%;
+  min-width: 54.54545455%;
+  max-width: 54.54545455%; }
+
 .form-grid.form-grid--columns-11 > .row .col-7 {
-  width: 63.63636%;
-  min-width: 63.63636%;
-  max-width: 63.63636%; }
+  width: 63.63636364%;
+  min-width: 63.63636364%;
+  max-width: 63.63636364%; }
+
 .form-grid.form-grid--columns-11 > .row .col-8 {
-  width: 72.72727%;
-  min-width: 72.72727%;
-  max-width: 72.72727%; }
+  width: 72.72727273%;
+  min-width: 72.72727273%;
+  max-width: 72.72727273%; }
+
 .form-grid.form-grid--columns-11 > .row .col-9 {
-  width: 81.81818%;
-  min-width: 81.81818%;
-  max-width: 81.81818%; }
+  width: 81.81818182%;
+  min-width: 81.81818182%;
+  max-width: 81.81818182%; }
+
 .form-grid.form-grid--columns-11 > .row .col-10 {
-  width: 90.90909%;
-  min-width: 90.90909%;
-  max-width: 90.90909%; }
+  width: 90.90909091%;
+  min-width: 90.90909091%;
+  max-width: 90.90909091%; }
+
 .form-grid.form-grid--columns-11 > .row .col-11 {
   width: 100%;
   min-width: 100%;
   max-width: 100%; }
 
 .form-grid.form-grid--columns-12 > .row .col-1 {
-  width: 8.33333%;
-  min-width: 8.33333%;
-  max-width: 8.33333%; }
+  width: 8.33333333%;
+  min-width: 8.33333333%;
+  max-width: 8.33333333%; }
+
 .form-grid.form-grid--columns-12 > .row .col-2 {
-  width: 16.66667%;
-  min-width: 16.66667%;
-  max-width: 16.66667%; }
+  width: 16.66666667%;
+  min-width: 16.66666667%;
+  max-width: 16.66666667%; }
+
 .form-grid.form-grid--columns-12 > .row .col-3 {
   width: 25%;
   min-width: 25%;
   max-width: 25%; }
+
 .form-grid.form-grid--columns-12 > .row .col-4 {
-  width: 33.33333%;
-  min-width: 33.33333%;
-  max-width: 33.33333%; }
+  width: 33.33333333%;
+  min-width: 33.33333333%;
+  max-width: 33.33333333%; }
+
 .form-grid.form-grid--columns-12 > .row .col-5 {
-  width: 41.66667%;
-  min-width: 41.66667%;
-  max-width: 41.66667%; }
+  width: 41.66666667%;
+  min-width: 41.66666667%;
+  max-width: 41.66666667%; }
+
 .form-grid.form-grid--columns-12 > .row .col-6 {
   width: 50%;
   min-width: 50%;
   max-width: 50%; }
+
 .form-grid.form-grid--columns-12 > .row .col-7 {
-  width: 58.33333%;
-  min-width: 58.33333%;
-  max-width: 58.33333%; }
+  width: 58.33333333%;
+  min-width: 58.33333333%;
+  max-width: 58.33333333%; }
+
 .form-grid.form-grid--columns-12 > .row .col-8 {
-  width: 66.66667%;
-  min-width: 66.66667%;
-  max-width: 66.66667%; }
+  width: 66.66666667%;
+  min-width: 66.66666667%;
+  max-width: 66.66666667%; }
+
 .form-grid.form-grid--columns-12 > .row .col-9 {
   width: 75%;
   min-width: 75%;
   max-width: 75%; }
+
 .form-grid.form-grid--columns-12 > .row .col-10 {
-  width: 83.33333%;
-  min-width: 83.33333%;
-  max-width: 83.33333%; }
+  width: 83.33333333%;
+  min-width: 83.33333333%;
+  max-width: 83.33333333%; }
+
 .form-grid.form-grid--columns-12 > .row .col-11 {
-  width: 91.66667%;
-  min-width: 91.66667%;
-  max-width: 91.66667%; }
+  width: 91.66666667%;
+  min-width: 91.66666667%;
+  max-width: 91.66666667%; }
+
 .form-grid.form-grid--columns-12 > .row .col-12 {
   width: 100%;
   min-width: 100%;
@@ -3732,10 +3759,13 @@ input[type=checkbox]:disabled + .checkbox-label:before {
   .identifier-editors input[type=text]:focus, .identifier-editors input[type=password]:focus, .identifier-editors select:focus, .identifier-editors textarea:focus {
     color: #333333;
     border-color: #fbc732; }
+
 .identifier-editors > div {
   margin: 12px 12px; }
+
 .identifier-editors button {
   margin: 0 12px; }
+
 .identifier-editors label.required {
   color: #f39129; }
   .identifier-editors label.required:after {
@@ -4269,10 +4299,12 @@ nav .julkipano-brand .header-box a {
       color: white; }
   nav .julkipano-brand .header-box a span {
     vertical-align: middle; }
+
 nav .julkipano-brand #header-user-menu {
   display: inline-block;
   position: absolute;
   right: 0px; }
+
 nav .julkipano-brand .header-box, nav .julkipano-brand .julkipano-user {
   font-size: 16px;
   vertical-align: middle;
@@ -4286,6 +4318,7 @@ nav .julkipano-brand .header-box, nav .julkipano-brand .julkipano-user {
   margin-right: 24px; }
   nav .julkipano-brand .header-box span, nav .julkipano-brand .julkipano-user span {
     vertical-align: middle; }
+
 nav .julkipano-brand .language-closed {
   background-color: inherit;
   display: inline-block;
@@ -4321,6 +4354,7 @@ nav .julkipano-brand .language-closed {
     line-height: 60px;
     text-transform: uppercase;
     overflow: hidden; }
+
 nav .julkipano-brand .language-open {
   background-color: #555555;
   display: inline-block;
@@ -4356,6 +4390,7 @@ nav .julkipano-brand .language-open {
     line-height: 60px;
     text-transform: uppercase;
     overflow: hidden; }
+
 nav .julkipano-brand .nav-bottom ul li a {
   font-size: 16px;
   vertical-align: middle;
@@ -4473,6 +4508,7 @@ footer {
 @media (max-width: 991px) {
   body {
     padding-bottom: 420px !important; } }
+
 footer ul {
   list-style-type: none;
   padding: 0;
@@ -4495,6 +4531,7 @@ footer ul li {
   src: url("../fonts/lupadoku-icons.eot?94140962#iefix") format("embedded-opentype"), url("../fonts/lupadoku-icons.woff?94140962") format("woff"), url("../fonts/lupadoku-icons.ttf?94140962") format("truetype"), url("../fonts/lupadoku-icons.svg?94140962#lupadoku-icons") format("svg");
   font-weight: normal;
   font-style: normal; }
+
 /* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
 /* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
 /*
@@ -4570,6 +4607,7 @@ footer ul li {
     -o-transform: rotate(359deg);
     -webkit-transform: rotate(359deg);
     transform: rotate(359deg); } }
+
 @-webkit-keyframes spin {
   0% {
     -moz-transform: rotate(0deg);
@@ -4581,6 +4619,7 @@ footer ul li {
     -o-transform: rotate(359deg);
     -webkit-transform: rotate(359deg);
     transform: rotate(359deg); } }
+
 @-o-keyframes spin {
   0% {
     -moz-transform: rotate(0deg);
@@ -4592,6 +4631,7 @@ footer ul li {
     -o-transform: rotate(359deg);
     -webkit-transform: rotate(359deg);
     transform: rotate(359deg); } }
+
 @-ms-keyframes spin {
   0% {
     -moz-transform: rotate(0deg);
@@ -4603,6 +4643,7 @@ footer ul li {
     -o-transform: rotate(359deg);
     -webkit-transform: rotate(359deg);
     transform: rotate(359deg); } }
+
 @keyframes spin {
   0% {
     -moz-transform: rotate(0deg);
@@ -4614,6 +4655,7 @@ footer ul li {
     -o-transform: rotate(359deg);
     -webkit-transform: rotate(359deg);
     transform: rotate(359deg); } }
+
 .search {
   margin-bottom: 20px; }
   .search input[type="text"], .search input:not([type]) {
@@ -5079,5 +5121,3 @@ nav .nav-wrapper .header-menu {
 nav .brand a img.onkalo-logo {
   width: auto;
   margin-left: 0; }
-
-/*# sourceMappingURL=main.css.map */

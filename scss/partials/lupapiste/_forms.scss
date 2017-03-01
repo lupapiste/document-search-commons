@@ -1029,8 +1029,6 @@ $max-columns: 12;
   background-color: $input-disabled-background-color;
 }
 
-@include label-checkbox (checkbox-label) {}
-
 @mixin input-fields() {
   padding: 0 $marginM;
   box-sizing: border-box;
