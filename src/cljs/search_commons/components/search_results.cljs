@@ -87,7 +87,7 @@
   (if type-group (str type-group "." type-id) type))
 
 (defn result-list-item [result]
-  (let [{:keys [propertyId address verdict-ts municipality type contents id filename created tiedostonimi paatospvm metadata]} result
+  (let [{:keys [propertyId address verdict-ts municipality type contents id filename created tiedostonimi paatospvm jattopvm metadata]} result
         verdict-date (or verdict-ts paatospvm)]
     [:li.result-item {:on-click (fn []
                                   (reset! state/selected-result-id id)
@@ -109,7 +109,7 @@
            [:span address ", "])
          [:span
           (municipality-name municipality) " - " (to-human-readable-property-id propertyId) " - "
-          (let [ts (or verdict-date created)
+          (let [ts (or verdict-date created jattopvm)
                 t-key (if verdict-date "Päätetty {pvm}" "Lisätty {pvm}")]
             (-> (t t-key)
                 (.replace "{pvm}" (format-date ts))))]]]]]
