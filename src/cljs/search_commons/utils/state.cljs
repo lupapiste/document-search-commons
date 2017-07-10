@@ -74,9 +74,9 @@
 (def unique-results
   (reaction
     (let [{:keys [results onkalo-results]} @search-results
-          mongo-ids (into #{} (map :id results))
-          unique-onkalo-results (remove #(contains? mongo-ids (:id %)) onkalo-results)]
-      (concat results unique-onkalo-results))))
+          onkalo-ids (into #{} (map :id onkalo-results))
+          unique-mongo-results (remove #(contains? onkalo-ids (:id %)) results)]
+      (concat onkalo-results unique-mongo-results))))
 
 (def filtered-results
   (reaction
@@ -128,7 +128,7 @@
   (reaction
     (let [id @selected-result-id
           {:keys [results onkalo-results]} @search-results]
-      (when id (or (find-result id results) (find-result id onkalo-results))))))
+      (when id (or (find-result id onkalo-results) (find-result id results))))))
 
 (def total-result-count
   (reaction
