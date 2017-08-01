@@ -78,8 +78,15 @@
            [cancel-search-param #(swap! state/search-query assoc :usage nil)]])
         (when (seq @state/map-selected-result-ids)
           [:div (t "Karttavalinta")
-           [:i.icon-cancel-circled {:on-click (fn []
-                                                (reset! state/map-selected-result-ids #{}))}]])])]))
+           [:i.icon-cancel-circled {:on-click (fn [] (reset! state/map-selected-result-ids #{}))}]])])
+       (if @state/multi-select-mode
+         [:button.primary {:on-click state/toggle-multi-select-mode}
+          [:i.lupicon-remove]
+          [:span (t "Lopeta valitseminen")]]
+         [:button.secondary {:on-click state/toggle-multi-select-mode}
+          [:i.lupicon-file-check]
+          [:span (t "Valitse dokumentteja")]])]))
+
 (defn municipality-name [code]
   (t (str "municipality." code)))
 
@@ -87,12 +94,21 @@
   (if type-group (str type-group "." type-id) type))
 
 (defn result-list-item [result]
-  (let [{:keys [propertyId address verdict-ts municipality type contents id filename created tiedostonimi paatospvm jattopvm metadata]} result
-        verdict-date (or verdict-ts paatospvm)]
-    [:li.result-item {:on-click (fn []
-                                  (reset! state/selected-result-id id)
-                                  (state/mark-result-seen id))}
-     [:div.result-item-data {:class (when (= result @state/selected-result) "selected")}
+  (let [{:keys [propertyId address verdict-ts municipality type contents id filename created
+                tiedostonimi paatospvm jattopvm metadata source-system organization]} result
+        verdict-date (or verdict-ts paatospvm)
+        multi-select-mode @state/multi-select-mode
+        result-item-onclick (if multi-select-mode
+                              (fn [] (state/multi-select-result id (or filename tiedostonimi) organization (= :onkalo source-system)))
+                              (fn [] (reset! state/selected-result-id id)
+                                     (state/mark-result-seen id)))
+        result-item-class (cond
+                            (and multi-select-mode (state/multi-selected-results-contain? id)) "selected"
+                            (= result @state/selected-result) "selected"
+                            multi-select-mode "multi-select-mode"
+                            :else nil)]
+    [:li.result-item {:on-click result-item-onclick}
+     [:div.result-item-data {:class result-item-class}
       [:div.result-type
        (format-file-extension (or filename tiedostonimi))
        (if (contains? (:seen-results @state/search-results) id)
@@ -113,7 +129,7 @@
                 t-key (if verdict-date "Päätetty {pvm}" "Lisätty {pvm}")]
             (-> (t t-key)
                 (.replace "{pvm}" (format-date ts))))]]]]]
-     (when (= id @state/selected-result-id)
+     (when (and (not multi-select-mode) (= id @state/selected-result-id))
        [:div.arrow-right])]))
 
 (defn result-list []

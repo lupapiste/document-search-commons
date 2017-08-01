@@ -71,6 +71,12 @@
 
 (defonce map-selected-result-ids (reagent/atom #{}))
 
+(defonce multi-select-mode (reagent/atom false))
+
+(defonce multi-selected-results (reagent/atom #{}))
+
+(defonce multi-wait-for-zip-file (reagent/atom false))
+
 (def unique-results
   (reaction
     (let [{:keys [results onkalo-results]} @search-results
@@ -187,6 +193,8 @@
   (reset! selected-result [])
   (reset! last-search @search-query)
   (reset! saved-search @search-query)
+  (reset! multi-selected-results #{})
+  (reset! multi-wait-for-zip-file false)
   (swap! search-results merge {:loading? true
                                :has-more? false
                                :results []
@@ -217,6 +225,43 @@
   (swap! search-results assoc :seen-results (conj (:seen-results @search-results) id))
   (swap! saved-seen-results conj id))
 
+(defn multi-selected-results-contain? [doc-id]
+  (some #(= doc-id (:doc-id %)) @multi-selected-results))
+
+(defn multi-select-result [doc-id filename org-id archived?]
+  (let [source (if archived? "onkalo" "lupapiste")
+        doc-entry {:source source :org-id org-id :doc-id doc-id :filename filename}]
+    (if (multi-selected-results-contain? doc-id)
+      (swap! multi-selected-results disj doc-entry)
+      (swap! multi-selected-results conj doc-entry))))
+
+(defn multi-select-all-results []
+  (let [{:keys [results onkalo-results]} @search-results
+        onkalo-ids (set (map :id onkalo-results))
+        result-uniques (remove #(contains? onkalo-ids (:id %)) results)
+        results-set (set (for [result result-uniques]
+                                {:source "lupapiste" :org-id (:organization result) :doc-id (:id result)}))
+        onkalo-results-set (set (for [result onkalo-results]
+                                  {:source "onkalo" :org-id (:organization result) :doc-id (:id result)}))]
+       (swap! multi-selected-results set/union results-set onkalo-results-set)))
+
+;; Use EDN to support vector params
+(defn download-multi-selected-results []
+  (let [id-filename-pair (fn [result] {:doc-id (:doc-id result) :filename (:filename result)})
+        lupapiste-ids (map id-filename-pair (filter #(= "lupapiste" (:source %)) @multi-selected-results))
+        onkalo-ids (map id-filename-pair (filter #(= "onkalo" (:source %)) @multi-selected-results))
+        org-ids (set (map :org-id @multi-selected-results))]
+    (GET (routing/path "/mass-download")
+          {:params  {:value (pr-str
+                              {:org-ids (seq org-ids)
+                               :lupapiste-docs lupapiste-ids
+                               :onkalo-docs onkalo-ids})}
+           :handler (fn [data] (reset! multi-wait-for-zip-file false))})))
+
+(defn toggle-multi-select-mode []
+  (reset! selected-result-id nil)
+  (reset! multi-select-mode (not @multi-select-mode)))
+
 (defn reset-state []
   (storage/remove-local-storage! :saved-search)
   (storage/remove-local-storage! :saved-seen-results)
@@ -228,7 +273,9 @@
   (reset! end-date nil)
   (reset! closed-start-date nil)
   (reset! closed-end-date nil)
-  (reset! map-selected-result-ids #{}))
+  (reset! map-selected-result-ids #{})
+  (reset! multi-selected-results #{})
+  (reset! multi-wait-for-zip-file false))
 
 (defn reset-date-atoms []
   (let [query @search-query]
@@ -271,3 +318,4 @@
 
 (defn selected-language [query]
   (#{:fi :sv :en} (keyword (first (keys query)))))
+
