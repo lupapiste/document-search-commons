@@ -95,11 +95,12 @@
 
 (defn result-list-item [result]
   (let [{:keys [propertyId address verdict-ts municipality type contents id filename created
-                tiedostonimi paatospvm jattopvm metadata source-system organization]} result
+                tiedostonimi paatospvm jattopvm metadata source-system organization fileId]} result
         verdict-date (or verdict-ts paatospvm)
         multi-select-mode @state/multi-select-mode
+        archived? (= :onkalo source-system)
         result-item-onclick (if multi-select-mode
-                              (fn [] (state/multi-select-result id (or filename tiedostonimi) organization (= :onkalo source-system)))
+                              (fn [] (state/multi-select-result id (if archived? id fileId) (or filename tiedostonimi) organization archived?))
                               (fn [] (reset! state/selected-result-id id)
                                      (state/mark-result-seen id)))
         result-item-class (cond
