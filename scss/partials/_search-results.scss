@@ -140,6 +140,13 @@ $result-highlight: $orange-light;
             text-decoration: underline;
           }
         }
+        a.select-all-link {
+          margin-left: 10px;
+          &:hover {
+            text-decoration: underline;
+            color: $gray187;
+          }
+        }
       }
     }
   }

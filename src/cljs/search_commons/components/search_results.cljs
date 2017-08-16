@@ -79,13 +79,14 @@
         (when (seq @state/map-selected-result-ids)
           [:div (t "Karttavalinta")
            [:i.icon-cancel-circled {:on-click (fn [] (reset! state/map-selected-result-ids #{}))}]])])
+     (when (not= 0 @state/total-result-count)
        (if @state/multi-select-mode
          [:button.primary {:on-click state/toggle-multi-select-mode}
           [:i.lupicon-remove]
           [:span (t "Lopeta valitseminen")]]
          [:button.secondary {:on-click state/toggle-multi-select-mode}
           [:i.lupicon-file-check]
-          [:span (t "Valitse dokumentteja")]])]))
+          [:span (t "Valitse dokumentteja")]]))]))
 
 (defn municipality-name [code]
   (t (str "municipality." code)))
@@ -100,7 +101,7 @@
         multi-select-mode @state/multi-select-mode
         archived? (= :onkalo source-system)
         result-item-onclick (if multi-select-mode
-                              (fn [] (state/multi-select-result id (if archived? id fileId) (or filename tiedostonimi) organization archived?))
+                              (fn [] (state/multi-select-result id (or fileId id) (or filename tiedostonimi) organization archived?))
                               (fn [] (reset! state/selected-result-id id)
                                      (state/mark-result-seen id)))
         result-item-class (cond
@@ -133,6 +134,14 @@
      (when (and (not multi-select-mode) (= id @state/selected-result-id))
        [:div.arrow-right])]))
 
+(defn- toggle-application-attachments [all-selected? result-group]
+  (let [select-missing (fn [{:keys [id fileId tiedostonimi filename organization source-system] :as result}]
+                         (when-not (state/multi-selected-results-contain? id)
+                           (state/multi-select-result id (or fileId id) (or filename tiedostonimi) organization (= :onkalo source-system))))]
+    (if all-selected?
+      (map #(state/multi-select-result (:id %) (or (:fileId %) (:id %)) (or (:filename %) (:tiedostonimi %)) (:organization %) (= :onkalo (:source-system %))) result-group)
+      (map select-missing result-group))))
+
 (defn result-list []
   (let [{:keys [has-more? onkalo-has-more? loading?]} @state/search-results
         {{:keys [lupapiste-host]} :config} @state/config]
@@ -140,12 +149,17 @@
      [:ol.result-list
       (doall
         (for [[grouping-key result-group] @state/result-groups]
-          (let [{:keys [applicationId]} (first result-group)]
+          (let [{:keys [applicationId]} (first result-group)
+                all-selected? (reduce #(and %1 %2) true (map state/multi-selected-results-contain? result-group))
+                select-all-link [:a.select-all-link {:on-click #(toggle-application-attachments all-selected? result-group)}
+                                 (if all-selected? "Poista valinnat" "Valitse kaikki")]]
             ^{:key grouping-key}
             [:li.result-application
              [:h4.application-separator
               (if-not (s/blank? applicationId)
-                [:a {:href (str lupapiste-host "/app/fi/authority#!/application/" applicationId)} applicationId]
+                [:span
+                 [:a {:href (str lupapiste-host "/app/fi/authority#!/application/" applicationId)} applicationId]
+                 (when @state/multi-select-mode select-all-link)]
                 [:span grouping-key])]
              [:ol.result-list
               (for [result result-group]
