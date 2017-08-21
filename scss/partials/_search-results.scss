@@ -141,7 +141,7 @@ $result-highlight: $orange-light;
           }
         }
         a.select-all-link {
-          margin-left: 10px;
+          float: right;
           &:hover {
             text-decoration: underline;
             color: $gray187;

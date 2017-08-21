@@ -134,14 +134,6 @@
      (when (and (not multi-select-mode) (= id @state/selected-result-id))
        [:div.arrow-right])]))
 
-(defn- toggle-application-attachments [all-selected? result-group]
-  (let [select-missing (fn [{:keys [id fileId tiedostonimi filename organization source-system] :as result}]
-                         (when-not (state/multi-selected-results-contain? id)
-                           (state/multi-select-result id (or fileId id) (or filename tiedostonimi) organization (= :onkalo source-system))))]
-    (if all-selected?
-      (map #(state/multi-select-result (:id %) (or (:fileId %) (:id %)) (or (:filename %) (:tiedostonimi %)) (:organization %) (= :onkalo (:source-system %))) result-group)
-      (map select-missing result-group))))
-
 (defn result-list []
   (let [{:keys [has-more? onkalo-has-more? loading?]} @state/search-results
         {{:keys [lupapiste-host]} :config} @state/config]
@@ -150,8 +142,8 @@
       (doall
         (for [[grouping-key result-group] @state/result-groups]
           (let [{:keys [applicationId]} (first result-group)
-                all-selected? (reduce #(and %1 %2) true (map state/multi-selected-results-contain? result-group))
-                select-all-link [:a.select-all-link {:on-click #(toggle-application-attachments all-selected? result-group)}
+                all-selected? (every? true? (map #(state/multi-selected-results-contain? (:id %)) result-group))
+                select-all-link [:a.select-all-link {:on-click #(state/multi-select-result-group all-selected? result-group)}
                                  (if all-selected? "Poista valinnat" "Valitse kaikki")]]
             ^{:key grouping-key}
             [:li.result-application

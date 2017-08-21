@@ -232,6 +232,14 @@
       (swap! multi-selected-results disj doc-entry)
       (swap! multi-selected-results conj doc-entry))))
 
+(defn multi-select-result-group [all-selected? result-group]
+  (let [select (fn [{:keys [id fileId filename tiedostonimi organization source-system]}]
+                 (println (str id " " fileId " " tiedostonimi " " filename " " organization " " source-system))
+                 (multi-select-result id (or fileId id) (or tiedostonimi filename) organization (= :onkalo source-system)))]
+    (if all-selected?
+      (doall (for [result result-group] (select result)))
+      (doall (for [result result-group] (when-not (multi-selected-results-contain? (:id result)) (select result)))))))
+
 (defn multi-select-all-results []
   (let [{:keys [results onkalo-results]} @search-results
         onkalo-ids (set (map :id onkalo-results))
