@@ -57,7 +57,9 @@
     (io/copy in zip)
     (.closeEntry zip)))
 
-(defn ^java.io.File zip-files [docs-list]
+(defn ^java.io.File zip-files
+  "Takes list of documents containting file id, filename and file stream, returns files zipped"
+  [docs-list]
   (let [temp-file (temp-file "lupapiste.dokmenttihaku." ".zip.tmp")]
     (with-open [zip (ZipOutputStream. (io/output-stream temp-file))]
       (doseq [doc docs-list]
