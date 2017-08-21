@@ -81,7 +81,7 @@
            [:i.icon-cancel-circled {:on-click (fn [] (reset! state/map-selected-result-ids #{}))}]])])
      (when (not= 0 @state/total-result-count)
        (if @state/multi-select-mode
-         [:button.primary {:on-click state/toggle-multi-select-mode}
+         [:button.secondary {:on-click state/toggle-multi-select-mode}
           [:i.lupicon-remove]
           [:span (t "Lopeta valitseminen")]]
          [:button.secondary {:on-click state/toggle-multi-select-mode}

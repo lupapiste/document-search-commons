@@ -234,7 +234,6 @@
 
 (defn multi-select-result-group [all-selected? result-group]
   (let [select (fn [{:keys [id fileId filename tiedostonimi organization source-system]}]
-                 (println (str id " " fileId " " tiedostonimi " " filename " " organization " " source-system))
                  (multi-select-result id (or fileId id) (or tiedostonimi filename) organization (= :onkalo source-system)))]
     (if all-selected?
       (doall (for [result result-group] (select result)))
