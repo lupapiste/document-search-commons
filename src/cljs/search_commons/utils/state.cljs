@@ -264,6 +264,7 @@
   (reset! end-date nil)
   (reset! closed-start-date nil)
   (reset! closed-end-date nil)
+  (reset! multi-select-mode false)
   (reset! map-selected-result-ids #{})
   (reset! multi-selected-results #{}))
 
