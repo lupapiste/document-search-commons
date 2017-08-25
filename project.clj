@@ -17,7 +17,7 @@
                  [cljs-ajax "0.6.0"]
                  [cljs-pikaday "0.1.4"]
                  [cljsjs/moment "2.17.1-1"]
-                 [cljsjs/openlayers "4.0.1-1"]
+                 [cljsjs/openlayers "3.15.1"]
                  [tailrecursion/cljson "1.0.7"]
                  [alandipert/storage-atom "2.0.1"]]
   :profiles {:provided {:dependencies [[lupapiste/commons "0.7.113" :exclusions [commons-logging commons-codec]]]}}
