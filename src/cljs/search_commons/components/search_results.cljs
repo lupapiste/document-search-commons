@@ -144,7 +144,7 @@
           (let [{:keys [applicationId]} (first result-group)
                 all-selected? (every? true? (map #(state/multi-selected-results-contain? (:id %)) result-group))
                 select-all-link [:a.select-all-link {:on-click #(state/multi-select-result-group all-selected? result-group)}
-                                 (if all-selected? "Poista valinnat" "Valitse kaikki")]]
+                                 (if all-selected? (t "Poista valinnat") (t "Valitse kaikki"))]]
             ^{:key grouping-key}
             [:li.result-application
              [:h4.application-separator

@@ -55,7 +55,8 @@
 
 (add-watch start-date :set-date-from #(swap! search-query assoc-in [:timespan :from] (when %4 (.getTime %4))))
 
-(add-watch closed-start-date :set-closed-date-from #(swap! search-query assoc-in [:timespan :closed-from] (when %4 (.getTime %4))))
+(add-watch closed-start-date :set-closed-date-from
+           #(swap! search-query assoc-in [:timespan :closed-from] (when %4 (.getTime %4))))
 
 (defonce end-date (reagent/atom nil))
 
@@ -63,7 +64,8 @@
 
 (add-watch end-date :set-date-to #(swap! search-query assoc-in [:timespan :to] (when %4 (.getTime %4))))
 
-(add-watch closed-end-date :set-closed-date-to #(swap! search-query assoc-in [:timespan :closed-to] (when %4 (.getTime %4))))
+(add-watch closed-end-date :set-closed-date-to
+           #(swap! search-query assoc-in [:timespan :closed-to] (when %4 (.getTime %4))))
 
 (defonce operations (reagent/atom []))
 
@@ -234,7 +236,11 @@
 
 (defn multi-select-result-group [all-selected? result-group]
   (let [select (fn [{:keys [id fileId filename tiedostonimi organization source-system]}]
-                 (multi-select-result id (or fileId id) (or tiedostonimi filename) organization (= :onkalo source-system)))]
+                 (multi-select-result id
+                                      (or fileId id)
+                                      (or tiedostonimi filename)
+                                      organization
+                                      (= :onkalo source-system)))]
     (if all-selected?
       (doall (for [result result-group] (select result)))
       (doall (for [result result-group] (when-not (multi-selected-results-contain? (:id result)) (select result)))))))
@@ -244,9 +250,11 @@
         onkalo-ids (set (map :id onkalo-results))
         result-uniques (remove #(contains? onkalo-ids (:id %)) results)
         results-set (set (for [result result-uniques]
-                                {:source "lupapiste" :org-id (:organization result) :doc-id (:id result) :file-id (:fileId result) :filename (:filename result)}))
+                                {:source "lupapiste" :org-id (:organization result)
+                                 :doc-id (:id result) :file-id (:fileId result) :filename (:filename result)}))
         onkalo-results-set (set (for [result onkalo-results]
-                                  {:source "onkalo" :org-id (:organization result) :doc-id (:id result) :file-id (:id result) :filename (:filename result)}))]
+                                  {:source "onkalo" :org-id (:organization result)
+                                   :doc-id (:id result) :file-id (:id result) :filename (:filename result)}))]
        (swap! multi-selected-results set/union results-set onkalo-results-set)))
 
 (defn toggle-multi-select-mode []
