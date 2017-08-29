@@ -16,8 +16,7 @@
      [:i.lupicon-checkbox-off]
      [:span (t "Poista valinnat")]]
     [:form {:id "multi-select-form" :action (routing/path "/mass-download") :method "POST"}
-     [:input {:type "hidden" :name "docs" :value (js/encodeURIComponent (pr-str @state/multi-selected-results))}]
+     [:input {:type "hidden" :name "docs" :value (pr-str @state/multi-selected-results)}]
      [:button.secondary {:type "submit"}
       [:i.lupicon-download]
       [:span (t "Lataa valitut dokumentit")]]]]])
-
