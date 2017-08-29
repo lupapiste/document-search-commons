@@ -193,6 +193,7 @@
   (reset! selected-result-id nil)
   (reset! last-search @search-query)
   (reset! saved-search @search-query)
+  (reset! multi-select-mode false)
   (reset! multi-selected-results #{})
   (swap! search-results merge {:loading? true
                                :has-more? false

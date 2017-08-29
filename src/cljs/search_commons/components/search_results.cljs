@@ -106,7 +106,7 @@
                                      (state/mark-result-seen id)))
         result-item-class (cond
                             (and multi-select-mode (state/multi-selected-results-contain? id)) "selected"
-                            (= result @state/selected-result) "selected"
+                            (= id @state/selected-result-id) "selected"
                             multi-select-mode "multi-select-mode"
                             :else nil)]
     [:li.result-item {:on-click result-item-onclick}
