@@ -28,4 +28,5 @@
                                     :target-path]
   :sass {:target-path  "resources/public/css/"
          :source-paths ["scss/"]
-         :output-style :compressed})
+         :output-style :compressed}
+  :aliases {"extract-strings" ["run" "-m" "lupapiste-commons.i18n.extract/extract-strings" "t"]})

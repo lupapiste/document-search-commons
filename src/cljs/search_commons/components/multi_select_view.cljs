@@ -7,7 +7,7 @@
   [:div.select-view
    [:div.select-view-header
     (let [total (count @state/multi-selected-results)]
-      [:h4 (str total " " (if (= 1 total) (t "dokumentti") (t "dokumenttia")) " valittu")])]
+      [:h4 (str total " " (if (= 1 total) (t "dokumentti") (t "dokumenttia")) " " (t "valittu"))])]
    [:div.select-view-content.stacked
     [:button.secondary {:on-click state/multi-select-all-results}
      [:i.lupicon-checkbox-on]
