@@ -32,6 +32,11 @@
       }
     }
   }
+  button {
+    float: right;
+    margin-left: 4px;
+    width: 16.4%;
+  }
 }
 
 $result-highlight: $orange-light;
@@ -61,6 +66,10 @@ $result-highlight: $orange-light;
         background-color: $gray246;
         &.selected {
           background-color: $result-highlight;
+        }
+        &.multi-select-mode {
+          background-color: $gray246;
+          color: $gray187;
         }
         padding: 10px;
         float: left;
@@ -131,6 +140,13 @@ $result-highlight: $orange-light;
             text-decoration: underline;
           }
         }
+        a.select-all-link {
+          float: right;
+          &:hover {
+            text-decoration: underline;
+            color: $gray187;
+          }
+        }
       }
     }
   }
@@ -158,6 +174,27 @@ $result-highlight: $orange-light;
   @media (min-width: $application-max-width) {
     margin-left: 560px;
   }
+
+  .select-view {
+    width: 100%;
+    margin-bottom: 15px;
+    background-color: #ffffff;
+    position: relative;
+    float: left;
+    border: 2px solid $gray85;
+    .select-view-header, .select-view-content {
+      padding: 15px;
+    }
+
+    .select-view-header {
+      background-color: $gray246;
+    }
+
+    button {
+      margin-bottom: 4px;
+    }
+  }
+
   .result-view {
     width: 100%;
     min-height: 570px;

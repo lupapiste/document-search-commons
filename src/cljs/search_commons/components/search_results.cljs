@@ -78,8 +78,16 @@
            [cancel-search-param #(swap! state/search-query assoc :usage nil)]])
         (when (seq @state/map-selected-result-ids)
           [:div (t "Karttavalinta")
-           [:i.icon-cancel-circled {:on-click (fn []
-                                                (reset! state/map-selected-result-ids #{}))}]])])]))
+           [:i.icon-cancel-circled {:on-click (fn [] (reset! state/map-selected-result-ids #{}))}]])])
+     (when (not= 0 @state/total-result-count)
+       (if @state/multi-select-mode
+         [:button.secondary {:on-click state/toggle-multi-select-mode}
+          [:i.lupicon-remove]
+          [:span (t "Lopeta valitseminen")]]
+         [:button.secondary {:on-click state/toggle-multi-select-mode}
+          [:i.lupicon-file-check]
+          [:span (t "Valitse dokumentteja")]]))]))
+
 (defn municipality-name [code]
   (t (str "municipality." code)))
 
@@ -87,12 +95,22 @@
   (if type-group (str type-group "." type-id) type))
 
 (defn result-list-item [result]
-  (let [{:keys [propertyId address verdict-ts municipality type contents id filename created tiedostonimi paatospvm jattopvm metadata]} result
-        verdict-date (or verdict-ts paatospvm)]
-    [:li.result-item {:on-click (fn []
-                                  (reset! state/selected-result-id id)
-                                  (state/mark-result-seen id))}
-     [:div.result-item-data {:class (when (= result @state/selected-result) "selected")}
+  (let [{:keys [propertyId address verdict-ts municipality type contents id filename created
+                tiedostonimi paatospvm jattopvm metadata source-system organization fileId]} result
+        verdict-date (or verdict-ts paatospvm)
+        multi-select-mode @state/multi-select-mode
+        archived? (= :onkalo source-system)
+        result-item-onclick (if multi-select-mode
+                              (fn [] (state/multi-select-result id (or fileId id) (or filename tiedostonimi) organization archived?))
+                              (fn [] (reset! state/selected-result-id id)
+                                     (state/mark-result-seen id)))
+        result-item-class (cond
+                            (and multi-select-mode (state/multi-selected-results-contain? id)) "selected"
+                            (= id @state/selected-result-id) "selected"
+                            multi-select-mode "multi-select-mode"
+                            :else nil)]
+    [:li.result-item {:on-click result-item-onclick}
+     [:div.result-item-data {:class result-item-class}
       [:div.result-type
        (format-file-extension (or filename tiedostonimi))
        (if (contains? (:seen-results @state/search-results) id)
@@ -113,7 +131,7 @@
                 t-key (if verdict-date "Päätetty {pvm}" "Lisätty {pvm}")]
             (-> (t t-key)
                 (.replace "{pvm}" (format-date ts))))]]]]]
-     (when (= id @state/selected-result-id)
+     (when (and (not multi-select-mode) (= id @state/selected-result-id))
        [:div.arrow-right])]))
 
 (defn result-list []
@@ -123,12 +141,17 @@
      [:ol.result-list
       (doall
         (for [[grouping-key result-group] @state/result-groups]
-          (let [{:keys [applicationId]} (first result-group)]
+          (let [{:keys [applicationId]} (first result-group)
+                all-selected? (every? true? (map #(state/multi-selected-results-contain? (:id %)) result-group))
+                select-all-link [:a.select-all-link {:on-click #(state/multi-select-result-group all-selected? result-group)}
+                                 (if all-selected? (t "Poista valinnat") (t "Valitse kaikki"))]]
             ^{:key grouping-key}
             [:li.result-application
              [:h4.application-separator
               (if-not (s/blank? applicationId)
-                [:a {:href (str lupapiste-host "/app/fi/authority#!/application/" applicationId)} applicationId]
+                [:span
+                 [:a {:href (str lupapiste-host "/app/fi/authority#!/application/" applicationId)} applicationId]
+                 (when @state/multi-select-mode select-all-link)]
                 [:span grouping-key])]
              [:ol.result-list
               (for [result result-group]
