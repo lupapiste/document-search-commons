@@ -251,12 +251,12 @@
         onkalo-ids (set (map :id onkalo-results))
         result-uniques (remove #(contains? onkalo-ids (:id %)) results)
         results-set (set (for [result result-uniques]
-                                {:source "lupapiste" :org-id (:organization result)
-                                 :doc-id (:id result) :file-id (:fileId result) :filename (:filename result)}))
+                           {:source "lupapiste" :org-id (:organization result)
+                            :doc-id (:id result) :file-id (:fileId result) :filename (:filename result)}))
         onkalo-results-set (set (for [result onkalo-results]
                                   {:source "onkalo" :org-id (:organization result)
-                                   :doc-id (:id result) :file-id (:id result) :filename (:filename result)}))]
-       (swap! multi-selected-results set/union results-set onkalo-results-set)))
+                                   :doc-id (:id result) :file-id (:id result) :filename (:tiedostonimi result)}))]
+    (swap! multi-selected-results set/union results-set onkalo-results-set)))
 
 (defn toggle-multi-select-mode []
   (reset! selected-result-id nil)
