@@ -150,9 +150,9 @@
              [:h4.application-separator
               (if-not (s/blank? applicationId)
                 [:span
-                 [:a {:href (str lupapiste-host "/app/fi/authority#!/application/" applicationId)} applicationId]
-                 (when @state/multi-select-mode select-all-link)]
-                [:span grouping-key])]
+                 [:a {:href (str lupapiste-host "/app/fi/authority#!/application/" applicationId)} applicationId]]
+                [:span grouping-key])
+              (when @state/multi-select-mode select-all-link)]
              [:ol.result-list
               (for [result result-group]
                 ^{:key (str (:id result) "-list-item")}
