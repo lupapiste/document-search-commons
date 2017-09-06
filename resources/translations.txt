@@ -213,3 +213,5 @@
 "Lopeta valitseminen" "sv" "Sluta att välja"
 "Poista valinnat" "fi" "Poista valinnat"
 "Poista valinnat" "sv" "Ta bort urval"
+"Liikaa hakutuloksia" "fi" "Liikaa hakutuloksia"
+"Liikaa hakutuloksia" "sv" "För många resultat"

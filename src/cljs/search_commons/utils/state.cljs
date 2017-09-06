@@ -233,7 +233,7 @@
         doc-entry {:source source :org-id org-id :doc-id doc-id :file-id file-id :filename filename}]
     (if (multi-selected-results-contain? doc-id)
       (swap! multi-selected-results disj doc-entry)
-      (swap! multi-selected-results conj doc-entry))))
+      (when (< @total-result-count 200) (swap! multi-selected-results conj doc-entry)))))
 
 (defn multi-select-result-group [all-selected? result-group]
   (let [select (fn [{:keys [id fileId filename tiedostonimi organization source-system]}]
@@ -244,19 +244,20 @@
                                       (= :onkalo source-system)))]
     (if all-selected?
       (doall (for [result result-group] (select result)))
-      (doall (for [result result-group] (when-not (multi-selected-results-contain? (:id result)) (select result)))))))
+      (when (< (+ (count result-group) (count @multi-selected-results)) 201)
+        (doall (for [result result-group]
+                 (when-not (multi-selected-results-contain? (:id result))
+                   (select result))))))))
 
 (defn multi-select-all-results []
-  (let [{:keys [results onkalo-results]} @search-results
-        onkalo-ids (set (map :id onkalo-results))
-        result-uniques (remove #(contains? onkalo-ids (:id %)) results)
-        results-set (set (for [result result-uniques]
-                           {:source "lupapiste" :org-id (:organization result)
-                            :doc-id (:id result) :file-id (:fileId result) :filename (:filename result)}))
-        onkalo-results-set (set (for [result onkalo-results]
-                                  {:source "onkalo" :org-id (:organization result)
-                                   :doc-id (:id result) :file-id (:id result) :filename (:tiedostonimi result)}))]
-    (swap! multi-selected-results set/union results-set onkalo-results-set)))
+  (let [results-set (set (for [result @filtered-results]
+                           (let [source (if (= :onkalo (:source-system result)) "onkalo" "lupapiste")
+                                 org-id (:organization result)
+                                 doc-id (:id result)
+                                 file-id (or (:fileId result) doc-id)
+                                 filename (or (:filename result) (:tiedostonimi result))]
+                             {:source source :org-id org-id :doc-id doc-id :file-id file-id :filename filename})))]
+    (reset! multi-selected-results results-set)))
 
 (defn toggle-multi-select-mode []
   (reset! selected-result-id nil)

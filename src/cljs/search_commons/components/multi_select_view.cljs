@@ -12,9 +12,12 @@
      [:div.select-view-header
       [:h4 (str total " " (if (= 1 total) (t "dokumentti") (t "dokumenttia")) " " (t "valittu"))]]
      [:div.select-view-content.stacked
-      [:button.secondary {:on-click state/multi-select-all-results}
+      [:button.secondary {:on-click state/multi-select-all-results
+                          :disabled (> @state/total-result-count 200)}
        [:i.lupicon-checkbox-on]
-       [:span (t "Valitse kaikki tulokset")]]
+       (if (> @state/total-result-count 200)
+         [:span (t "Liikaa hakutuloksia")]
+         [:span (t "Valitse kaikki tulokset")])]
       [:button.secondary {:on-click #(reset! state/multi-selected-results #{})}
        [:i.lupicon-checkbox-off]
        [:span (t "Poista valinnat")]]
