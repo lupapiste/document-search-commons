@@ -203,6 +203,8 @@
 "Valitse dokumentteja" "sv" "Välj dokument"
 "dokumenttia" "fi" "dokumenttia"
 "dokumenttia" "sv" "dokument"
+"valittu" "fi" "valittu"
+"valittu" "sv" "vald"
 "Valitse kaikki" "fi" "Valitse kaikki"
 "Valitse kaikki" "sv" "Välj alla"
 "Valitse kaikki tulokset" "fi" "Valitse kaikki tulokset"

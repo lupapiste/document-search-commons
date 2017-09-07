@@ -208,6 +208,33 @@ $result-highlight: $orange-light;
     }
     .result-view-header {
       background-color: $gray246;
+
+      .editor-button-container {
+        position: absolute;
+        margin-right: 15px;
+        margin-top: 15px;
+        display: table-row;
+
+        .editor-buttons {
+          font-size: 1.3em;
+          line-height: normal;
+          .btn-primary {
+            width: auto;
+            height: 40px;
+          }
+          i {
+            font-size: 22px;
+            margin: 0;
+            line-height: normal;
+            padding: 3px 15px 3px 0;
+            vertical-align: middle;
+          }
+          span {
+            display: table-cell;
+          }
+        }
+      }
+
     }
     .application-link {
       color: #000000;
@@ -278,24 +305,6 @@ $result-highlight: $orange-light;
             }
             .year-label {
               margin-left: 5px;
-            }
-            .editor-buttons {
-              font-size: 1.3em;
-              line-height: normal;
-              .btn-primary {
-                width: auto;
-                height: 40px;
-              }
-              i {
-                font-size: 22px;
-                margin: 0;
-                line-height: normal;
-                padding: 3px 15px 3px 0;
-                vertical-align: middle;
-              }
-              span {
-                display: table-cell;
-              }
             }
           }
         }
