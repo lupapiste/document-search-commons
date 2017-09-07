@@ -225,6 +225,10 @@
   (swap! search-results assoc :seen-results (conj (:seen-results @search-results) id))
   (swap! saved-seen-results conj id))
 
+(def multi-select-count
+  (reaction
+    (count @multi-selected-results)))
+
 (defn multi-selected-results-contain? [doc-id]
   (some #(= doc-id (:doc-id %)) @multi-selected-results))
 
@@ -233,7 +237,7 @@
         doc-entry {:source source :org-id org-id :doc-id doc-id :file-id file-id :filename filename}]
     (if (multi-selected-results-contain? doc-id)
       (swap! multi-selected-results disj doc-entry)
-      (when (< @total-result-count 200) (swap! multi-selected-results conj doc-entry)))))
+      (when (< @multi-select-count 200) (swap! multi-selected-results conj doc-entry)))))
 
 (defn multi-select-result-group [all-selected? result-group]
   (let [select (fn [{:keys [id fileId filename tiedostonimi organization source-system]}]
@@ -244,7 +248,7 @@
                                       (= :onkalo source-system)))]
     (if all-selected?
       (doall (for [result result-group] (select result)))
-      (when (< (+ (count result-group) (count @multi-selected-results)) 201)
+      (when (<= (+ (count result-group) @multi-select-count) 200)
         (doall (for [result result-group]
                  (when-not (multi-selected-results-contain? (:id result))
                    (select result))))))))
