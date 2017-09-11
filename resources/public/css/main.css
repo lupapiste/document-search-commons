@@ -7048,24 +7048,24 @@ footer ul li {
   background-color: #f6f6f6;
 }
 
-.result-view-container .result-view .result-view-header .editor-button-container {
-  position: absolute;
-  margin-right: 15px;
-  margin-top: 15px;
-  display: table-row;
+.result-view-container .result-view .result-view-header .edit-button {
+  float: right;
 }
 
-.result-view-container .result-view .result-view-header .editor-button-container .editor-buttons {
+.result-view-container .result-view .save-button {
+  margin-bottom: 15px;
+  margin-right: 0px;
+  float: right;
   font-size: 1.3em;
   line-height: normal;
 }
 
-.result-view-container .result-view .result-view-header .editor-button-container .editor-buttons .btn-primary {
+.result-view-container .result-view .save-button .btn-primary {
   width: auto;
   height: 40px;
 }
 
-.result-view-container .result-view .result-view-header .editor-button-container .editor-buttons i {
+.result-view-container .result-view .save-button i {
   font-size: 22px;
   margin: 0;
   line-height: normal;
@@ -7073,7 +7073,7 @@ footer ul li {
   vertical-align: middle;
 }
 
-.result-view-container .result-view .result-view-header .editor-button-container .editor-buttons span {
+.result-view-container .result-view .save-button span {
   display: table-cell;
 }
 
