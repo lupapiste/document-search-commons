@@ -14,12 +14,13 @@
      [:div.select-view-content.stacked
       [:button.secondary {:on-click state/multi-select-all-results
                           :disabled (> @state/total-result-count 200)}
-       [:i.lupicon-checkbox-on]
+       [:i.lupicon-file-check]
        (if (> @state/total-result-count 200)
-         [:span (t "Liikaa hakutuloksia")]
+         [:span (t "Kaikkia ei voi valita (max 200)")]
          [:span (t "Valitse kaikki tulokset")])]
-      [:button.secondary {:on-click #(reset! state/multi-selected-results #{})}
-       [:i.lupicon-checkbox-off]
+      [:button.secondary {:on-click #(reset! state/multi-selected-results #{})
+                          :disabled (= 0 total)}
+       [:i.lupicon-remove]
        [:span (t "Poista valinnat")]]
       [:form {:id "multi-select-form" :action (routing/path "/mass-download") :method "POST"}
        [:input {:type "hidden" :name "docs" :value (transit/write writer @state/multi-selected-results)}]

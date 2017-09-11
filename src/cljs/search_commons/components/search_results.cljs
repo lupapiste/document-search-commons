@@ -150,7 +150,7 @@
                                   (when (<= (+ (count result-group) @state/multi-select-count) 200)
                                     [:a.select-all-link
                                      {:on-click #(state/multi-select-result-group all-selected? result-group)}
-                                     (t "Valitse kaikki")]))]
+                                     (t "Valitse")]))]
             ^{:key grouping-key}
             [:li.result-application
              [:h4.application-separator
