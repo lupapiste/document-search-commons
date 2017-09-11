@@ -10,7 +10,11 @@
   (let [total (count @state/multi-selected-results)]
     [:div.select-view
      [:div.select-view-header
-      [:h4 (str total " " (if (= 1 total) (t "dokumentti") (t "dokumenttia")) " " (t "valittu"))]]
+      [:h4 (cond
+             (= total 0) (t "0 dokumenttia valittu")
+             (= total 1) (t "1 dokumentti valittu")
+             (> total 1) (str total (t "dokumenttia valittu"))
+             :else "Error")]]
      [:div.select-view-content.stacked
       [:button.secondary {:on-click state/multi-select-all-results
                           :disabled (> @state/total-result-count 200)}
