@@ -7048,6 +7048,44 @@ footer ul li {
   background-color: #f6f6f6;
 }
 
+.result-view-container .result-view .result-view-header .combobox {
+  display: inline-block;
+  position: relative;
+  width: 50%;
+}
+
+.result-view-container .result-view .result-view-header .combobox .select-arrow {
+  position: absolute;
+  right: 1px;
+  bottom: 1px;
+  color: #f39129;
+  pointer-events: none;
+  background-color: #fff;
+  height: 38px;
+  width: 30px;
+  line-height: 38px;
+  vertical-align: middle;
+}
+
+.result-view-container .result-view .result-view-header .combobox .combobox-input {
+  width: 100%;
+}
+
+.result-view-container .result-view .result-view-header .combobox .combobox-input input {
+  width: 100%;
+  outline: none;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0;
+}
+
+.result-view-container .result-view .result-view-header .combobox .autocomplete-selection-wrapper {
+  border: 0 !important;
+}
+
+.result-view-container .result-view .result-view-header .combobox .autocomplete-dropdown ul.autocomplete-result {
+  top: 0 !important;
+}
+
 .result-view-container .result-view .result-view-header .edit-button {
   float: right;
 }
