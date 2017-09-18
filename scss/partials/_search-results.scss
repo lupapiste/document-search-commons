@@ -206,14 +206,77 @@ $result-highlight: $orange-light;
     .result-view-header, .result-view-content {
       padding: 15px;
     }
+
     .result-view-header {
+      @include clearfix;
       background-color: $gray246;
+
+      .document-info {
+        width: 80%;
+        float: left;
+
+        .dropdown {
+          display: inline-block;
+          position: relative;
+
+          .select-arrow {
+            position: absolute;
+            right: 1px;
+            bottom: 1px;
+            color: $orange-dark;
+            pointer-events: none;
+
+            // show white box behind selector arrow to hide default select arrows on IE9
+            background-color: #fff;
+            height: $grid-input-height - 2px;
+            width: 30px;
+            line-height: $grid-input-height - 2px;
+            vertical-align: middle;
+          }
+
+          .dropdown-input {
+              width: 100%;
+            input {
+              font-size: 15px;
+              width: 100%;
+              min-height: 40px;
+              outline: none;
+              border: 1px solid #bbbbbb;
+              background-color: #ffffff;
+              -webkit-appearance: none;
+              -webkit-border-radius: 0;
+              box-sizing: border-box;
+              padding: 0 6px;
+            }
+          }
+
+          .autocomplete-selection-wrapper {
+            border: 0 !important;
+          }
+
+          .autocomplete-dropdown {
+            ul.autocomplete-result {
+              top: 0 !important;
+            }
+          }
+        }
+      }
+      .edit-button-container {
+        width: 20%;
+        float: left;
+
+        .edit-button {
+          float: right;
+        }
+      }
     }
+
     .application-link {
       color: #000000;
     }
     .result-view-content {
       @include clearfix;
+      position: relative;
       .preview {
         float: left;
         width: 50%;
@@ -236,7 +299,31 @@ $result-highlight: $orange-light;
         .btn {
           min-width: 200px;
         }
+
       }
+
+      .save-button {
+        position: absolute;
+        bottom: 15px;
+        left: 15px;
+        font-size: 1.3em;
+        line-height: normal;
+        .btn-primary {
+          width: auto;
+          height: 40px;
+        }
+        i {
+          font-size: 22px;
+          margin: 0;
+          line-height: normal;
+          padding: 3px 15px 3px 0;
+          vertical-align: middle;
+        }
+        span {
+          display: table-cell;
+        }
+      }
+
       .metadata {
         float: left;
         width: 50%;
@@ -279,24 +366,6 @@ $result-highlight: $orange-light;
             .year-label {
               margin-left: 5px;
             }
-            .editor-buttons {
-              font-size: 1.3em;
-              line-height: normal;
-              .btn-primary {
-                width: auto;
-                height: 40px;
-              }
-              i {
-                font-size: 22px;
-                margin: 0;
-                line-height: normal;
-                padding: 3px 15px 3px 0;
-                vertical-align: middle;
-              }
-              span {
-                display: table-cell;
-              }
-            }
           }
         }
       }
@@ -336,8 +405,8 @@ $result-highlight: $orange-light;
   left: 30px;
   right: 30px;
   bottom: 20px;
-  background-color: rgb(204,204,204);
-  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  background-color: rgb(204, 204, 204);
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
   border: 2px solid $gray85;
 
   .document-view-header {

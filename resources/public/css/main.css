@@ -7045,7 +7045,74 @@ footer ul li {
 }
 
 .result-view-container .result-view .result-view-header {
+  *zoom: 1;
   background-color: #f6f6f6;
+}
+
+.result-view-container .result-view .result-view-header:before, .result-view-container .result-view .result-view-header:after {
+  content: "";
+  display: table;
+}
+
+.result-view-container .result-view .result-view-header:after {
+  clear: both;
+}
+
+.result-view-container .result-view .result-view-header .document-info {
+  width: 80%;
+  float: left;
+}
+
+.result-view-container .result-view .result-view-header .document-info .dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.result-view-container .result-view .result-view-header .document-info .dropdown .select-arrow {
+  position: absolute;
+  right: 1px;
+  bottom: 1px;
+  color: #f39129;
+  pointer-events: none;
+  background-color: #fff;
+  height: 38px;
+  width: 30px;
+  line-height: 38px;
+  vertical-align: middle;
+}
+
+.result-view-container .result-view .result-view-header .document-info .dropdown .dropdown-input {
+  width: 100%;
+}
+
+.result-view-container .result-view .result-view-header .document-info .dropdown .dropdown-input input {
+  font-size: 15px;
+  width: 100%;
+  min-height: 40px;
+  outline: none;
+  border: 1px solid #bbbbbb;
+  background-color: #ffffff;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0;
+  box-sizing: border-box;
+  padding: 0 6px;
+}
+
+.result-view-container .result-view .result-view-header .document-info .dropdown .autocomplete-selection-wrapper {
+  border: 0 !important;
+}
+
+.result-view-container .result-view .result-view-header .document-info .dropdown .autocomplete-dropdown ul.autocomplete-result {
+  top: 0 !important;
+}
+
+.result-view-container .result-view .result-view-header .edit-button-container {
+  width: 20%;
+  float: left;
+}
+
+.result-view-container .result-view .result-view-header .edit-button-container .edit-button {
+  float: right;
 }
 
 .result-view-container .result-view .application-link {
@@ -7054,6 +7121,7 @@ footer ul li {
 
 .result-view-container .result-view .result-view-content {
   *zoom: 1;
+  position: relative;
 }
 
 .result-view-container .result-view .result-view-content:before, .result-view-container .result-view .result-view-content:after {
@@ -7092,6 +7160,31 @@ footer ul li {
 
 .result-view-container .result-view .result-view-content .preview .btn, .result-view-container .result-view .result-view-content .preview .dataTables_paginate .paginate_disabled_previous, .dataTables_paginate .result-view-container .result-view .result-view-content .preview .paginate_disabled_previous, .result-view-container .result-view .result-view-content .preview .dataTables_paginate .paginate_disabled_next, .dataTables_paginate .result-view-container .result-view .result-view-content .preview .paginate_disabled_next {
   min-width: 200px;
+}
+
+.result-view-container .result-view .result-view-content .save-button {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  font-size: 1.3em;
+  line-height: normal;
+}
+
+.result-view-container .result-view .result-view-content .save-button .btn-primary {
+  width: auto;
+  height: 40px;
+}
+
+.result-view-container .result-view .result-view-content .save-button i {
+  font-size: 22px;
+  margin: 0;
+  line-height: normal;
+  padding: 3px 15px 3px 0;
+  vertical-align: middle;
+}
+
+.result-view-container .result-view .result-view-content .save-button span {
+  display: table-cell;
 }
 
 .result-view-container .result-view .result-view-content .metadata {
@@ -7141,28 +7234,6 @@ footer ul li {
 
 .result-view-container .result-view .result-view-content .metadata .metadata-editor-container .editor .year-label {
   margin-left: 5px;
-}
-
-.result-view-container .result-view .result-view-content .metadata .metadata-editor-container .editor .editor-buttons {
-  font-size: 1.3em;
-  line-height: normal;
-}
-
-.result-view-container .result-view .result-view-content .metadata .metadata-editor-container .editor .editor-buttons .btn-primary {
-  width: auto;
-  height: 40px;
-}
-
-.result-view-container .result-view .result-view-content .metadata .metadata-editor-container .editor .editor-buttons i {
-  font-size: 22px;
-  margin: 0;
-  line-height: normal;
-  padding: 3px 15px 3px 0;
-  vertical-align: middle;
-}
-
-.result-view-container .result-view .result-view-content .metadata .metadata-editor-container .editor .editor-buttons span {
-  display: table-cell;
 }
 
 .result-view-container .result-view .result-view-content .building-table {
