@@ -307,12 +307,14 @@
                    (load-saved-search))
         :headers (language-header)}))
 
-(defn update-onkalo-result-data [id new-s2-metadata new-type new-contents]
+(defn update-onkalo-result-data [id new-s2-metadata]
   (swap! search-results (fn [{:keys [onkalo-results] :as res}]
                           (->> onkalo-results
                                (map (fn [result]
                                       (if (= id (:id result))
-                                        (assoc result :metadata new-s2-metadata :contents new-contents :type new-type)
+                                        (assoc result :metadata new-s2-metadata
+                                                      :contents (:contents new-s2-metadata)
+                                                      :type (:type new-s2-metadata))
                                         result)))
                                (assoc res :onkalo-results)))))
 
