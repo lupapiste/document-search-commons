@@ -260,6 +260,13 @@ $result-highlight: $orange-light;
             }
           }
         }
+        .content-element {
+          width: 100%;
+          input {
+            width: 100%;
+            box-sizing: border-box;
+          }
+        }
       }
       .edit-button-container {
         width: 20%;

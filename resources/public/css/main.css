@@ -7106,6 +7106,15 @@ footer ul li {
   top: 0 !important;
 }
 
+.result-view-container .result-view .result-view-header .document-info .content-element {
+  width: 100%;
+}
+
+.result-view-container .result-view .result-view-header .document-info .content-element input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .result-view-container .result-view .result-view-header .edit-button-container {
   width: 20%;
   float: left;
