@@ -119,11 +119,13 @@
            (map (fn [[_ data]] (:permit-types data)))
            (apply set/union)))))
 
+(def document-types #{[:hakemus] [:ilmoitus] [:neuvontapyyntö] [:case-file]})
+
 (def available-attachment-types
   (reaction
     (let [types @selected-permit-types
           all? (empty? types)]
-      (cond-> #{}
+      (cond-> document-types
               (or all? (types "R")) (set/union (flatten-attachments attachment-types/Rakennusluvat-v2))
               (or all? (types "YA")) (set/union (flatten-attachments attachment-types/YleistenAlueidenLuvat-v2))))))
 
@@ -307,14 +309,14 @@
                    (load-saved-search))
         :headers (language-header)}))
 
-(defn update-onkalo-result-data [id new-s2-metadata]
+(defn update-onkalo-result-data [id new-metadata]
   (swap! search-results (fn [{:keys [onkalo-results] :as res}]
                           (->> onkalo-results
                                (map (fn [result]
                                       (if (= id (:id result))
-                                        (assoc result :metadata new-s2-metadata
-                                                      :contents (:contents new-s2-metadata)
-                                                      :type (:type new-s2-metadata))
+                                        (assoc result :metadata (:metadata new-metadata)
+                                                      :contents (:contents new-metadata)
+                                                      :type (:type new-metadata))
                                         result)))
                                (assoc res :onkalo-results)))))
 
