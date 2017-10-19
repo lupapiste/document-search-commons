@@ -7112,6 +7112,7 @@ footer ul li {
 
 .result-view-container .result-view .result-view-header .document-info .content-element input {
   width: 100%;
+  height: 30px;
   box-sizing: border-box;
 }
 
