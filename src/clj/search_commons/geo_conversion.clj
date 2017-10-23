@@ -15,7 +15,7 @@
         result-point  (. math-transform transform direct-pos nil)]
     (->> result-point
          .getCoordinate
-         (map (comp #(.doubleValue %) #(round-to % 5) bigdec)))))
+         (map (comp #(.doubleValue %) #(round-to % 6) bigdec)))))
 
 (defn epsg3067->wgs84 [coord-array]
   (convert (CRS/decode "epsg:3067") DefaultGeographicCRS/WGS84 coord-array))
