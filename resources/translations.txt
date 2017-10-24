@@ -1,5 +1,5 @@
-"0 dokumenttia valittu" "fi" "0 dokumenttia valittu"
-"0 dokumenttia valittu" "sv" "0 dokument utvalt"
+"0 dokumenttia valittu" "fi" "Valitse dokumentteja klikkaamalla dokumentin nimeä"
+"0 dokumenttia valittu" "sv" "Välj dokument genom att klicka på dokumentets namn"
 "1 dokumentti valittu" "fi" "1 dokumentti valittu"
 "1 dokumentti valittu" "sv" "1 dokument utvalt"
 "Alkaen" "en" "Starting"
