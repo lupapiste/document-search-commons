@@ -37,8 +37,8 @@
       (generate-available-name name-map text (inc suffix))
       key)))
 
-(defn type-map []
-  (->> @state/available-attachment-types
+(defn type-map [available-attachment-types]
+  (->> available-attachment-types
        (reduce (fn [acc type-vec]
                  (let [text (->> (map name type-vec) (string/join ".") t)
                        key (if (contains? acc text)
@@ -50,7 +50,7 @@
 (defn attachment-type-filter []
   [:div.filter-option
    [:label (t "Asiakirjatyyppi")]
-   [cb/combobox (type-map) false :type]])
+   [cb/combobox (type-map @state/available-attachment-types) false :type]])
 
 (defn input-form []
   [:div.search

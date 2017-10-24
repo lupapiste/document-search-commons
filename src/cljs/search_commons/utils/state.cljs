@@ -129,6 +129,13 @@
               (or all? (types "R")) (set/union (flatten-attachments attachment-types/Rakennusluvat-v2))
               (or all? (types "YA")) (set/union (flatten-attachments attachment-types/YleistenAlueidenLuvat-v2))))))
 
+(defn org-attachment-types [org]
+  (let [org-type (re-find #"[\-].+$" org)]
+    (case org-type
+      "-R" (set/union (flatten-attachments attachment-types/Rakennusluvat-v2))
+      "-YA" (set/union (flatten-attachments attachment-types/YleistenAlueidenLuvat-v2))
+      (throw (js/Error. "Invalid organization")))))
+
 (defn find-result [id results]
   (first (filter #(= id (:id %)) results)))
 
