@@ -194,8 +194,6 @@
 "dokumenttia" "sv" "dokument"
 "dokumenttia valittu" "fi" " dokumenttia valittu"
 "dokumenttia valittu" "sv" " dokument utvalda"
-"footer.tel" "fi" "Puh."
-"footer.tel" "sv" "Tel."
 "handler" "en" "Handler"
 "handler" "fi" "Käsittelijä"
 "handler" "sv" "Handläggare"
