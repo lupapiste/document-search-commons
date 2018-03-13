@@ -27,9 +27,11 @@
 (defn wrap-user-authorization [handler tr-data required-roles & [redirect-path]]
   (fn [request]
     (let [lang (or (keyword (get-in request [:headers "Accept-Language"])) :fi)]
-      (if-let [user (get-in request [:session :user])]
+      (if-let [user (or (get-in request [:session :user])
+                        (:autologin-user request))]
         (if (not (every? nil? (mapv (fn [role] (user-is-authorized? user role)) required-roles)))
-          (let [response (handler request)]
+          (let [response (-> (assoc request :user user)
+                             (handler))]
             (when response
               (assoc response :session (-> (or (:session response) (:session request))
                                            (dissoc :redirect-after-login)))))
