@@ -251,6 +251,8 @@
              cluster-source (make-cluster-source)]
          (.setSource cluster-layer cluster-source)
          (reset! map-view-atom (ol.View. #js {:center     (clj->js (map-center))
+                                              :minZoom    2
+                                              :maxZoom    14
                                               :zoom       8
                                               :projection projektio}))
          (reset! map-object-atom (ol/Map. #js {:controls     (-> (ol.control.defaults) (.extend (clj->js [(ol.control.Control. #js {"element" custom-buttons})])))
