@@ -138,8 +138,7 @@
        [:div.arrow-right])]))
 
 (defn result-list []
-  (let [{:keys [has-more? onkalo-has-more? loading?]} @state/search-results
-        {{:keys [lupapiste-host]} :config} @state/config]
+  (let [{:keys [has-more? onkalo-has-more? loading?]} @state/search-results]
     [:div.result-list-container
      [:ol.result-list
       (doall
@@ -159,7 +158,7 @@
              [:h4.application-separator
               (if-not (s/blank? applicationId)
                 [:span
-                 [:a {:href (str lupapiste-host "/app/fi/authority#!/application/" applicationId)} applicationId]]
+                 [:a {:href (str "/app/fi/authority#!/application/" applicationId)} applicationId]]
                 [:span grouping-key])
               (when @state/multi-select-mode select-all-link)]
              [:ol.result-list

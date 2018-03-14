@@ -42,7 +42,7 @@
 (def db-property-id-regex #"(\d{1,3})(\d{1,3})(\d{1,4})(\d{1,4})")
 
 (defn proxy-url [map]
-  (let [host (get-in @state/config [:config :lupapiste-host])]
+  (let [host (get-in @state/config [:config :cdn-host])]
     (str host "/proxy/" map)))
 
 (defn make-tilegrid []
