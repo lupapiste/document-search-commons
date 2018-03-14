@@ -159,14 +159,12 @@
 (defn fetch-operations []
   (GET (routing/path "/operations")
        {:handler #(reset! operations %)
-        :headers (language-header)
-        :response-format :transit}))
+        :headers (language-header)}))
 
 (defn fetch-translations [lang]
   (GET (routing/path (str "/i18n/" (name lang)))
        :headers (language-header)
-       :handler #(swap! translations assoc :translations %1 :current-lang lang)
-       :response-format :transit))
+       :handler #(swap! translations assoc :translations %1 :current-lang lang)))
 
 (defn set-lang! [lang]
   (fetch-translations lang))
@@ -186,8 +184,7 @@
                                                    :has-more? has-more?
                                                    :took took
                                                    :results (concat (:results @search-results) results)})))
-         :error-handler search-error-handler
-         :response-format :transit}))
+         :error-handler search-error-handler}))
 
 (defn search-onkalo []
   (POST (routing/path "/search-onkalo")
@@ -198,8 +195,7 @@
                                                  :onkalo-has-more? has-more?
                                                  :onkalo-took took
                                                  :onkalo-results (concat (:onkalo-results @search-results) results)}))
-         :error-handler search-error-handler
-         :response-format :transit}))
+         :error-handler search-error-handler}))
 
 (defn new-search []
   (swap! search-query assoc :page 0)
@@ -318,8 +314,7 @@
        {:handler (fn [data]
                    (reset! config data)
                    (load-saved-search))
-        :headers (language-header)
-        :response-format :transit}))
+        :headers (language-header)}))
 
 (defn update-onkalo-result-data [id new-metadata]
   (swap! search-results (fn [{:keys [onkalo-results] :as res}]
