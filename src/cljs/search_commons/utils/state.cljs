@@ -159,12 +159,14 @@
 (defn fetch-operations []
   (GET (routing/path "/operations")
        {:handler #(reset! operations %)
-        :headers (language-header)}))
+        :headers (language-header)
+        :response-format :detect}))
 
 (defn fetch-translations [lang]
   (GET (routing/path (str "/i18n/" (name lang)))
        :headers (language-header)
-       :handler #(swap! translations assoc :translations %1 :current-lang lang)))
+       :handler #(swap! translations assoc :translations %1 :current-lang lang)
+       :response-format :detect))
 
 (defn set-lang! [lang]
   (fetch-translations lang))
@@ -312,9 +314,14 @@
 (defn fetch-user-and-config []
   (GET (routing/path "/user-and-config")
        {:handler (fn [data]
+                   (println data)
                    (reset! config data)
                    (load-saved-search))
-        :headers (language-header)}))
+        :error-handler (fn [err]
+                         (println "Error fetching user and config")
+                         (println err))
+        :headers (language-header)
+        :response-format :detect}))
 
 (defn update-onkalo-result-data [id new-metadata]
   (swap! search-results (fn [{:keys [onkalo-results] :as res}]
