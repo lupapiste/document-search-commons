@@ -208,8 +208,12 @@
              drawing-interaction (ol.interaction.Draw. #js {:source   drawing-source
                                                             :type     "Polygon"
                                                             :features features
-                                                            :condition (fn [event]
-                                                                         (not (.hasFeatureAtPixel @map-object-atom (.-pixel event) (fn [layer-candidate] (= layer-candidate cluster-layer)))))})
+                                                            ; This checks that the drawing tool does not prevent clicking
+                                                            ; on a search result (cluster) marker
+                                                            :condition #(not (.hasFeatureAtPixel @map-object-atom
+                                                                                                 (.-pixel %)
+                                                                                                 #js {:layerFilter (fn [layer-candidate]
+                                                                                                                     (= layer-candidate cluster-layer))}))})
 
              select-interaction (ol.interaction.Select. #js {:multi true
                                                              :layers #js [cluster-layer]
