@@ -2,11 +2,23 @@
   (:require-macros [reagent.ratom :refer [reaction]])
   (:require [search-commons.routing :as routing]
             [ajax.core :refer [GET POST]]
+            [ajax.formats :as f]
+            [ajax.transit :as t]
+            [ajax.json :as json]
             [reagent.core :as reagent]
             [alandipert.storage-atom :as storage]
             [clojure.string :as string]
             [lupapiste-commons.attachment-types :as attachment-types]
             [clojure.set :as set]))
+
+(def formats [["application/transit+json" t/transit-response-format]
+              ["application/json" (json/json-response-format {:keywords? true})]
+              ["text/plain" f/text-response-format]
+              ["text/html" f/text-response-format]
+              ["*/*" f/raw-response-format]])
+
+(def formats-no-kws [["application/transit+json" t/transit-response-format]
+                     ["application/json" json/json-response-format]])
 
 (defonce translations (reagent/atom {:current-lang :unset
                                      :translations {}}))
@@ -116,7 +128,7 @@
       (->> (if (string/blank? selected-org)
              all-orgs
              (filter (fn [[id _]] (= id selected-org)) all-orgs))
-           (map (fn [[_ data]] (:permit-types data)))
+           (map (fn [[_ data]] (set (:permit-types data))))
            (apply set/union)))))
 
 (def document-types #{[:hakemus] [:ilmoitus] [:neuvontapyyntö] [:case-file]})
@@ -158,15 +170,15 @@
 
 (defn fetch-operations []
   (GET (routing/path "/operations")
-       {:handler #(reset! operations %)
+       {:handler #(reset! operations (set %))
         :headers (language-header)
-        :response-format :detect}))
+        :response-format (f/detect-response-format {:response-format formats})}))
 
 (defn fetch-translations [lang]
   (GET (routing/path (str "/i18n/" (name lang)))
        :headers (language-header)
        :handler #(swap! translations assoc :translations %1 :current-lang lang)
-       :response-format :detect))
+       :response-format (f/detect-response-format {:response-format formats-no-kws})))
 
 (defn set-lang! [lang]
   (fetch-translations lang))
@@ -186,7 +198,8 @@
                                                    :has-more? has-more?
                                                    :took took
                                                    :results (concat (:results @search-results) results)})))
-         :error-handler search-error-handler}))
+         :error-handler search-error-handler
+         :response-format (f/detect-response-format {:response-format formats})}))
 
 (defn search-onkalo []
   (POST (routing/path "/search-onkalo")
@@ -197,7 +210,8 @@
                                                  :onkalo-has-more? has-more?
                                                  :onkalo-took took
                                                  :onkalo-results (concat (:onkalo-results @search-results) results)}))
-         :error-handler search-error-handler}))
+         :error-handler search-error-handler
+         :response-format (f/detect-response-format {:response-format formats})}))
 
 (defn new-search []
   (swap! search-query assoc :page 0)
@@ -314,14 +328,10 @@
 (defn fetch-user-and-config []
   (GET (routing/path "/user-and-config")
        {:handler (fn [data]
-                   (println data)
                    (reset! config data)
                    (load-saved-search))
-        :error-handler (fn [err]
-                         (println "Error fetching user and config")
-                         (println err))
         :headers (language-header)
-        :response-format :detect}))
+        :response-format (f/detect-response-format {:response-format formats})}))
 
 (defn update-onkalo-result-data [id new-metadata]
   (swap! search-results (fn [{:keys [onkalo-results] :as res}]
