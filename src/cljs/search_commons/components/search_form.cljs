@@ -89,7 +89,7 @@
      [:div.checkboxes
       [:div.half
        (doall
-         (map field-limit-checkbox [:address :attachment.label.contents :applicant :tyomaasta-vastaava :projectDescription]))]
+         (map field-limit-checkbox [:address :attachment.label.contents :applicant :tyomaasta-vastaava :projectDescription :deleted]))]
       [:div.half
        (doall
          (map field-limit-checkbox [:designer :handler :propertyId :foreman]))]]

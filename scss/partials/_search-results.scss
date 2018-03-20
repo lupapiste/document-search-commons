@@ -115,6 +115,10 @@ $result-highlight: $orange-light;
         .result-item-status {
           font-size: 0.6em;
         }
+        .deleted {
+          font-size: 0.6em;
+          color: red;
+        }
       }
       &:nth-child(even) {
         .result-item-data {
@@ -311,25 +315,17 @@ $result-highlight: $orange-light;
 
       }
 
-      .save-button {
+      .editing-buttons {
+        width: 100%;
         position: absolute;
         bottom: 15px;
         left: 15px;
         font-size: 1.3em;
         line-height: normal;
-        .btn-primary {
-          width: auto;
-          height: 40px;
-        }
-        i {
-          font-size: 22px;
-          margin: 0;
-          line-height: normal;
-          padding: 3px 15px 3px 0;
-          vertical-align: middle;
-        }
-        span {
-          display: table-cell;
+
+        button {
+          float: left;
+          margin-right: 15px;
         }
       }
 
@@ -358,6 +354,9 @@ $result-highlight: $orange-light;
               margin-bottom: 8px;
             }
           }
+        }
+        .deleted {
+          color: red;
         }
         .archive-data {
           margin-top: 15px;

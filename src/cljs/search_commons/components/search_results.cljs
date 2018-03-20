@@ -96,14 +96,15 @@
 
 (defn result-list-item [result]
   (let [{:keys [propertyId address verdict-ts municipality type contents id filename created
-                tiedostonimi paatospvm jattopvm metadata source-system organization fileId]} result
+                tiedostonimi paatospvm jattopvm metadata source-system organization fileId
+                applicationId deleted]} result
         verdict-date (or verdict-ts paatospvm)
         multi-select-mode @state/multi-select-mode
         archived? (= :onkalo source-system)
         result-item-onclick (if multi-select-mode
-                              (fn [] (state/multi-select-result id (or fileId id) (or filename tiedostonimi) organization archived?))
+                              (fn [] (state/multi-select-result id (or fileId id) (or filename tiedostonimi) organization archived? applicationId))
                               (fn [] (reset! state/selected-result-id id)
-                                     (state/mark-result-seen id)))
+                                (state/mark-result-seen id)))
         result-item-class (cond
                             (and multi-select-mode (state/multi-selected-results-contain? id)) "selected"
                             (= id @state/selected-result-id) "selected"
@@ -113,10 +114,11 @@
      [:div.result-item-data {:class result-item-class}
       [:div.result-type
        (format-file-extension (or filename tiedostonimi))
-       (if (contains? (:seen-results @state/search-results) id)
-         [:div.seen-icon
-          [:i.icon-ok-circled2 {:title (t "Tulos katsottu")}]]
-         [:div.result-item-status (t (:tila metadata))])]
+       (cond
+         (contains? (:seen-results @state/search-results) id) [:div.seen-icon
+                                                               [:i.icon-ok-circled2 {:title (t "Tulos katsottu")}]]
+         deleted [:div.deleted (t "Poistettu")]
+         :else [:div.result-item-status (t (:tila metadata))])]
       [:div.result-item-text
        [:div.hover-popout
 
@@ -199,7 +201,7 @@
                                                                             (.requestAnimationFrame js/window animate-frame))))]
                                               (animate-frame start))))))))
 
-(def div-content (reagent/atom {:id nil
+(def div-content (reagent/atom {:id   nil
                                 :text nil}))
 
 (defn fetch-div-content [id url]

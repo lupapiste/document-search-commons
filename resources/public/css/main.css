@@ -6935,6 +6935,11 @@ footer ul li {
   font-size: 0.6em;
 }
 
+.result-list-container .result-list .result-item .result-item-data .deleted {
+  font-size: 0.6em;
+  color: red;
+}
+
 .result-list-container .result-list .result-item:nth-child(even) .result-item-data {
   background-color: white;
 }
@@ -7172,7 +7177,8 @@ footer ul li {
   min-width: 200px;
 }
 
-.result-view-container .result-view .result-view-content .save-button {
+.result-view-container .result-view .result-view-content .editing-buttons {
+  width: 100%;
   position: absolute;
   bottom: 15px;
   left: 15px;
@@ -7180,21 +7186,9 @@ footer ul li {
   line-height: normal;
 }
 
-.result-view-container .result-view .result-view-content .save-button .btn-primary {
-  width: auto;
-  height: 40px;
-}
-
-.result-view-container .result-view .result-view-content .save-button i {
-  font-size: 22px;
-  margin: 0;
-  line-height: normal;
-  padding: 3px 15px 3px 0;
-  vertical-align: middle;
-}
-
-.result-view-container .result-view .result-view-content .save-button span {
-  display: table-cell;
+.result-view-container .result-view .result-view-content .editing-buttons button {
+  float: left;
+  margin-right: 15px;
 }
 
 .result-view-container .result-view .result-view-content .metadata {
@@ -7226,6 +7220,10 @@ footer ul li {
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 8px;
+}
+
+.result-view-container .result-view .result-view-content .metadata .deleted {
+  color: red;
 }
 
 .result-view-container .result-view .result-view-content .metadata .archive-data {
@@ -7378,6 +7376,63 @@ footer ul li {
   width: 100%;
   height: 400px;
   margin-top: 10px;
+}
+
+.confirm-dialog-background {
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(100, 100, 100, 0.5);
+  z-index: 3;
+}
+
+.confirm-dialog-background .confirm-dialog {
+  width: 400px;
+  height: 300px;
+  top: 200px;
+  margin: auto;
+  position: relative;
+  background-color: #ffffff;
+  border: 2px solid #555555;
+}
+
+.confirm-dialog-background .confirm-dialog .confirm-dialog-header, .confirm-dialog-background .confirm-dialog .confirm-dialog-content {
+  padding: 15px;
+}
+
+.confirm-dialog-background .confirm-dialog .confirm-dialog-header {
+  background-color: #f6f6f6;
+}
+
+.confirm-dialog-background .confirm-dialog .confirm-dialog-content .message {
+  margin-bottom: 20px;
+}
+
+.confirm-dialog-background .confirm-dialog .confirm-dialog-content .explanation {
+  margin-bottom: 20px;
+}
+
+.confirm-dialog-background .confirm-dialog .confirm-dialog-content .buttons {
+  width: 50%;
+  margin: auto;
+  padding-top: 20px;
+}
+
+.confirm-dialog-background .confirm-dialog .confirm-dialog-content .buttons :first-child {
+  float: left;
+}
+
+.confirm-dialog-background .confirm-dialog .confirm-dialog-content .buttons button {
+  float: right;
+}
+
+.confirm-dialog-background .confirm-dialog .confirm-dialog-content .loading {
+  margin: auto;
 }
 
 body {
