@@ -236,10 +236,8 @@
   (when (and (contains? (:targets @search-query) :lupapiste)
              (get-in @config [:config :lupapiste-enabled?]))
     (search-lupapiste))
-  (when (or (and (contains? (:targets @search-query) :onkalo)
-                 (get-in @config [:config :onkalo-enabled?]))
-            (and (contains? (:targets @search-query) :deleted)
-                 (get-in @config [:config :onkalo-enabled?])))
+  (when (and (contains? (:targets @search-query) :onkalo)
+             (get-in @config [:config :onkalo-enabled?]))
     (search-onkalo)))
 
 (defn fetch-more []
