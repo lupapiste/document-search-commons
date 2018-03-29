@@ -1,4 +1,4 @@
-.confirm-dialog-background {
+.dialog-background {
   position: fixed;
   display: block;
   width: 100%;
@@ -8,49 +8,62 @@
   right: 0;
   bottom: 0;
   background-color: rgba(100,100,100,0.5);
-  z-index: 3;
+  filter: alpha(opacity=50)\9;
+  z-index: 2003;
 
-  .confirm-dialog {
-    width: 400px;
-    height: 300px;
+  .dialog {
+    width: 480px;
+    min-height: 150px;
     top: 200px;
     margin: auto;
+    padding: 12px;
     position: relative;
     background-color: #ffffff;
-    border: 2px solid $gray85;
 
-    .confirm-dialog-header, .confirm-dialog-content {
-      padding: 15px;
+    .dialog-header, .dialog-content {
+      padding: 12px;
     }
 
-    .confirm-dialog-header {
-      background-color: $gray246;
+    .dialog-header {
+      padding: 2px 24;
+      border-bottom: 1px solid;
+      p {
+        margin: 0;
+        font-size: 20px;
+        display: inline;
+      }
     }
-    .confirm-dialog-content {
+    .dialog-content {
+
+      min-height: 96px;
+      position: relative;
+      margin: 12px 0;
+      padding: 12px 0 0 0;
 
       .message {
-        margin-bottom: 20px;
+        margin-bottom: 8px;
       }
 
       .explanation {
-        margin-bottom: 20px;
+        margin-bottom: 50px;
+
+        input {
+          width: 100%;
+        }
       }
 
       .buttons {
-        width: 50%;
-        margin: auto;
-        padding-top: 20px;
-
-        :first-child {
-          float: left;
-        }
-
-        button {
-          float: right;
+        .negative {
+          left: 0;
         }
       }
-      .loading {
-        margin: auto;
+
+      .ok {
+        padding-top: 24px;
+        button {
+          position: relative;
+          margin: 0 auto 0 auto;
+        }
       }
     }
   }

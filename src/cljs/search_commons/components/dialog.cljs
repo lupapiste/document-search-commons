@@ -7,11 +7,15 @@
 
 (defn yes-no-with-exp-dialog-content [{:keys [message yes-fn yes-text] :as data}]
   (let [explanation (reagent/atom "")
-        no-fn       (fn []
-                      (reset! state/confirm-dialog-data nil)
-                      (reset! state/show-confirm-dialog false))]
+        waiting? (reagent/atom false)
+        yes-fn-with-wait (fn [expl]
+                           (reset! waiting? true)
+                           (yes-fn expl))
+        no-fn (fn []
+                (reset! state/dialog-data nil)
+                (reset! state/show-dialog false))]
     (fn [{:keys [message yes-fn yes-text] :as data}]
-      [:div.confirm-dialog-content
+      [:div.dialog-content
        [:div.message
         [:span.like-btn message]]
        [:div.explanation
@@ -21,40 +25,46 @@
                  :value       @explanation
                  :on-change   #(reset! explanation (.. % -target -value))}]]
        [:div.buttons
-        [:button.negative {:on-click #(yes-fn @explanation)
-                           :disabled (s/blank? @explanation)}
+        [:button.btn-dialog.negative {:on-click #(yes-fn-with-wait @explanation)
+                           :class (when @waiting? "waiting")
+                           :disabled (or @waiting? (s/blank? @explanation))}
          [:span (or yes-text "OK")]]
-        [:button.secondary {:on-click no-fn}
+        [:button.btn-dialog.secondary {:on-click no-fn
+                            :disabled @waiting?}
          [:span (t "Peruuta")]]]])))
 
 (defn ok-dialog-content [{:keys [message ok-fn]}]
   (let [click-fn (fn []
-                   (ok-fn)
-                   (reset! state/confirm-dialog-data nil)
-                   (reset! state/show-confirm-dialog false))]
-    [:div.confirm-dialog-content
-     [:div.message
-      [:span.like-btn message]]
-     [:div
-      [:button.secondary {:on-click click-fn}]]]))
-
-(defn confirm-dialog []
-  (let [{:keys [dialog-type header] :as data} @state/confirm-dialog-data]
+                   (reset! state/dialog-data nil)
+                   (reset! state/show-dialog false)
+                   (ok-fn))]
     (fn []
-      [:div.confirm-dialog-background
-       [:div.confirm-dialog
-        [:div.confirm-dialog-header
-         [:h4 header]]
+      [:div.dialog-content
+       [:div.message
+        [:span.like-btn message]]
+       [:div.ok
+        [:button.btn-dialog.secondary {:on-click click-fn}
+         [:span (t "OK")]]]])))
+
+(defn dialog []
+  (fn []
+    (let [{:keys [dialog-type header] :as data} @state/dialog-data]
+      [:div.dialog-background
+       [:div.dialog
+        [:div.dialog-header
+         [:p header]]
         (cond
           (= dialog-type :ok) [ok-dialog-content data]
           (= dialog-type :yes-no-exp) [yes-no-with-exp-dialog-content data]
-          :else (reset! state/show-confirm-dialog false))]])))
+          :else (reset! state/show-dialog false))]])))
 
 (defn ok-dialog [header message ok-fn]
-  (swap! state/confirm-dialog-data :header header :message message :ok-fn ok-fn :dialog-type :ok)
-  (reset! state/show-confirm-dialog true))
+  (reset! state/show-dialog false)
+  (swap! state/dialog-data assoc :header header :message message :ok-fn ok-fn :dialog-type :ok)
+  (reset! state/show-dialog true))
 
 (defn yes-no-dialog-with-explanation [header message yes-fn & [yes-text]]
-  (swap! state/confirm-dialog-data :header header :message message :yes-fn yes-fn :dialog-type :yes-no-exp)
-  (when yes-text (swap! state/confirm-dialog-data :yes-text yes-text))
-  (reset! state/show-confirm-dialog true))
+  (reset! state/show-dialog false)
+  (swap! state/dialog-data assoc :header header :message message :yes-fn yes-fn :dialog-type :yes-no-exp)
+  (when yes-text (swap! state/dialog-data assoc :yes-text yes-text))
+  (reset! state/show-dialog true))
