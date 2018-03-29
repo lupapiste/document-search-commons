@@ -102,7 +102,7 @@
         multi-select-mode @state/multi-select-mode
         archived? (= :onkalo source-system)
         result-item-onclick (if multi-select-mode
-                              (fn [] (state/multi-select-result id (or fileId id) (or filename tiedostonimi) organization archived? applicationId))
+                              (fn [] (state/multi-select-result id (or fileId id) (or filename tiedostonimi) organization archived? applicationId type deleted))
                               (fn [] (reset! state/selected-result-id id)
                                 (state/mark-result-seen id)))
         result-item-class (cond
@@ -115,9 +115,9 @@
       [:div.result-type
        (format-file-extension (or filename tiedostonimi))
        (cond
+         (some? deleted) [:div.deleted (t "Poistettu")]
          (contains? (:seen-results @state/search-results) id) [:div.seen-icon
                                                                [:i.icon-ok-circled2 {:title (t "Tulos katsottu")}]]
-         deleted [:div.deleted (t "Poistettu")]
          :else [:div.result-item-status (t (:tila metadata))])]
       [:div.result-item-text
        [:div.hover-popout

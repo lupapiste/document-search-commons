@@ -355,7 +355,7 @@ $result-highlight: $orange-light;
             }
           }
         }
-        .deleted {
+        .metadata.item, .deleted {
           color: red;
         }
         .archive-data {

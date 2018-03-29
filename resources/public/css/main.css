@@ -7222,7 +7222,7 @@ footer ul li {
   margin-bottom: 8px;
 }
 
-.result-view-container .result-view .result-view-content .metadata .deleted {
+.result-view-container .result-view .result-view-content .metadata .metadata.item, .result-view-container .result-view .result-view-content .metadata .deleted {
   color: red;
 }
 
@@ -7378,7 +7378,7 @@ footer ul li {
   margin-top: 10px;
 }
 
-.confirm-dialog-background {
+.dialog-background {
   position: fixed;
   display: block;
   width: 100%;
@@ -7388,51 +7388,65 @@ footer ul li {
   right: 0;
   bottom: 0;
   background-color: rgba(100, 100, 100, 0.5);
-  z-index: 3;
+  filter: alpha(opacity=50) \9;
+  z-index: 2003;
 }
 
-.confirm-dialog-background .confirm-dialog {
-  width: 400px;
-  height: 300px;
+.dialog-background .dialog {
+  width: 480px;
+  min-height: 150px;
   top: 200px;
   margin: auto;
+  padding: 12px;
   position: relative;
   background-color: #ffffff;
-  border: 2px solid #555555;
 }
 
-.confirm-dialog-background .confirm-dialog .confirm-dialog-header, .confirm-dialog-background .confirm-dialog .confirm-dialog-content {
-  padding: 15px;
+.dialog-background .dialog .dialog-header, .dialog-background .dialog .dialog-content {
+  padding: 12px;
 }
 
-.confirm-dialog-background .confirm-dialog .confirm-dialog-header {
-  background-color: #f6f6f6;
+.dialog-background .dialog .dialog-header {
+  padding: 2px 24;
+  border-bottom: 1px solid;
 }
 
-.confirm-dialog-background .confirm-dialog .confirm-dialog-content .message {
-  margin-bottom: 20px;
+.dialog-background .dialog .dialog-header p {
+  margin: 0;
+  font-size: 20px;
+  display: inline;
 }
 
-.confirm-dialog-background .confirm-dialog .confirm-dialog-content .explanation {
-  margin-bottom: 20px;
+.dialog-background .dialog .dialog-content {
+  min-height: 96px;
+  position: relative;
+  margin: 12px 0;
+  padding: 12px 0 0 0;
 }
 
-.confirm-dialog-background .confirm-dialog .confirm-dialog-content .buttons {
-  width: 50%;
-  margin: auto;
-  padding-top: 20px;
+.dialog-background .dialog .dialog-content .message {
+  margin-bottom: 8px;
 }
 
-.confirm-dialog-background .confirm-dialog .confirm-dialog-content .buttons :first-child {
-  float: left;
+.dialog-background .dialog .dialog-content .explanation {
+  margin-bottom: 50px;
 }
 
-.confirm-dialog-background .confirm-dialog .confirm-dialog-content .buttons button {
-  float: right;
+.dialog-background .dialog .dialog-content .explanation input {
+  width: 100%;
 }
 
-.confirm-dialog-background .confirm-dialog .confirm-dialog-content .loading {
-  margin: auto;
+.dialog-background .dialog .dialog-content .buttons .negative {
+  left: 0;
+}
+
+.dialog-background .dialog .dialog-content .ok {
+  padding-top: 24px;
+}
+
+.dialog-background .dialog .dialog-content .ok button {
+  position: relative;
+  margin: 0 auto 0 auto;
 }
 
 body {
