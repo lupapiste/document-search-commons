@@ -39,6 +39,7 @@
    :coordinates []
    :organization ""
    :tokenize? false
+   :deleted? false
    :targets #{:lupapiste :onkalo}})
 
 (defonce search-query (reagent/atom empty-search-query))
@@ -77,9 +78,9 @@
 
 (defonce multi-selected-results (reagent/atom #{}))
 
-(defonce show-confirm-dialog (reagent/atom false))
+(defonce show-dialog (reagent/atom false))
 
-(defonce confirm-dialog-data (reagent/atom nil))
+(defonce dialog-data (reagent/atom nil))
 
 (defonce mass-operation-request-map (reagent/atom nil))
 
@@ -223,8 +224,10 @@
   (when (and (contains? (:targets @search-query) :lupapiste)
              (get-in @config [:config :lupapiste-enabled?]))
     (search-lupapiste))
-  (when (and (contains? (:targets @search-query) :onkalo)
-             (get-in @config [:config :onkalo-enabled?]))
+  (when (or (and (contains? (:targets @search-query) :onkalo)
+                 (get-in @config [:config :onkalo-enabled?]))
+            (and (contains? (:targets @search-query) :deleted)
+                 (get-in @config [:config :onkalo-enabled?])))
     (search-onkalo)))
 
 (defn fetch-more []
@@ -251,21 +254,24 @@
 (defn multi-selected-results-contain? [doc-id]
   (some #(= doc-id (:doc-id %)) @multi-selected-results))
 
-(defn multi-select-result [doc-id file-id filename org-id archived? applicationId]
+(defn multi-select-result [doc-id file-id filename org-id archived? applicationId type deleted]
   (let [source (if archived? "onkalo" "lupapiste")
-        doc-entry {:source source :org-id org-id :doc-id doc-id :file-id file-id :filename filename :application-id applicationId}]
+        doc-entry {:source source :org-id org-id :doc-id doc-id :file-id file-id :filename filename
+                   :application-id applicationId :type type :deleted deleted}]
     (if (multi-selected-results-contain? doc-id)
       (swap! multi-selected-results disj doc-entry)
       (when (< @multi-select-count 200) (swap! multi-selected-results conj doc-entry)))))
 
 (defn multi-select-result-group [all-selected? result-group]
-  (let [select (fn [{:keys [id fileId filename tiedostonimi organization source-system applicationId]}]
+  (let [select (fn [{:keys [id fileId filename tiedostonimi organization source-system applicationId type deleted]}]
                  (multi-select-result id
                                       (or fileId id)
                                       (or tiedostonimi filename)
                                       organization
                                       (= :onkalo source-system)
-                                      applicationId))]
+                                      applicationId
+                                      type
+                                      deleted))]
     (if all-selected?
       (doall (for [result result-group] (select result)))
       (when (<= (+ (count result-group) @multi-select-count) 200)
