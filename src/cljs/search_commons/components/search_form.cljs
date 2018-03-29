@@ -89,7 +89,7 @@
      [:div.checkboxes
       [:div.half
        (doall
-         (map field-limit-checkbox [:address :attachment.label.contents :applicant :tyomaasta-vastaava :projectDescription :deleted]))]
+         (map field-limit-checkbox [:address :attachment.label.contents :applicant :tyomaasta-vastaava :projectDescription]))]
       [:div.half
        (doall
          (map field-limit-checkbox [:designer :handler :propertyId :foreman]))]]
@@ -148,4 +148,10 @@
            [:input {:type      "checkbox"
                     :checked   (contains? (get @state/search-query :targets) :onkalo)
                     :on-change #(toggle-query-field :onkalo (.. % -target -checked) :targets)}]
-           [:span (t "Säilytysjärjestelmä")]]]]])]]])
+           [:span (t "Säilytysjärjestelmä")]]]]])
+     [:h4 (t "Hae vain arkistosta poistetuista")]
+     [:div
+      [:div.half
+       [:input {:type      "checkbox"
+                :checked   (:deleted? @state/search-query)
+                :on-change #(swap! state/search-query assoc :deleted? (.. % -target -checked))}]]]]]])
