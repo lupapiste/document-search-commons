@@ -154,4 +154,8 @@
       [:div.half
        [:input {:type      "checkbox"
                 :checked   (:deleted? @state/search-query)
-                :on-change #(swap! state/search-query assoc :deleted? (.. % -target -checked))}]]]]]])
+                :on-change (fn [event]
+                             (let [deleted? (.. event -target -checked)]
+                               (when (and deleted? (get-in @state/config [:config :lupapiste-enabled?]))
+                                 (toggle-query-field :lupapiste false :targets))
+                               (swap! state/search-query assoc :deleted? deleted?)))}]]]]]])
