@@ -2,7 +2,7 @@
 (cemerick.pomegranate.aether/register-wagon-factory!
   "http" #(org.apache.maven.wagon.providers.http.HttpWagon.))
 
-(defproject lupapiste/document-search-commons "0.6.8"
+(defproject lupapiste/document-search-commons "0.7.3"
   :description "Common document search related code shared between lupadoku and onkalo applications"
   :url "http://www.lupapiste.fi"
   :license {:name "European Union Public License"
@@ -12,20 +12,20 @@
   :repositories [["boundless" {:url "https://repo.boundlessgeo.com/main/"}]
                  ["osgeo" {:url "http://download.osgeo.org/webdav/geotools"}]]
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.geotools/gt-main "17.2"]
-                 [org.geotools/gt-referencing "17.2"]
-                 [org.geotools/gt-epsg-wkt "17.2"]
+                 [org.geotools/gt-main "18.2"]
+                 [org.geotools/gt-referencing "18.2"]
+                 [org.geotools/gt-epsg-wkt "18.2"]
 
                  ;; ClojureScript
                  [org.clojure/clojurescript "1.9.854"]
                  [reagent "0.7.0"]
-                 [cljs-ajax "0.6.0"]
+                 [cljs-ajax "0.7.3"]
                  [cljs-pikaday "0.1.4"]
                  [cljsjs/moment "2.17.1-1"]
-                 [cljsjs/openlayers "3.15.1"]
+                 [cljsjs/openlayers "4.4.1-1"]
                  [tailrecursion/cljson "1.0.7"]
                  [alandipert/storage-atom "2.0.1"]]
-  :profiles {:provided {:dependencies [[lupapiste/commons "0.8.0" :exclusions [commons-logging commons-codec]]]}}
+  :profiles {:provided {:dependencies [[lupapiste/commons "0.9.7" :exclusions [commons-logging commons-codec]]]}}
   :plugins [[deraen/lein-sass4clj "0.3.0"]]
   :source-paths ["src/clj" "src/cljc" "src/cljs"]
   :cljsbuild {:builds {:dev {:source-paths ["src/cljc" "src/cljs"]}}}

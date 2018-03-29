@@ -96,9 +96,9 @@
 
 (defn result-list-item [result]
   (let [{:keys [propertyId address verdict-ts municipality type contents id filename created
-                tiedostonimi paatospvm jattopvm metadata source-system organization fileId
+                tiedostonimi paatospvm jattopvm lupapvm metadata source-system organization fileId
                 applicationId deleted]} result
-        verdict-date (or verdict-ts paatospvm)
+        verdict-date (or verdict-ts paatospvm lupapvm)
         multi-select-mode @state/multi-select-mode
         archived? (= :onkalo source-system)
         result-item-onclick (if multi-select-mode
@@ -128,17 +128,19 @@
          (when-not (s/blank? address)
            [:span address ", "])
          [:span
-          (municipality-name municipality) " - " (to-human-readable-property-id propertyId) " - "
+          (municipality-name municipality) " - " (to-human-readable-property-id propertyId)
           (let [ts (or verdict-date created jattopvm)
                 t-key (if verdict-date "Päätetty {pvm}" "Lisätty {pvm}")]
-            (-> (t t-key)
-                (.replace "{pvm}" (format-date ts))))]]]]]
+            (when ts
+              (str
+                " - "
+                (-> (t t-key)
+                    (.replace "{pvm}" (format-date ts))))))]]]]]
      (when (and (not multi-select-mode) (= id @state/selected-result-id))
        [:div.arrow-right])]))
 
 (defn result-list []
-  (let [{:keys [has-more? onkalo-has-more? loading?]} @state/search-results
-        {{:keys [lupapiste-host]} :config} @state/config]
+  (let [{:keys [has-more? onkalo-has-more? loading?]} @state/search-results]
     [:div.result-list-container
      [:ol.result-list
       (doall
@@ -158,7 +160,7 @@
              [:h4.application-separator
               (if-not (s/blank? applicationId)
                 [:span
-                 [:a {:href (str lupapiste-host "/app/fi/authority#!/application/" applicationId)} applicationId]]
+                 [:a {:href (str "/app/fi/authority#!/application/" applicationId)} applicationId]]
                 [:span grouping-key])
               (when @state/multi-select-mode select-all-link)]
              [:ol.result-list

@@ -42,7 +42,7 @@
 (def db-property-id-regex #"(\d{1,3})(\d{1,3})(\d{1,4})(\d{1,4})")
 
 (defn proxy-url [map]
-  (let [host (get-in @state/config [:config :lupapiste-host])]
+  (let [host (get-in @state/config [:config :cdn-host])]
     (str host "/proxy/" map)))
 
 (defn make-tilegrid []
@@ -208,8 +208,12 @@
              drawing-interaction (ol.interaction.Draw. #js {:source   drawing-source
                                                             :type     "Polygon"
                                                             :features features
-                                                            :condition (fn [event]
-                                                                         (not (.hasFeatureAtPixel @map-object-atom (.-pixel event) (fn [layer-candidate] (= layer-candidate cluster-layer)))))})
+                                                            ; This checks that the drawing tool does not prevent clicking
+                                                            ; on a search result (cluster) marker
+                                                            :condition #(not (.hasFeatureAtPixel @map-object-atom
+                                                                                                 (.-pixel %)
+                                                                                                 #js {:layerFilter (fn [layer-candidate]
+                                                                                                                     (= layer-candidate cluster-layer))}))})
 
              select-interaction (ol.interaction.Select. #js {:multi true
                                                              :layers #js [cluster-layer]
@@ -247,6 +251,8 @@
              cluster-source (make-cluster-source)]
          (.setSource cluster-layer cluster-source)
          (reset! map-view-atom (ol.View. #js {:center     (clj->js (map-center))
+                                              :minZoom    2
+                                              :maxZoom    14
                                               :zoom       8
                                               :projection projektio}))
          (reset! map-object-atom (ol/Map. #js {:controls     (-> (ol.control.defaults) (.extend (clj->js [(ol.control.Control. #js {"element" custom-buttons})])))

@@ -7378,6 +7378,10 @@ footer ul li {
   margin-top: 10px;
 }
 
+.map .ol-attribution {
+  display: none !important;
+}
+
 .dialog-background {
   position: fixed;
   display: block;
