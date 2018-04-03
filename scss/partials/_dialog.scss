@@ -45,14 +45,16 @@
       }
 
       .explanation {
-        margin-bottom: 50px;
+        margin-bottom: 100px;
 
         input {
+          padding: 0;
           width: 100%;
         }
       }
 
       .buttons {
+        position: relative;
         .negative {
           left: 0;
         }
