@@ -12,7 +12,7 @@
                            (reset! waiting? true)
                            (yes-fn expl))
         no-fn (fn []
-                (reset! state/dialog-data nil)]
+                (reset! state/dialog-data nil))]
     (fn [{:keys [message yes-fn yes-text] :as data}]
       [:div.dialog-content
        [:div.message
@@ -54,7 +54,7 @@
         (cond
           (= dialog-type :ok) [ok-dialog-content data]
           (= dialog-type :yes-no-exp) [yes-no-with-exp-dialog-content data]
-          :else (reset! state/show-dialog false))]])))
+          :else (reset! state/dialog-data nil))]])))
 
 (defn ok-dialog [header message ok-fn]
   (reset! state/dialog-data nil)
