@@ -1,0 +1,72 @@
+.dialog-background {
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(100,100,100,0.5);
+  filter: alpha(opacity=50)\9;
+  z-index: 2003;
+
+  .dialog {
+    width: 480px;
+    min-height: 150px;
+    top: 200px;
+    margin: auto;
+    padding: 12px;
+    position: relative;
+    background-color: #ffffff;
+
+    .dialog-header, .dialog-content {
+      padding: 12px;
+    }
+
+    .dialog-header {
+      padding: 2px 24;
+      border-bottom: 1px solid;
+      p {
+        margin: 0;
+        font-size: 20px;
+        display: inline;
+      }
+    }
+    .dialog-content {
+
+      min-height: 96px;
+      position: relative;
+      margin: 12px 0;
+      padding: 12px 0 0 0;
+
+      .message {
+        margin-bottom: 8px;
+      }
+
+      .explanation {
+        margin-bottom: 100px;
+
+        input {
+          padding: 0;
+          width: 100%;
+        }
+      }
+
+      .buttons {
+        position: relative;
+        .negative {
+          left: 0;
+        }
+      }
+
+      .ok {
+        padding-top: 24px;
+        button {
+          position: relative;
+          margin: 0 auto 0 auto;
+        }
+      }
+    }
+  }
+}

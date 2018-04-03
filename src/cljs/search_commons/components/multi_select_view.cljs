@@ -6,7 +6,7 @@
 
 (def writer (transit/writer :json))
 
-(defn select-view []
+(defn select-view [& [mass-operations]]
   (let [total (count @state/multi-selected-results)]
     [:div.select-view
      [:div.select-view-header
@@ -30,4 +30,6 @@
        [:input {:type "hidden" :name "docs" :value (transit/write writer @state/multi-selected-results)}]
        [:button.secondary {:type "submit" :disabled (= 0 total)}
         [:i.lupicon-download]
-        [:span (t "Lataa valitut dokumentit")]]]]]))
+        [:span (t "Lataa valitut dokumentit")]]]
+      [:div.undo-archive]]
+     (when mass-operations [mass-operations])]))

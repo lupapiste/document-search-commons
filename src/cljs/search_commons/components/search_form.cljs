@@ -148,4 +148,14 @@
            [:input {:type      "checkbox"
                     :checked   (contains? (get @state/search-query :targets) :onkalo)
                     :on-change #(toggle-query-field :onkalo (.. % -target -checked) :targets)}]
-           [:span (t "Säilytysjärjestelmä")]]]]])]]])
+           [:span (t "Säilytysjärjestelmä")]]]]])
+     [:h4 (t "Hae vain arkistosta poistetuista")]
+     [:div
+      [:div.half
+       [:input {:type      "checkbox"
+                :checked   (:deleted? @state/search-query)
+                :on-change (fn [event]
+                             (let [deleted? (.. event -target -checked)]
+                               (when (and deleted? (get-in @state/config [:config :lupapiste-enabled?]))
+                                 (toggle-query-field :lupapiste false :targets))
+                               (swap! state/search-query assoc :deleted? deleted?)))}]]]]]])

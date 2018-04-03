@@ -51,6 +51,7 @@
    :coordinates []
    :organization ""
    :tokenize? false
+   :deleted? false
    :targets #{:lupapiste :onkalo}})
 
 (defonce search-query (reagent/atom empty-search-query))
@@ -88,6 +89,10 @@
 (defonce multi-select-mode (reagent/atom false))
 
 (defonce multi-selected-results (reagent/atom #{}))
+
+(defonce dialog-data (reagent/atom nil))
+
+(defonce mass-operation-request-map (reagent/atom nil))
 
 (def unique-results
   (reaction
@@ -257,20 +262,24 @@
 (defn multi-selected-results-contain? [doc-id]
   (some #(= doc-id (:doc-id %)) @multi-selected-results))
 
-(defn multi-select-result [doc-id file-id filename org-id archived?]
+(defn multi-select-result [doc-id file-id filename org-id archived? applicationId type deleted]
   (let [source (if archived? "onkalo" "lupapiste")
-        doc-entry {:source source :org-id org-id :doc-id doc-id :file-id file-id :filename filename}]
+        doc-entry {:source source :org-id org-id :doc-id doc-id :file-id file-id :filename filename
+                   :application-id applicationId :type type :deleted deleted}]
     (if (multi-selected-results-contain? doc-id)
       (swap! multi-selected-results disj doc-entry)
       (when (< @multi-select-count 200) (swap! multi-selected-results conj doc-entry)))))
 
 (defn multi-select-result-group [all-selected? result-group]
-  (let [select (fn [{:keys [id fileId filename tiedostonimi organization source-system]}]
+  (let [select (fn [{:keys [id fileId filename tiedostonimi organization source-system applicationId type deleted]}]
                  (multi-select-result id
                                       (or fileId id)
                                       (or tiedostonimi filename)
                                       organization
-                                      (= :onkalo source-system)))]
+                                      (= :onkalo source-system)
+                                      applicationId
+                                      type
+                                      deleted))]
     (if all-selected?
       (doall (for [result result-group] (select result)))
       (when (<= (+ (count result-group) @multi-select-count) 200)
@@ -284,8 +293,9 @@
                                  org-id (:organization result)
                                  doc-id (:id result)
                                  file-id (or (:fileId result) doc-id)
-                                 filename (or (:filename result) (:tiedostonimi result))]
-                             {:source source :org-id org-id :doc-id doc-id :file-id file-id :filename filename})))]
+                                 filename (or (:filename result) (:tiedostonimi result))
+                                 applicationId (:applicationId result)]
+                             {:source source :org-id org-id :doc-id doc-id :file-id file-id :filename filename :application-id applicationId})))]
     (reset! multi-selected-results results-set)))
 
 (defn toggle-multi-select-mode []
