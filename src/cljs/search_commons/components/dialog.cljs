@@ -12,8 +12,7 @@
                            (reset! waiting? true)
                            (yes-fn expl))
         no-fn (fn []
-                (reset! state/dialog-data nil)
-                (reset! state/show-dialog false))]
+                (reset! state/dialog-data nil)]
     (fn [{:keys [message yes-fn yes-text] :as data}]
       [:div.dialog-content
        [:div.message
@@ -36,7 +35,6 @@
 (defn ok-dialog-content [{:keys [message ok-fn]}]
   (let [click-fn (fn []
                    (reset! state/dialog-data nil)
-                   (reset! state/show-dialog false)
                    (ok-fn))]
     (fn []
       [:div.dialog-content
@@ -59,12 +57,10 @@
           :else (reset! state/show-dialog false))]])))
 
 (defn ok-dialog [header message ok-fn]
-  (reset! state/show-dialog false)
-  (swap! state/dialog-data assoc :header header :message message :ok-fn ok-fn :dialog-type :ok)
-  (reset! state/show-dialog true))
+  (reset! state/dialog-data nil)
+  (swap! state/dialog-data assoc :header header :message message :ok-fn ok-fn :dialog-type :ok))
 
 (defn yes-no-dialog-with-explanation [header message yes-fn & [yes-text]]
-  (reset! state/show-dialog false)
+  (reset! state/dialog-data nil)
   (swap! state/dialog-data assoc :header header :message message :yes-fn yes-fn :dialog-type :yes-no-exp)
-  (when yes-text (swap! state/dialog-data assoc :yes-text yes-text))
-  (reset! state/show-dialog true))
+  (when yes-text (swap! state/dialog-data assoc :yes-text yes-text)))

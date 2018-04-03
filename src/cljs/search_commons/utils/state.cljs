@@ -90,8 +90,6 @@
 
 (defonce multi-selected-results (reagent/atom #{}))
 
-(defonce show-dialog (reagent/atom false))
-
 (defonce dialog-data (reagent/atom nil))
 
 (defonce mass-operation-request-map (reagent/atom nil))
