@@ -33,7 +33,8 @@
    :loading? false
    :has-more? false
    :onkalo-has-more? false
-   :seen-results #{}})
+   :seen-results #{}
+   :deleted-results #{}})
 
 (defonce search-results (reagent/atom empty-search-results))
 
@@ -214,7 +215,12 @@
                     (swap! search-results merge {:loading? false
                                                  :onkalo-has-more? has-more?
                                                  :onkalo-took took
-                                                 :onkalo-results (concat (:onkalo-results @search-results) results)}))
+                                                 :onkalo-results (concat (:onkalo-results @search-results) results)
+                                                 :deleted-results (->> results
+                                                                       (filter :deleted)
+                                                                       (map :id)
+                                                                       (concat (:deleted-results @search-results))
+                                                                       (set))}))
          :error-handler search-error-handler
          :response-format (f/detect-response-format {:response-format formats})}))
 
@@ -343,16 +349,23 @@
         :headers (language-header)
         :response-format (f/detect-response-format {:response-format formats})}))
 
+(defn update-single-result [new-metadata result]
+  (let [updated-result (assoc result :metadata (:metadata new-metadata)
+                                     :contents (:contents new-metadata)
+                                     :type (:type new-metadata))]
+    (if (:deleted new-metadata)
+      (assoc updated-result :deleted (:deleted new-metadata)
+                            :deletion-explanation (:deletion-explanation new-metadata))
+      (dissoc updated-result :deleted :deletion-explanation))))
+
 (defn update-onkalo-result-data [id new-metadata]
   (swap! search-results (fn [{:keys [onkalo-results] :as res}]
                           (->> onkalo-results
-                               (map (fn [result]
-                                      (if (= id (:id result))
-                                        (assoc result :metadata (:metadata new-metadata)
-                                                      :contents (:contents new-metadata)
-                                                      :type (:type new-metadata))
-                                        result)))
-                               (assoc res :onkalo-results)))))
+                               (map #(if (= id (:id %)) (update-single-result new-metadata %) %))
+                               (assoc res :onkalo-results))))
+  (if (:deleted new-metadata)
+    (swap! search-results assoc :deleted-results (conj (:deleted-results @search-results) id))
+    (swap! search-results assoc :deleted-results (disj (:deleted-results @search-results) id))))
 
 (def results-for-map
   (reaction
