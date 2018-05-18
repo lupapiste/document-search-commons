@@ -39,24 +39,22 @@
       position: relative;
       margin: 12px 0;
       padding: 12px 0 0 0;
-
-      .message {
-        margin-bottom: 8px;
-      }
-
-      .explanation {
-        margin-bottom: 100px;
-
-        input {
-          padding: 0;
-          width: 100%;
-        }
-      }
+      overflow: auto;
 
       .buttons {
-        position: relative;
-        .negative {
+        margin-top: 60px;
+        .btn-dialog {
+          margin: 0;
+        }
+
+        .btn-dialog:first-child {
+          position: absolute;
           left: 0;
+        }
+
+        .btn-dialog:last-child {
+          position: absolute;
+          right: 0;
         }
       }
 
