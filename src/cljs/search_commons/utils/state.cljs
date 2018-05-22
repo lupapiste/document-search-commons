@@ -236,7 +236,8 @@
                                :results []
                                :took nil
                                :onkalo-took nil
-                               :onkalo-results []})
+                               :onkalo-results []
+                               :deleted-results #{}})
   (when (and (contains? (:targets @search-query) :lupapiste)
              (get-in @config [:config :lupapiste-enabled?]))
     (search-lupapiste))
