@@ -115,7 +115,7 @@
       [:div.result-type
        (format-file-extension (or filename tiedostonimi))
        (cond
-         ((:deleted-results @state/search-results) id) [:div.deleted (t "Poistettu")]
+         deleted [:div.deleted (t "Poistettu")]
          (contains? (:seen-results @state/search-results) id) [:div.seen-icon
                                                                [:i.icon-ok-circled2 {:title (t "Tulos katsottu")}]]
          :else [:div.result-item-status (t (:tila metadata))])]

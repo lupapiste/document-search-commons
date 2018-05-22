@@ -33,8 +33,7 @@
    :loading? false
    :has-more? false
    :onkalo-has-more? false
-   :seen-results #{}
-   :deleted-results #{}})
+   :seen-results #{}})
 
 (defonce search-results (reagent/atom empty-search-results))
 
@@ -215,12 +214,7 @@
                     (swap! search-results merge {:loading? false
                                                  :onkalo-has-more? has-more?
                                                  :onkalo-took took
-                                                 :onkalo-results (concat (:onkalo-results @search-results) results)
-                                                 :deleted-results (->> results
-                                                                       (filter :deleted)
-                                                                       (map :id)
-                                                                       (concat (:deleted-results @search-results))
-                                                                       (set))}))
+                                                 :onkalo-results (concat (:onkalo-results @search-results) results)}))
          :error-handler search-error-handler
          :response-format (f/detect-response-format {:response-format formats})}))
 
@@ -236,8 +230,7 @@
                                :results []
                                :took nil
                                :onkalo-took nil
-                               :onkalo-results []
-                               :deleted-results #{}})
+                               :onkalo-results []})
   (when (and (contains? (:targets @search-query) :lupapiste)
              (get-in @config [:config :lupapiste-enabled?]))
     (search-lupapiste))
@@ -363,10 +356,7 @@
   (swap! search-results (fn [{:keys [onkalo-results] :as res}]
                           (->> onkalo-results
                                (map #(if (= id (:id %)) (update-single-result new-metadata %) %))
-                               (assoc res :onkalo-results))))
-  (if (:deleted new-metadata)
-    (swap! search-results assoc :deleted-results (conj (:deleted-results @search-results) id))
-    (swap! search-results assoc :deleted-results (disj (:deleted-results @search-results) id))))
+                               (assoc res :onkalo-results)))))
 
 (def results-for-map
   (reaction
