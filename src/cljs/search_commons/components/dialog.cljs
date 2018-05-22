@@ -5,15 +5,16 @@
             [search-commons.utils.i18n :refer [t]]
             [search-commons.utils.state :as state]))
 
-(defn yes-no-with-exp-dialog-content [{:keys [message yes-fn yes-text] :as data}]
+(defn yes-no-with-exp-dialog-content [{:keys [message yes-fn yes-button yes-text] :as data}]
   (let [explanation (reagent/atom "")
         waiting? (reagent/atom false)
         yes-fn-with-wait (fn [expl]
                            (reset! waiting? true)
                            (yes-fn expl))
+        yes-button-class (str "btn-dialog " yes-button)
         no-fn (fn []
                 (reset! state/dialog-data nil))]
-    (fn [{:keys [message yes-fn yes-text] :as data}]
+    (fn [{:keys [message yes-fn yes-button yes-text] :as data}]
       [:div.dialog-content
        [:div.message
         [:span.like-btn message]]
@@ -26,13 +27,13 @@
                      :rows        "5"
                      :auto-focus  true
                      :placeholder (t "Perustelu")
+                     :value       @explanation
                      :on-change   #(reset! explanation (.. % -target -value))
-                     :read-only   @waiting?}
-                    @explanation]]]
+                     :read-only   @waiting?}]]]
        [:div.buttons
-        [:button.btn-dialog.negative {:on-click #(yes-fn-with-wait @explanation)
-                                      :class (when @waiting? "waiting")
-                                      :disabled (or @waiting? (s/blank? @explanation))}
+        [:button {:on-click #(yes-fn-with-wait @explanation)
+                  :class yes-button-class
+                  :disabled (or @waiting? (s/blank? @explanation))}
          [:span (or yes-text "OK")]]
         [:button.btn-dialog.secondary {:on-click no-fn
                                        :disabled @waiting?}
@@ -66,7 +67,7 @@
   (reset! state/dialog-data nil)
   (swap! state/dialog-data assoc :header header :message message :ok-fn ok-fn :dialog-type :ok))
 
-(defn yes-no-dialog-with-explanation [header message yes-fn & [yes-text]]
+(defn yes-no-dialog-with-explanation [header message yes-fn yes-button & [yes-text]]
   (reset! state/dialog-data nil)
-  (swap! state/dialog-data assoc :header header :message message :yes-fn yes-fn :dialog-type :yes-no-exp)
+  (swap! state/dialog-data assoc :header header :message message :yes-fn yes-fn :yes-button yes-button :dialog-type :yes-no-exp)
   (when yes-text (swap! state/dialog-data assoc :yes-text yes-text)))
