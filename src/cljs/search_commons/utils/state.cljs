@@ -343,15 +343,19 @@
         :headers (language-header)
         :response-format (f/detect-response-format {:response-format formats})}))
 
+(defn update-single-result [new-metadata result]
+  (let [updated-result (assoc result :metadata (:metadata new-metadata)
+                                     :contents (:contents new-metadata)
+                                     :type (:type new-metadata))]
+    (if (:deleted new-metadata)
+      (assoc updated-result :deleted (:deleted new-metadata)
+                            :deletion-explanation (:deletion-explanation new-metadata))
+      (dissoc updated-result :deleted :deletion-explanation))))
+
 (defn update-onkalo-result-data [id new-metadata]
   (swap! search-results (fn [{:keys [onkalo-results] :as res}]
                           (->> onkalo-results
-                               (map (fn [result]
-                                      (if (= id (:id result))
-                                        (assoc result :metadata (:metadata new-metadata)
-                                                      :contents (:contents new-metadata)
-                                                      :type (:type new-metadata))
-                                        result)))
+                               (map #(if (= id (:id %)) (update-single-result new-metadata %) %))
                                (assoc res :onkalo-results)))))
 
 (def results-for-map

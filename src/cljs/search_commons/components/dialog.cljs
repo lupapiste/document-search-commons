@@ -18,18 +18,24 @@
        [:div.message
         [:span.like-btn message]]
        [:div.explanation
-        [:span (t "Perustelu (pakollinen) ")]
-        [:input {:type        "text"
-                 :placeholder (t "Perustelu")
-                 :value       @explanation
-                 :on-change   #(reset! explanation (.. % -target -value))}]]
+        [:div.label
+         [:label {:class (if (s/blank? @explanation) "form-label tip" "form-label")} (t "Perustelu")]]
+        [:div.textarea
+         [:textarea {:class (when (s/blank? @explanation) "tip")
+                     :cols        "70"
+                     :rows        "5"
+                     :auto-focus  true
+                     :placeholder (t "Perustelu")
+                     :on-change   #(reset! explanation (.. % -target -value))
+                     :read-only   @waiting?}
+                    @explanation]]]
        [:div.buttons
         [:button.btn-dialog.negative {:on-click #(yes-fn-with-wait @explanation)
-                           :class (when @waiting? "waiting")
-                           :disabled (or @waiting? (s/blank? @explanation))}
+                                      :class (when @waiting? "waiting")
+                                      :disabled (or @waiting? (s/blank? @explanation))}
          [:span (or yes-text "OK")]]
         [:button.btn-dialog.secondary {:on-click no-fn
-                            :disabled @waiting?}
+                                       :disabled @waiting?}
          [:span (t "Peruuta")]]]])))
 
 (defn ok-dialog-content [{:keys [message ok-fn]}]

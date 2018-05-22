@@ -357,6 +357,11 @@ $result-highlight: $orange-light;
         }
         .metadata.item, .deleted {
           color: red;
+
+          p {
+            margin: 0;
+            color: red;
+          }
         }
         .archive-data {
           margin-top: 15px;
