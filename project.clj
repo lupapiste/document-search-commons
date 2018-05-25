@@ -10,7 +10,7 @@
             :distribution :repo}
   :scm {:url "https://github.com/lupapiste/document-search-commons"}
   :repositories [["boundless" {:url "https://repo.boundlessgeo.com/main/"}]
-                 ["osgeo" {:url "http://download.osgeo.org/webdav/geotools"}]]
+                 ["osgeo" {:url "https://download.osgeo.org/webdav/geotools"}]]
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.geotools/gt-main "18.2"]
                  [org.geotools/gt-referencing "18.2"]
