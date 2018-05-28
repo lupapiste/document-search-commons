@@ -1,20 +1,17 @@
 (require 'cemerick.pomegranate.aether)
-(cemerick.pomegranate.aether/register-wagon-factory!
-  "http" #(org.apache.maven.wagon.providers.http.HttpWagon.))
 
-(defproject lupapiste/document-search-commons "0.7.7"
+(defproject lupapiste/document-search-commons "0.7.8"
   :description "Common document search related code shared between lupadoku and onkalo applications"
   :url "https://www.evolta.fi"
   :license {:name "European Union Public License"
             :url "https://joinup.ec.europa.eu/community/eupl/og_page/european-union-public-licence-eupl-v11"
             :distribution :repo}
   :scm {:url "https://github.com/lupapiste/document-search-commons"}
-  :repositories [["boundless" {:url "https://repo.boundlessgeo.com/main/"}]
-                 ["osgeo" {:url "https://download.osgeo.org/webdav/geotools"}]]
+  :repositories [["osgeo" {:url "https://download.osgeo.org/webdav/geotools"}]]
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.geotools/gt-main "18.2"]
-                 [org.geotools/gt-referencing "18.2"]
-                 [org.geotools/gt-epsg-wkt "18.2"]
+                 [org.geotools/gt-main "19.1"]
+                 [org.geotools/gt-referencing "19.1"]
+                 [org.geotools/gt-epsg-wkt "19.1"]
 
                  ;; ClojureScript
                  [org.clojure/clojurescript "1.9.854"]
