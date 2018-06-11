@@ -1,6 +1,6 @@
 (require 'cemerick.pomegranate.aether)
 
-(defproject lupapiste/document-search-commons "0.7.8"
+(defproject lupapiste/document-search-commons "0.7.9"
   :description "Common document search related code shared between lupadoku and onkalo applications"
   :url "https://www.evolta.fi"
   :license {:name "European Union Public License"
@@ -22,7 +22,7 @@
                  [cljsjs/openlayers "4.4.1-1"]
                  [tailrecursion/cljson "1.0.7"]
                  [alandipert/storage-atom "2.0.1"]]
-  :profiles {:provided {:dependencies [[lupapiste/commons "0.9.14" :exclusions [commons-logging commons-codec]]]}}
+  :profiles {:provided {:dependencies [[lupapiste/commons "0.9.17" :exclusions [commons-logging commons-codec]]]}}
   :plugins [[deraen/lein-sass4clj "0.3.0"]]
   :source-paths ["src/clj" "src/cljc" "src/cljs"]
   :cljsbuild {:builds {:dev {:source-paths ["src/cljc" "src/cljs"]}}}
