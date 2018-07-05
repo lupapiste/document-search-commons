@@ -1,6 +1,4 @@
-(require 'cemerick.pomegranate.aether)
-
-(defproject lupapiste/document-search-commons "0.8.0"
+(defproject lupapiste/document-search-commons "0.8.1"
   :description "Common document search related code shared between lupadoku and onkalo applications"
   :url "https://www.evolta.fi"
   :license {:name "European Union Public License"
