@@ -333,7 +333,10 @@
           (new-search))
       (reset-state)))
   (when-let [seen-results @saved-seen-results]
-    (swap! search-results assoc :seen-results seen-results)))
+    (swap! search-results assoc :seen-results seen-results))
+  (when (empty? (rest (get-in @config [:user :organizations])))
+    ; Reset organization field if it's not visible
+    (update-search-field :organization "")))
 
 (defn fetch-user-and-config []
   (GET (routing/path "/user-and-config")
