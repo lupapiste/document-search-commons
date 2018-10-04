@@ -1,9 +1,9 @@
 // Footer colors.
 $footer-bg: #333;
 $footer-bi-bg: #111; // bi = build info
-$footer-txt: #fff;
-$footer-link: #f7ac2e;
-$footer-hover: #fff; // Hover and active
+$footer-txt: $gray255;
+$footer-link: $orange;
+$footer-hover: $gray255; // Hover and active
 $footer-bi: #555;
 
 footer {
@@ -41,17 +41,12 @@ footer {
           text-decoration: none;
           &:hover, &:active { color: $footer-hover }
       }
-      &.sade-box {
-        a {
-          display: inline;
-        }
-      }
     }
   }
 
   .lupapiste-brand {
     .footer-box {
-      @include nav-link($link: $blue, $hover: white);
+      @include nav-link($link: $orange, $hover: white);
       color: $blue;
       a {
         vertical-align: middle;
@@ -73,12 +68,16 @@ footer {
   }
 
   @media (max-width:991px) {
-      .footer-box:nth-child(2n+1) {
+      .footer-box {
           clear: left;
       }
       .footer-box {
           min-width: 49%;
       }
+  }
+
+  p {
+    color: $footer-txt;
   }
 }
 
