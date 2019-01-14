@@ -347,13 +347,10 @@
         :response-format (f/detect-response-format {:response-format formats})}))
 
 (defn update-single-result [new-metadata result]
-  (let [updated-result (assoc result :metadata (:metadata new-metadata)
-                                     :contents (:contents new-metadata)
-                                     :type (:type new-metadata))]
-    (if (:deleted new-metadata)
-      (assoc updated-result :deleted (:deleted new-metadata)
-                            :deletion-explanation (:deletion-explanation new-metadata))
-      (dissoc updated-result :deleted :deletion-explanation))))
+  (let [updated-result (merge result new-metadata)]
+    (if-not (:deleted new-metadata)
+      (dissoc updated-result :deleted :deletion-explanation)
+      updated-result)))
 
 (defn update-onkalo-result-data [id new-metadata]
   (swap! search-results (fn [{:keys [onkalo-results] :as res}]
