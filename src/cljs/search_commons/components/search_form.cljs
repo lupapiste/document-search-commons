@@ -73,8 +73,6 @@
                                     :on-click state/new-search}
      [:i.lupicon-search]
      [:span (t "Hae")]]
-    [:a.help {:href (t "path.guide.document.search") :target "_blank" :title (t "help")}
-     [:span.lupicon-circle-question]]
     (when (and @state/show-search-map (get-in @state/config [:config :cdn-host]))
       [map/ol-map {:data @state/results-for-map}])]
    [:div.search-options
