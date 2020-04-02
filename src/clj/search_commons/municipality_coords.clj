@@ -1,7 +1,7 @@
 (ns search-commons.municipality-coords
   (:require [taoensso.timbre :as timbre]))
 
-(def municipality-center-coordinates {20  [324985.061 6784290.193]
+(def municipality-center-coordinates {20  [331394.63 6785437.15]
                                       5   [343283.693 6985908.347]
                                       9   [370399.239 7119863.552]
                                       10  [320419.463 6941690.657]
