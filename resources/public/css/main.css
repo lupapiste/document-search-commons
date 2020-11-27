@@ -6407,7 +6407,7 @@ footer {
   padding-top: 24px;
   position: absolute;
   clear: both;
-  color: #fff;
+  color: white;
   background-color: #333;
   height: auto;
   bottom: 0;
@@ -6444,11 +6444,7 @@ footer .informations .footer-box a:link, footer .informations .footer-box a:visi
 }
 
 footer .informations .footer-box a:link:hover, footer .informations .footer-box a:link:active, footer .informations .footer-box a:visited:hover, footer .informations .footer-box a:visited:active {
-  color: #fff;
-}
-
-footer .informations .footer-box.sade-box a {
-  display: inline;
+  color: white;
 }
 
 footer .lupapiste-brand .footer-box {
@@ -6466,12 +6462,12 @@ footer .lupapiste-brand .footer-box a {
 }
 
 footer .lupapiste-brand .footer-box a:link, footer .lupapiste-brand .footer-box a:visited {
-  color: #0fbbf7;
+  color: #f7ac2e;
   text-decoration: none;
 }
 
 footer .lupapiste-brand .footer-box a:link span, footer .lupapiste-brand .footer-box a:visited span {
-  color: #0fbbf7;
+  color: #f7ac2e;
 }
 
 footer .lupapiste-brand .footer-box a:hover, footer .lupapiste-brand .footer-box a:active {
@@ -6509,12 +6505,16 @@ footer .lupapiste-brand .footer-align-right ul {
 }
 
 @media (max-width: 991px) {
-  footer .footer-box:nth-child(2n+1) {
+  footer .footer-box {
     clear: left;
   }
   footer .footer-box {
     min-width: 49%;
   }
+}
+
+footer p {
+  color: white;
 }
 
 @media (max-width: 991px) {
@@ -7449,6 +7449,55 @@ footer ul li {
 .document-view .iframe-container .xml-container div:not(.xml-header) {
   font-weight: bold;
   margin-left: 20px;
+}
+
+.mass-update-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+}
+
+.mass-update-metadata .mass-update-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  padding: 15px;
+}
+
+.mass-update-metadata .mass-update-button-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 15px;
+}
+
+.mass-update-metadata .editor-header {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  min-height: 40px !important;
+}
+
+.mass-update-metadata .metadata-fields {
+  width: 100%;
+}
+
+.mass-update-metadata .editor-form {
+  padding: 0 !important;
+}
+
+.mass-update-metadata .select-metadata {
+  align-self: center;
+  padding-right: 3em;
+}
+
+.mass-update-metadata .error {
+  color: red;
+}
+
+.mass-update-metadata .text-field {
+  width: 100%;
 }
 
 .combobox {
