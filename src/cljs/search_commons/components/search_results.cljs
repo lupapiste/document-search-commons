@@ -97,7 +97,7 @@
 (defn result-list-item [result]
   (let [{:keys [propertyId address verdict-ts municipality type contents id filename created
                 tiedostonimi paatospvm jattopvm lupapvm metadata source-system organization fileId
-                applicationId deleted]} result
+                applicationId deleted address]} result
         verdict-date (or verdict-ts paatospvm lupapvm)
         multi-select-mode @state/multi-select-mode
         result-item-onclick (if multi-select-mode
@@ -111,7 +111,8 @@
                                        :type type
                                        :deleted deleted
                                        :property-id propertyId
-                                       :metadata metadata}))
+                                       :metadata metadata
+                                       :address address}))
                               (fn [] (reset! state/selected-result-id id)
                                 (state/mark-result-seen id)))
         result-item-class (cond

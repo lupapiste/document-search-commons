@@ -7463,7 +7463,12 @@ footer ul li {
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
-  padding: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.mass-update-metadata .checkbox-row {
+  padding-bottom: 15px;
 }
 
 .mass-update-metadata .mass-update-button-row {
