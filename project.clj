@@ -23,6 +23,7 @@
   :profiles {:provided {:dependencies [[lupapiste/commons "0.9.26" :exclusions [commons-logging commons-codec]]]}}
   :plugins [[deraen/lein-sass4clj "0.3.1"]]
   :source-paths ["src/clj" "src/cljc" "src/cljs"]
+  :test-paths ["test/clj" "test/cljc"]
   :cljsbuild {:builds {:dev {:source-paths ["src/cljc" "src/cljs"]}}}
   :clean-targets ^{:protect false} ["resources/public/css/main.css.map"
                                     :target-path]
