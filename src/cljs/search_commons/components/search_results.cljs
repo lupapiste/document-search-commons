@@ -100,9 +100,18 @@
                 applicationId deleted]} result
         verdict-date (or verdict-ts paatospvm lupapvm)
         multi-select-mode @state/multi-select-mode
-        archived? (= :onkalo source-system)
         result-item-onclick (if multi-select-mode
-                              (fn [] (state/multi-select-result id (or fileId id) (or filename tiedostonimi) organization archived? applicationId type deleted))
+                              (fn [] (state/multi-select-result
+                                      {:doc-id id
+                                       :file-id (or fileId id)
+                                       :filename (or filename tiedostonimi)
+                                       :org-id organization
+                                       :archived? (= :onkalo source-system)
+                                       :application-id applicationId
+                                       :type type
+                                       :deleted deleted
+                                       :property-id propertyId
+                                       :metadata metadata}))
                               (fn [] (reset! state/selected-result-id id)
                                 (state/mark-result-seen id)))
         result-item-class (cond

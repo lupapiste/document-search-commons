@@ -312,3 +312,6 @@
 "Päivitä valitut tiedot" "fi" "Päivitä valitut tiedot"
 "Päivitä" "fi" "Päivitä"
 "Päivitä" "sv" ""
+"Valittujen dokumenttien nykyiset arvot" "fi" "Valittujen dokumenttien nykyiset arvot"
+"Kyllä" "fi" "Kyllä"
+"Ei" "fi" "Ei"
