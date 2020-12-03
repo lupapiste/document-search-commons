@@ -98,7 +98,8 @@
 (defn result-list-item [result]
   (let [{:keys [propertyId address verdict-ts municipality type contents id filename created
                 tiedostonimi paatospvm jattopvm lupapvm metadata source-system organization fileId
-                applicationId deleted address permit-expired permit-expired-date demolished demolished-date]} result
+                applicationId deleted address permit-expired permit-expired-date
+                demolished demolished-date nationalBuildingIds]} result
         verdict-date (or verdict-ts paatospvm lupapvm)
         multi-select-mode @state/multi-select-mode
         result-item-onclick (if multi-select-mode
@@ -117,7 +118,8 @@
                                        :permit-expired permit-expired
                                        :permit-expired-date permit-expired-date
                                        :demolished demolished
-                                       :demolished-date demolished-date}))
+                                       :demolished-date demolished-date
+                                       :national-building-ids nationalBuildingIds}))
                               (fn [] (reset! state/selected-result-id id)
                                 (state/mark-result-seen id)))
         result-item-class (cond

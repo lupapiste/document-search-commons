@@ -36,3 +36,21 @@
     (human-readable-property-id? property-id) (zero-padded-property-id property-id)
     (db-property-id? property-id) property-id
     :else nil))
+
+(def rakennustunnus-pattern
+  "VRK pysyva rakennustunnus. KRYSP-skeemassa: ([1][0-9]{8})[0-9ABCDEFHJKLMNPRSTUVWXY]
+   Modified version from sade.validators"
+  #?(:clj (re-pattern "^1\\d{8}[0-9A-FHJ-NPR-Y]$")
+     :cljs #"^[1][0-9]{8}[0-9A-FHJ-NPR-Y]$"))
+
+(defn- matches? [re s] (boolean (when (string? s) (re-matches re s))))
+
+(defn rakennustunnus? [prt]
+  (and (matches? rakennustunnus-pattern prt)))
+
+(defn ->tokens
+  "Split string by comma or whitespace"
+  [^String s]
+  (if s
+    (remove empty? (s/split s #"\s*,\s*|\s+"))
+    []))

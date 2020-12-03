@@ -28,3 +28,25 @@
       (is (= "09241600110123" (sut/->db-property-id "09241600110123"))))
     (testing "in human format"
       (is (= "09240300020279" (sut/->db-property-id "92-403-2-279"))))))
+
+(deftest rakennustunnus?-test
+  (testing "rakennustunnus?"
+    (testing "returns falsey for invalid values"
+      (is (not (sut/rakennustunnus? nil)))
+      (is (not (sut/rakennustunnus? "")))
+      (is (not (sut/rakennustunnus? "foo")))
+      (is (not (sut/rakennustunnus? "1a")))
+      (is (not (sut/rakennustunnus? "1A"))))
+    (testing "returns truthy for valid values"
+      (is (sut/rakennustunnus? "182736459F"))
+      (is (sut/rakennustunnus? "100012345N"))
+      (is (sut/rakennustunnus? "1234567892")))))
+
+(deftest ->tokens-test
+  (testing "tokens"
+    (testing "returns empty collection for empty input"
+      (is (= [] (sut/->tokens "")))
+      (is (= [] (sut/->tokens nil))))
+    (testing "returns non-empty when given a non-empty string"
+      (is (= ["foo"] (sut/->tokens "foo")))
+      (is (= ["a" "b" "c" "d" "e" "f"] (sut/->tokens "a, b , c,d ,e ,, f "))))))
