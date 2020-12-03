@@ -478,13 +478,19 @@ $result-highlight: $orange-light;
     .mass-update-row {
         display: flex;
         justify-content: flex-start;
-        align-items: flex-end;
+        align-items: flex-start;
         padding-left: 15px;
         padding-right: 15px;
     }
 
     .checkbox-row {
+        padding-top: 15px;
         padding-bottom: 15px;
+    }
+
+    .top-checkbox {
+        align-self: flex-start !important;
+        padding-top: 5px;
     }
 
     .mass-update-button-row {
@@ -519,6 +525,11 @@ $result-highlight: $orange-light;
 
     .text-field {
         width: 100%;
+    }
+
+    .date-field {
+        padding-left: 20px;
+        width: 130px;
     }
 
 }

@@ -223,7 +223,7 @@
   (reset! selected-result-id nil)
   (reset! last-search @search-query)
   (reset! saved-search @search-query)
-  (reset! multi-select-mode false)
+  (reset! multi-select-mode true)  ;;TODO SWITCH ME BACK TO FALSE ONCE DONE DEBUG/DEV
   (reset! multi-selected-results #{})
   (swap! search-results merge {:loading? true
                                :has-more? false
@@ -270,7 +270,8 @@
 
 (defn multi-select-result-group [all-selected? result-group]
   (let [select (fn [{:keys [id fileId filename tiedostonimi organization source-system applicationId
-                            propertyId type deleted metadata address permit-expired demolished]}]
+                            propertyId type deleted metadata address permit-expired permit-expired-date
+                            demolished demolished-date]}]
                  (multi-select-result {:doc-id id
                                        :file-id (or fileId id)
                                        :filename (or tiedostonimi filename)
@@ -283,7 +284,9 @@
                                        :metadata metadata
                                        :address address
                                        :permit-expired permit-expired
-                                       :demolished demolished}))]
+                                       :permit-expired-date permit-expired-date
+                                       :demolished demolished
+                                       :demolished-date demolished-date}))]
     (if all-selected?
       (doall (for [result result-group] (select result)))
       (when (<= (+ (count result-group) @multi-select-count) 200)

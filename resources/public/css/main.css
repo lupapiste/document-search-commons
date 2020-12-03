@@ -7462,13 +7462,19 @@ footer ul li {
 .mass-update-metadata .mass-update-row {
   display: flex;
   justify-content: flex-start;
-  align-items: flex-end;
+  align-items: flex-start;
   padding-left: 15px;
   padding-right: 15px;
 }
 
 .mass-update-metadata .checkbox-row {
+  padding-top: 15px;
   padding-bottom: 15px;
+}
+
+.mass-update-metadata .top-checkbox {
+  align-self: flex-start !important;
+  padding-top: 5px;
 }
 
 .mass-update-metadata .mass-update-button-row {
@@ -7503,6 +7509,11 @@ footer ul li {
 
 .mass-update-metadata .text-field {
   width: 100%;
+}
+
+.mass-update-metadata .date-field {
+  padding-left: 20px;
+  width: 130px;
 }
 
 .combobox {

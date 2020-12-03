@@ -12,7 +12,7 @@
    :weekdays [(t "Sunnuntai") (t "Maanantai") (t "Tiistai") (t "Keskiviikko") (t "Torstai") (t "Perjantai") (t "Lauantai")]
    :weekdays-short [(t "Su") (t "Ma") (t "Ti") (t "Ke") (t "To") (t "Pe") (t "La")]})
 
-(defn date-selector [date-atom css-class]
+(defn date-selector [{:keys [date-atom css-class]}]
   (with-meta
     (fn []
       [pikaday/date-selector {:date-atom date-atom
@@ -28,14 +28,20 @@
   (let [react-key (str "pikaday-" (-> @state/translations :current-lang name))]
     [:div.filter-option.timespan
      [:label (t "Päätös annettu aikavälillä")]
-     ^{:key (str "pikaday-start-" react-key)} [(date-selector state/start-date "start-date")]
+     ^{:key (str "pikaday-start-" react-key)} [(date-selector {:date-atom state/start-date :css-class "start-date"})]
      [:span.date-separator "–"]
-     ^{:key (str "pikaday-end-" react-key)} [(date-selector state/end-date "end-date")]]))
+     ^{:key (str "pikaday-end-" react-key)} [(date-selector {:date-atom state/end-date :css-class "end-date"})]]))
 
 (defn closed-timespan []
   (let [react-key (str "pikaday-" (-> @state/translations :current-lang name))]
     [:div.filter-option.timespan
      [:label (t "Hanke valmistunut aikavälillä")]
-     ^{:key (str "pikaday-start-" react-key)} [(date-selector state/closed-start-date "start-date")]
+     ^{:key (str "pikaday-start-" react-key)} [(date-selector {:date-atom state/closed-start-date :css-class "start-date"})]
      [:span.date-separator "–"]
-     ^{:key (str "pikaday-end-" react-key)} [(date-selector state/closed-end-date "end-date")]]))
+     ^{:key (str "pikaday-end-" react-key)} [(date-selector {:date-atom state/closed-end-date :css-class "end-date"})]]))
+
+(defn date-field [{:keys [label value-atom disabled tooltip visible?]}]
+  (when (or visible? (nil? visible?))
+    [:div.filter-option.timespan {:title tooltip}
+     [:label label]
+     [(date-selector {:date-atom value-atom})]]))

@@ -315,3 +315,7 @@
 "Valittujen dokumenttien nykyiset arvot" "fi" "Valittujen dokumenttien nykyiset arvot"
 "Kyllä" "fi" "Kyllä"
 "Ei" "fi" "Ei"
+"Lupa on rauennut" "fi" "Lupa on rauennut"
+"Rakennus on purettu" "fi" "Rakennus on purettu"
+"Raukeamispäivämäärä" "fi" "Raukeamispäivämäärä"
+"Purkamispäivämäärä" "fi" "Purkamispäivämäärä"

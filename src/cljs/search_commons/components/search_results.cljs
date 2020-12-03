@@ -29,7 +29,8 @@
       (s/upper-case (str "." (last parts))))))
 
 (defn format-date [ts]
-  (.format (DateTimeFormat. "d.M.yyyy") (js/Date. ts)))
+  (when ts
+    (.format (DateTimeFormat. "d.M.yyyy") (js/Date. ts))))
 
 (defn cancel-search-param [remove-fn]
   [:i.icon-cancel-circled {:on-click (fn []
@@ -97,7 +98,7 @@
 (defn result-list-item [result]
   (let [{:keys [propertyId address verdict-ts municipality type contents id filename created
                 tiedostonimi paatospvm jattopvm lupapvm metadata source-system organization fileId
-                applicationId deleted address permit-expired demolished]} result
+                applicationId deleted address permit-expired permit-expired-date demolished demolished-date]} result
         verdict-date (or verdict-ts paatospvm lupapvm)
         multi-select-mode @state/multi-select-mode
         result-item-onclick (if multi-select-mode
@@ -114,7 +115,9 @@
                                        :metadata metadata
                                        :address address
                                        :permit-expired permit-expired
-                                       :demolished demolished}))
+                                       :permit-expired-date permit-expired-date
+                                       :demolished demolished
+                                       :demolished-date demolished-date}))
                               (fn [] (reset! state/selected-result-id id)
                                 (state/mark-result-seen id)))
         result-item-class (cond
