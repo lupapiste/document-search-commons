@@ -7467,16 +7467,6 @@ footer ul li {
   padding-right: 15px;
 }
 
-.mass-update-metadata .checkbox-row {
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
-
-.mass-update-metadata .top-checkbox {
-  align-self: flex-start !important;
-  padding-top: 5px;
-}
-
 .mass-update-metadata .mass-update-button-row {
   display: flex;
   justify-content: flex-end;
@@ -7509,6 +7499,14 @@ footer ul li {
 
 .mass-update-metadata .text-field {
   width: 100%;
+}
+
+.mass-update-metadata .yes-no-select {
+  width: 100px !important;
+}
+
+.mass-update-metadata .yes-no-wrapper {
+  padding-bottom: 25px;
 }
 
 .mass-update-metadata .date-field {

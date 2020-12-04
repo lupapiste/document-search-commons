@@ -483,16 +483,6 @@ $result-highlight: $orange-light;
         padding-right: 15px;
     }
 
-    .checkbox-row {
-        padding-top: 15px;
-        padding-bottom: 15px;
-    }
-
-    .top-checkbox {
-        align-self: flex-start !important;
-        padding-top: 5px;
-    }
-
     .mass-update-button-row {
         display: flex;
         justify-content: flex-end;
@@ -525,6 +515,14 @@ $result-highlight: $orange-light;
 
     .text-field {
         width: 100%;
+    }
+
+    .yes-no-select {
+        width: 100px !important;
+    }
+
+    .yes-no-wrapper {
+        padding-bottom: 25px;
     }
 
     .date-field {
