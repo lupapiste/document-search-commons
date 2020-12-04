@@ -7507,6 +7507,7 @@ footer ul li {
 
 .mass-update-metadata .yes-no-wrapper {
   padding-bottom: 25px;
+  min-width: 140px;
 }
 
 .mass-update-metadata .date-field {
