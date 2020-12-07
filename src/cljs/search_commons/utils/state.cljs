@@ -262,24 +262,32 @@
 (defn multi-selected-results-contain? [doc-id]
   (some #(= doc-id (:doc-id %)) @multi-selected-results))
 
-(defn multi-select-result [doc-id file-id filename org-id archived? applicationId type deleted]
-  (let [source (if archived? "onkalo" "lupapiste")
-        doc-entry {:source source :org-id org-id :doc-id doc-id :file-id file-id :filename filename
-                   :application-id applicationId :type type :deleted deleted}]
+(defn multi-select-result [{:keys [doc-id archived?] :as doc}]
+  (let [doc-entry (assoc doc :source (if archived? "onkalo" "lupapiste"))]
     (if (multi-selected-results-contain? doc-id)
       (swap! multi-selected-results disj doc-entry)
       (when (< @multi-select-count 200) (swap! multi-selected-results conj doc-entry)))))
 
 (defn multi-select-result-group [all-selected? result-group]
-  (let [select (fn [{:keys [id fileId filename tiedostonimi organization source-system applicationId type deleted]}]
-                 (multi-select-result id
-                                      (or fileId id)
-                                      (or tiedostonimi filename)
-                                      organization
-                                      (= :onkalo source-system)
-                                      applicationId
-                                      type
-                                      deleted))]
+  (let [select (fn [{:keys [id fileId filename tiedostonimi organization source-system applicationId
+                            propertyId type deleted metadata address permit-expired permit-expired-date
+                            demolished demolished-date nationalBuildingIds]}]
+                 (multi-select-result {:doc-id id
+                                       :file-id (or fileId id)
+                                       :filename (or tiedostonimi filename)
+                                       :org-id organization
+                                       :archived? (= :onkalo source-system)
+                                       :application-id applicationId
+                                       :type type
+                                       :deleted deleted
+                                       :property-id propertyId
+                                       :metadata metadata
+                                       :address address
+                                       :permit-expired permit-expired
+                                       :permit-expired-date permit-expired-date
+                                       :demolished demolished
+                                       :demolished-date demolished-date
+                                       :national-building-ids nationalBuildingIds}))]
     (if all-selected?
       (doall (for [result result-group] (select result)))
       (when (<= (+ (count result-group) @multi-select-count) 200)
@@ -365,4 +373,3 @@
 
 (defn selected-language [query]
   (#{:fi :sv :en} (keyword (first (keys query)))))
-

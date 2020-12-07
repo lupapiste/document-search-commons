@@ -1,24 +1,11 @@
 (ns search-commons.utils
   (:require [clojure.string :as s]
-            [clojure.pprint :refer [cl-format]]))
+            [clojure.pprint :refer [cl-format]]
+            [search-commons.shared-utils :as shared-utils]))
 
-(def property-id-regex #"(\d{1,3})-(\d{1,3})-(\d{1,4})-(\d{1,4})")
+(def property-id-regex shared-utils/property-id-regex)
 
-;; Common Lisp format string: https://www.cs.cmu.edu/Groups/AI/html/cltl/clm/node200.html
-(def lpad-3 "~3,1,0,'0@A")
-(def lpad-4 "~4,1,0,'0@A")
-;;           || | |  |||print as string
-;;           || | |  ||pad left
-;;           || | |  |padding character
-;;           || | |minimum padding, 0 means dont' pad if not necessary
-;;           || |insert one padding character at a time
-;;           ||pad at least this amount
-;;           |start a directive, like %
-
-(defn zero-padded-property-id [^String value]
-  (when-let [[_ & parts] (re-matches property-id-regex value)]
-    (let [format-string (apply str [lpad-3 lpad-3 lpad-4 lpad-4])]
-      (apply cl-format nil format-string parts))))
+(def zero-padded-property-id shared-utils/zero-padded-property-id)
 
 (defn property-id-regexp-string [tokens]
   (when-let [regexes (->> tokens

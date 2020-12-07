@@ -29,7 +29,8 @@
       (s/upper-case (str "." (last parts))))))
 
 (defn format-date [ts]
-  (.format (DateTimeFormat. "d.M.yyyy") (js/Date. ts)))
+  (when ts
+    (.format (DateTimeFormat. "d.M.yyyy") (js/Date. ts))))
 
 (defn cancel-search-param [remove-fn]
   [:i.icon-cancel-circled {:on-click (fn []
@@ -97,12 +98,28 @@
 (defn result-list-item [result]
   (let [{:keys [propertyId address verdict-ts municipality type contents id filename created
                 tiedostonimi paatospvm jattopvm lupapvm metadata source-system organization fileId
-                applicationId deleted]} result
+                applicationId deleted address permit-expired permit-expired-date
+                demolished demolished-date nationalBuildingIds]} result
         verdict-date (or verdict-ts paatospvm lupapvm)
         multi-select-mode @state/multi-select-mode
-        archived? (= :onkalo source-system)
         result-item-onclick (if multi-select-mode
-                              (fn [] (state/multi-select-result id (or fileId id) (or filename tiedostonimi) organization archived? applicationId type deleted))
+                              (fn [] (state/multi-select-result
+                                      {:doc-id id
+                                       :file-id (or fileId id)
+                                       :filename (or filename tiedostonimi)
+                                       :org-id organization
+                                       :archived? (= :onkalo source-system)
+                                       :application-id applicationId
+                                       :type type
+                                       :deleted deleted
+                                       :property-id propertyId
+                                       :metadata metadata
+                                       :address address
+                                       :permit-expired permit-expired
+                                       :permit-expired-date permit-expired-date
+                                       :demolished demolished
+                                       :demolished-date demolished-date
+                                       :national-building-ids nationalBuildingIds}))
                               (fn [] (reset! state/selected-result-id id)
                                 (state/mark-result-seen id)))
         result-item-class (cond

@@ -1,0 +1,64 @@
+.mass-update-metadata {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+
+    .mass-update-row {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .mass-update-button-row {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        padding: 15px;
+    }
+
+    .editor-header {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        min-height: 40px !important;
+    }
+
+    .metadata-fields {
+        width: 100%;
+    }
+
+    .editor-form {
+        padding: 0 !important;
+    }
+
+    .select-metadata {
+        align-self: center;
+        padding-right: 3em;
+    }
+
+    .error {
+        color: $error-text;
+    }
+
+    .text-field {
+        width: 100%;
+    }
+
+    .yes-no-select {
+        width: 100px !important;
+    }
+
+    .yes-no-wrapper {
+        padding-bottom: 25px;
+        min-width: 140px;
+    }
+
+    .date-field {
+        padding-left: 20px;
+        width: 130px;
+    }
+
+}
