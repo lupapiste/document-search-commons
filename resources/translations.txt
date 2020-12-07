@@ -309,7 +309,7 @@
 "Perustelu: " "sv" ""
 "Metatiedot" "fi" "Metatiedot"
 "Metatiedot" "sv" ""
-"Päivitä valitut tiedot" "fi" "Päivitä valitut tiedot"
+"Päivitä valitut metatiedot" "fi" "Päivitä valitut metatiedot"
 "Päivitä" "fi" "Päivitä"
 "Päivitä" "sv" ""
 "Valittujen dokumenttien nykyiset arvot" "fi" "Valittujen dokumenttien nykyiset arvot"
@@ -320,3 +320,4 @@
 "Raukeamispäivämäärä" "fi" "Raukeamispäivämäärä"
 "Purkamispäivämäärä" "fi" "Purkamispäivämäärä"
 "Anna rakennustunnukset oikeassa muodossa" "fi" "Anna rakennustunnukset oikeassa muodossa. Erota tunnukset pilkulla tai välilyönnillä."
+"Syötä osoite" "fi" "Syötä osoite"
