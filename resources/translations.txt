@@ -163,6 +163,7 @@
 "Päätös annettu aikavälillä" "en" "Decisions given at intervals"
 "Päätös annettu aikavälillä" "fi" "Päätös annettu aikavälillä"
 "Päätös annettu aikavälillä" "sv" "Beslut givet inom perioden"
+"Päätöspäivämäärä" "fi" "Päätöspäivämäärä"
 "Rajaa hakualue" "en" "Limit search area"
 "Rajaa hakualue" "fi" "Rajaa hakualue"
 "Rajaa hakualue" "sv" "Begränsa sökområde"

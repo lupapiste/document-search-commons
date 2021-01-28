@@ -2,6 +2,7 @@
   (:require [search-commons.utils.i18n :refer [t]]
             [search-commons.utils.state :as state]
             [search-commons.utils.utils :as utils]
+            [search-commons.utils.time :as tu]
             [reagent.core :as reagent]
             [goog.string :as gs]
             [goog.string.format]
@@ -27,10 +28,6 @@
     (if (= (count parts) 1)
       "?"
       (s/upper-case (str "." (last parts))))))
-
-(defn format-date [ts]
-  (when ts
-    (.format (DateTimeFormat. "d.M.yyyy") (js/Date. ts))))
 
 (defn cancel-search-param [remove-fn]
   [:i.icon-cancel-circled {:on-click (fn []
@@ -60,16 +57,16 @@
           [:div (t "Asiakirjatyyppi") ": " (t (s/join "." (map name type)))
            [cancel-search-param #(swap! state/search-query assoc :type '())]])
         (when (:from timespan)
-          [:div (t "Alkaen") ": " (format-date (:from timespan))
+          [:div (t "Alkaen") ": " (tu/format-date (:from timespan))
            [cancel-search-param #(reset! state/start-date nil)]])
         (when (:to timespan)
-          [:div (t "Päättyen") ": " (format-date (:to timespan))
+          [:div (t "Päättyen") ": " (tu/format-date (:to timespan))
            [cancel-search-param #(reset! state/end-date nil)]])
         (when (:closed-from timespan)
-          [:div (t "Valmistunut alkaen") ": " (format-date (:closed-from timespan))
+          [:div (t "Valmistunut alkaen") ": " (tu/format-date (:closed-from timespan))
            [cancel-search-param #(reset! state/closed-start-date nil)]])
         (when (:closed-to timespan)
-          [:div (t "Valmistunut päättyen") ": " (format-date (:closed-to timespan))
+          [:div (t "Valmistunut päättyen") ": " (tu/format-date (:closed-to timespan))
            [cancel-search-param #(reset! state/closed-end-date nil)]])
         (when operation
           [:div (t "Toimenpide") ": " (t operation)
@@ -152,7 +149,7 @@
               (str
                 " - "
                 (-> (t t-key)
-                    (.replace "{pvm}" (format-date ts))))))]]]]]
+                    (.replace "{pvm}" (tu/format-date ts))))))]]]]]
      (when (and (not multi-select-mode) (= id @state/selected-result-id))
        [:div.arrow-right])]))
 

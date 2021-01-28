@@ -20,7 +20,8 @@
                                 :class css-class
                                 :pikaday-attrs {:format "DD.MM.YYYY"
                                                 :i18n (pikaday-i18n)}
-                                :input-attrs   {:read-only read-only :class input-class}}]))
+                                :input-attrs   {:read-only read-only
+                                                :class input-class}}]))
     {:component-did-mount (fn [this]
                             (let [node (reagent/dom-node this)]
                               (.addEventListener node "input" (fn [] (when (= "" (.-value node))
