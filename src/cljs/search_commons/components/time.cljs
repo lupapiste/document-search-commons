@@ -12,7 +12,7 @@
    :weekdays [(t "Sunnuntai") (t "Maanantai") (t "Tiistai") (t "Keskiviikko") (t "Torstai") (t "Perjantai") (t "Lauantai")]
    :weekdays-short [(t "Su") (t "Ma") (t "Ti") (t "Ke") (t "To") (t "Pe") (t "La")]})
 
-(defn date-selector [{:keys [date-atom css-class read-only read-only-css-class]}]
+(defn date-selector [{:keys [date-atom css-class read-only read-only-css-class disabled]}]
   (with-meta
     (fn []
       (let [input-class (when read-only (or read-only-css-class "read-only-date-field"))]
@@ -21,7 +21,8 @@
                                 :pikaday-attrs {:format "DD.MM.YYYY"
                                                 :i18n (pikaday-i18n)}
                                 :input-attrs   {:read-only read-only
-                                                :class input-class}}]))
+                                                :class input-class
+                                                :disabled disabled}}]))
     {:component-did-mount (fn [this]
                             (let [node (reagent/dom-node this)]
                               (.addEventListener node "input" (fn [] (when (= "" (.-value node))
@@ -43,8 +44,10 @@
      [:span.date-separator "–"]
      ^{:key (str "pikaday-end-" react-key)} [(date-selector {:date-atom state/closed-end-date :css-class "end-date"})]]))
 
-(defn date-field [{:keys [label value-atom disabled tooltip visible? prevent-manual-entry]}]
+(defn date-field [{:keys [label value-atom disabled tooltip visible? prevent-manual-entry on-click]}]
   (when (or visible? (nil? visible?))
-    [:div.date-wrapper {:title tooltip}
+    [:div.date-wrapper {:title tooltip :on-click on-click}
      [:label label]
-     [(date-selector {:date-atom value-atom :read-only prevent-manual-entry})]]))
+     [(date-selector {:date-atom value-atom
+                      :read-only prevent-manual-entry
+                      :disabled disabled})]]))

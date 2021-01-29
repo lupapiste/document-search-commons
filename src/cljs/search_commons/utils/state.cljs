@@ -271,7 +271,7 @@
 (defn multi-select-result-group [all-selected? result-group]
   (let [select (fn [{:keys [id fileId filename tiedostonimi organization source-system applicationId
                             propertyId type deleted metadata address permit-expired permit-expired-date
-                            demolished demolished-date nationalBuildingIds]}]
+                            demolished demolished-date nationalBuildingIds paatospvm]}]
                  (multi-select-result {:doc-id id
                                        :file-id (or fileId id)
                                        :filename (or tiedostonimi filename)
@@ -287,7 +287,8 @@
                                        :permit-expired-date permit-expired-date
                                        :demolished demolished
                                        :demolished-date demolished-date
-                                       :national-building-ids nationalBuildingIds}))]
+                                       :national-building-ids nationalBuildingIds
+                                       :paatospvm paatospvm}))]
     (if all-selected?
       (doall (for [result result-group] (select result)))
       (when (<= (+ (count result-group) @multi-select-count) 200)
