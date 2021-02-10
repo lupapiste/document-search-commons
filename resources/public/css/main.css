@@ -7511,8 +7511,12 @@ footer ul li {
 }
 
 .mass-update-metadata .date-field {
-  padding-left: 20px;
   width: 130px;
+  padding-bottom: 25px;
+}
+
+.mass-update-metadata .right-field {
+  padding-left: 20px;
 }
 
 .combobox {
