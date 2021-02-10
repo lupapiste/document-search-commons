@@ -268,27 +268,30 @@
       (swap! multi-selected-results disj doc-entry)
       (when (< @multi-select-count 200) (swap! multi-selected-results conj doc-entry)))))
 
+(defn ->multi-select-result [{:keys [id fileId filename tiedostonimi organization source-system applicationId
+                                     propertyId type deleted metadata address permit-expired permit-expired-date
+                                     demolished demolished-date nationalBuildingIds paatospvm] :as result}]
+  {:doc-id id
+   :file-id (or fileId id)
+   :filename (or tiedostonimi filename)
+   :org-id organization
+   :application-id applicationId
+   :type type
+   :deleted deleted
+   :property-id propertyId
+   :metadata metadata
+   :address address
+   :permit-expired permit-expired
+   :permit-expired-date permit-expired-date
+   :demolished demolished
+   :demolished-date demolished-date
+   :national-building-ids nationalBuildingIds
+   :paatospvm paatospvm
+   :archived? (= :onkalo source-system)
+   :source (if (= :onkalo source-system) "onkalo" "lupapiste")})
+
 (defn multi-select-result-group [all-selected? result-group]
-  (let [select (fn [{:keys [id fileId filename tiedostonimi organization source-system applicationId
-                            propertyId type deleted metadata address permit-expired permit-expired-date
-                            demolished demolished-date nationalBuildingIds paatospvm]}]
-                 (multi-select-result {:doc-id id
-                                       :file-id (or fileId id)
-                                       :filename (or tiedostonimi filename)
-                                       :org-id organization
-                                       :archived? (= :onkalo source-system)
-                                       :application-id applicationId
-                                       :type type
-                                       :deleted deleted
-                                       :property-id propertyId
-                                       :metadata metadata
-                                       :address address
-                                       :permit-expired permit-expired
-                                       :permit-expired-date permit-expired-date
-                                       :demolished demolished
-                                       :demolished-date demolished-date
-                                       :national-building-ids nationalBuildingIds
-                                       :paatospvm paatospvm}))]
+  (let [select #(multi-select-result (->multi-select-result %))]
     (if all-selected?
       (doall (for [result result-group] (select result)))
       (when (<= (+ (count result-group) @multi-select-count) 200)
@@ -297,14 +300,7 @@
                    (select result))))))))
 
 (defn multi-select-all-results []
-  (let [results-set (set (for [result @filtered-results]
-                           (let [source (if (= :onkalo (:source-system result)) "onkalo" "lupapiste")
-                                 org-id (:organization result)
-                                 doc-id (:id result)
-                                 file-id (or (:fileId result) doc-id)
-                                 filename (or (:filename result) (:tiedostonimi result))
-                                 applicationId (:applicationId result)]
-                             {:source source :org-id org-id :doc-id doc-id :file-id file-id :filename filename :application-id applicationId})))]
+  (let [results-set (set (map ->multi-select-result @filtered-results))]
     (reset! multi-selected-results results-set)))
 
 (defn toggle-multi-select-mode []
