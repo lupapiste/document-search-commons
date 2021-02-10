@@ -94,30 +94,12 @@
 
 (defn result-list-item [result]
   (let [{:keys [propertyId address verdict-ts municipality type contents id filename created
-                tiedostonimi paatospvm jattopvm lupapvm metadata source-system organization fileId
-                applicationId deleted address permit-expired permit-expired-date
-                demolished demolished-date nationalBuildingIds paatospvm]} result
+                tiedostonimi paatospvm jattopvm lupapvm metadata applicationId deleted
+                address permit-expired permit-expired-date paatospvm]} result
         verdict-date (or verdict-ts paatospvm lupapvm)
         multi-select-mode @state/multi-select-mode
         result-item-onclick (if multi-select-mode
-                              (fn [] (state/multi-select-result
-                                      {:doc-id id
-                                       :file-id (or fileId id)
-                                       :filename (or filename tiedostonimi)
-                                       :org-id organization
-                                       :archived? (= :onkalo source-system)
-                                       :application-id applicationId
-                                       :type type
-                                       :deleted deleted
-                                       :property-id propertyId
-                                       :metadata metadata
-                                       :address address
-                                       :permit-expired permit-expired
-                                       :permit-expired-date permit-expired-date
-                                       :demolished demolished
-                                       :demolished-date demolished-date
-                                       :national-building-ids nationalBuildingIds
-                                       :paatospvm paatospvm}))
+                              (fn [] (state/multi-select-result (state/->multi-select-result result)))
                               (fn [] (reset! state/selected-result-id id)
                                 (state/mark-result-seen id)))
         result-item-class (cond
