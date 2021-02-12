@@ -354,6 +354,38 @@ $result-highlight: $orange-light;
               margin-bottom: 8px;
             }
           }
+
+          .error {
+              color: $error-text;
+              display: block;
+          }
+
+          .text-field {
+              width: auto;
+          }
+
+          .removable-item {
+              display: flex;
+
+              .remove-item {
+                  align-self: flex-start;
+              }
+          }
+
+          .add-item {
+              width: 158px;
+              align-self: flex-start;
+              margin-top: 5px;
+              min-height: 30px;
+              line-height: 20px;
+          }
+
+          .list-container {
+              display: flex;
+              flex-direction: column;
+              padding-bottom: 10px;
+          }
+
         }
         .metadata.item, .deleted {
           color: red;

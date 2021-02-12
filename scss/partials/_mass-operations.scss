@@ -57,8 +57,38 @@
     }
 
     .date-field {
-        padding-left: 20px;
         width: 130px;
+        padding-bottom: 25px;
+    }
+
+    .right-field {
+        padding-left: 20px;
+    }
+
+    .max-width {
+        width: 100%;
+    }
+
+    .add-item {
+        float: right;
+    }
+
+    .removable-item {
+        display: flex;
+    }
+
+    .remove-item {
+        align-self: flex-end;
+        padding-bottom: 17px;
+    }
+
+    .remove-disabled {
+        color: $gray187;
+        cursor: default;
+    }
+
+    .list-container {
+        width: 100%;
     }
 
 }
