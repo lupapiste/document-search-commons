@@ -93,6 +93,7 @@
 "Kuntalupatunnus" "en" "Municipal permit ID"
 "Kuntalupatunnus" "fi" "Kuntalupatunnus"
 "Kuntalupatunnus" "sv" "Kommuntillståndsbeteckning"
+"Kuntalupatunnuksen muutossyy" "fi" "Kuntalupatunnuksen muutossyy"
 "Käyttötarkoitus" "en" "Intended use"
 "Käyttötarkoitus" "fi" "Käyttötarkoitus"
 "Käyttötarkoitus" "sv" "Användningssyfte"
