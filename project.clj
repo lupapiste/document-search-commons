@@ -1,4 +1,4 @@
-(defproject lupapiste/document-search-commons "0.8.15"
+(defproject lupapiste/document-search-commons "0.8.16"
   :description "Common document search related code shared between lupadoku and onkalo applications"
   :url "https://www.evolta.fi"
   :license {:name "European Union Public License"
