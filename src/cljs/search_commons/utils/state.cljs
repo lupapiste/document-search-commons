@@ -270,12 +270,13 @@
 
 (defn ->multi-select-result [{:keys [id fileId filename tiedostonimi organization source-system applicationId
                                      propertyId type deleted metadata address permit-expired permit-expired-date
-                                     demolished demolished-date nationalBuildingIds paatospvm] :as result}]
+                                     demolished demolished-date nationalBuildingIds paatospvm kuntalupatunnukset] :as result}]
   {:doc-id id
    :file-id (or fileId id)
    :filename (or tiedostonimi filename)
    :org-id organization
    :application-id applicationId
+   :kuntalupatunnukset kuntalupatunnukset
    :type type
    :deleted deleted
    :property-id propertyId

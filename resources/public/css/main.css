@@ -7519,6 +7519,28 @@ footer ul li {
   padding-left: 20px;
 }
 
+.mass-update-metadata .max-width {
+  width: 100%;
+}
+
+.mass-update-metadata .add-item {
+  float: right;
+}
+
+.mass-update-metadata .removable-item {
+  display: flex;
+}
+
+.mass-update-metadata .remove-item {
+  align-self: flex-end;
+  padding-bottom: 17px;
+}
+
+.mass-update-metadata .remove-disabled {
+  color: #bbbbbb;
+  cursor: default;
+}
+
 .combobox {
   display: inline-block;
   position: relative;
