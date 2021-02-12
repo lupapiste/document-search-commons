@@ -86,6 +86,7 @@
 "Kirjoita hakusana" "en" "Enter keyword"
 "Kirjoita hakusana" "fi" "Kirjoita hakusana"
 "Kirjoita hakusana" "sv" "Skriv ett sökord"
+"Korjaa rakennustunnus" "fi" "Korjaa rakennustunnus"
 "Kunnan rakennustunnukset" "en" "Municipal building codes"
 "Kunnan rakennustunnukset" "fi" "Kunnan rakennustunnukset"
 "Kunnan rakennustunnukset" "sv" "Kommunens byggnadsbeteckningar"

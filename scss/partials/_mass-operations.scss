@@ -71,7 +71,6 @@
 
     .add-item {
         float: right;
-
     }
 
     .removable-item {
@@ -86,6 +85,10 @@
     .remove-disabled {
         color: $gray187;
         cursor: default;
+    }
+
+    .list-container {
+        width: 100%;
     }
 
 }

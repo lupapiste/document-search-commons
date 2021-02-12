@@ -7333,6 +7333,37 @@ footer ul li {
   margin-bottom: 8px;
 }
 
+.result-view-container .result-view .result-view-content .metadata .metadata-item .error {
+  color: red;
+  display: block;
+}
+
+.result-view-container .result-view .result-view-content .metadata .metadata-item .text-field {
+  width: auto;
+}
+
+.result-view-container .result-view .result-view-content .metadata .metadata-item .removable-item {
+  display: flex;
+}
+
+.result-view-container .result-view .result-view-content .metadata .metadata-item .removable-item .remove-item {
+  align-self: flex-start;
+}
+
+.result-view-container .result-view .result-view-content .metadata .metadata-item .add-item {
+  width: 158px;
+  align-self: flex-start;
+  margin-top: 5px;
+  min-height: 30px;
+  line-height: 20px;
+}
+
+.result-view-container .result-view .result-view-content .metadata .metadata-item .list-container {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10px;
+}
+
 .result-view-container .result-view .result-view-content .metadata .metadata.item, .result-view-container .result-view .result-view-content .metadata .deleted {
   color: red;
 }
@@ -7539,6 +7570,10 @@ footer ul li {
 .mass-update-metadata .remove-disabled {
   color: #bbbbbb;
   cursor: default;
+}
+
+.mass-update-metadata .list-container {
+  width: 100%;
 }
 
 .combobox {
