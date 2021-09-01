@@ -5679,6 +5679,10 @@ div.review-done div {
   font-weight: 700;
 }
 
+.metadata-editor-container .editor .editor-form .checkbox-container label {
+  font-weight: 500;
+}
+
 .metadata-editor-container .editor .editor-form .text-input-container div {
   display: inline-block;
   margin: 0;

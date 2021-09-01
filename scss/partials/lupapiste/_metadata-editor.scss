@@ -47,7 +47,12 @@
       label {
         display: inline-block;
         margin: 5px 0 5px 0;
-        font-weight: 700;
+        font-weight: 700; // bold
+      }
+      .checkbox-container {
+        label {
+          font-weight: 500; // medium
+        }
       }
       .text-input-container {
         div {
