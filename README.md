@@ -13,6 +13,6 @@ For development time usage, compile SCSS files to CSS uncompressed:
 
 ## License
 
-Copyright © 2017 Evolta Ltd.
+Copyright © 2021 Cloudpermit Oy
 
 Distributed under the European Union Public Licence (EUPL) version 1.1.

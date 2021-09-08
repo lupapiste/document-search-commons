@@ -1,14 +1,15 @@
 (ns search-commons.components.search-results
-  (:require [search-commons.utils.i18n :refer [t]]
-            [search-commons.utils.state :as state]
-            [search-commons.utils.utils :as utils]
-            [search-commons.utils.time :as tu]
-            [reagent.core :as reagent]
+  (:require [ajax.core :refer [GET]]
+            [clojure.string :as s]
             [goog.string :as gs]
             [goog.string.format]
+            [reagent.core :as reagent]
+            [reagent.dom :as rd]
             [search-commons.routing :as routing]
-            [clojure.string :as s]
-            [ajax.core :refer [GET]])
+            [search-commons.utils.i18n :refer [t]]
+            [search-commons.utils.state :as state]
+            [search-commons.utils.time :as tu]
+            [search-commons.utils.utils :as utils])
   (:import [goog.i18n DateTimeFormat]))
 
 ;; From sade.property in lupapalvelu
@@ -179,7 +180,7 @@
       (js/parseInt (s/replace v "px" "")))))
 
 (defn animate-view-transition [component]
-  (when-let [node (reagent/dom-node component)]
+  (when-let [node (rd/dom-node component)]
     (let [parent-offset-top (.-offsetTop (.-parentNode (.-parentNode node)))
           scroll-y (or (.-scrollY js/window) (.-pageYOffset js/window))
           target-top (max (+ (- scroll-y parent-offset-top) 5) 0)

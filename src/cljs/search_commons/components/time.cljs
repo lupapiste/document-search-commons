@@ -1,9 +1,9 @@
 (ns search-commons.components.time
-  (:require [search-commons.utils.state :as state]
-            [search-commons.utils.i18n :refer [t]]
-            [cljs-pikaday.reagent :as pikaday]
+  (:require [cljs-pikaday.reagent :as pikaday]
             [cljsjs.moment]
-            [reagent.core :as reagent]))
+            [reagent.dom :as rd]
+            [search-commons.utils.i18n :refer [t]]
+            [search-commons.utils.state :as state]))
 
 (defn pikaday-i18n []
   {:previous-month (t "Edellinen kuukausi")
@@ -24,7 +24,7 @@
                                                 :class input-class
                                                 :disabled disabled}}]))
     {:component-did-mount (fn [this]
-                            (let [node (reagent/dom-node this)]
+                            (let [node (rd/dom-node this)]
                               (.addEventListener node "input" (fn [] (when (= "" (.-value node))
                                                                         (reset! date-atom nil))))))}))
 
