@@ -101,13 +101,14 @@ nav {
   .brand {
     position: relative;
     width: $brand-width;
-    display: inline-block;
+    display: flex;
+    height: 60px;
+    align-items: center;
     float: left;
-    a img {
-      float: left;
+    a.logo {
+      display: block;
       width: 164px;
       height: 35px;
-      margin: 12px;
     }
   }
   .language-closed {

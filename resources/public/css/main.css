@@ -5958,15 +5958,16 @@ nav .nav-top {
 nav .brand {
   position: relative;
   width: 188px;
-  display: inline-block;
+  display: flex;
+  height: 60px;
+  align-items: center;
   float: left;
 }
 
-nav .brand a img {
-  float: left;
+nav .brand a.logo {
+  display: block;
   width: 164px;
   height: 35px;
-  margin: 12px;
 }
 
 nav .language-closed {
