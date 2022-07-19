@@ -1,4 +1,4 @@
-(defproject lupapiste/document-search-commons "1.0.3"
+(defproject lupapiste/document-search-commons "1.0.4"
   :description "Common document search related code shared between lupadoku and onkalo applications"
   :url "https://www.lupapiste.fi"
   :license {:name "European Union Public License"
@@ -29,7 +29,7 @@
                  [cljsjs/openlayers "4.4.1-1"]
                  [tailrecursion/cljson "1.0.7"]
                  [alandipert/storage-atom "2.0.1"]]
-  :profiles {:provided {:dependencies [[lupapiste/commons "0.11.01" :exclusions [commons-logging commons-codec]]]}}
+  :profiles {:provided {:dependencies [[lupapiste/commons "2.0.3" :exclusions [commons-logging commons-codec]]]}}
   :plugins [[deraen/lein-sass4clj "0.3.1"]]
   :source-paths ["src/clj" "src/cljc" "src/cljs"]
   :test-paths ["test/clj" "test/cljc"]
