@@ -143,14 +143,20 @@
     (let [types @selected-permit-types
           all? (empty? types)]
       (cond-> document-types
-              (or all? (types "R")) (set/union (flatten-attachments attachment-types/Rakennusluvat-v2))
-              (or all? (types "YA")) (set/union (flatten-attachments attachment-types/YleistenAlueidenLuvat-v2))))))
+              (or all? (types "R"))  (set/union (flatten-attachments attachment-types/Rakennusluvat-v2))
+              (or all? (types "YA")) (set/union (flatten-attachments attachment-types/YleistenAlueidenLuvat-v2))
+              (or all? (types "YI")) (set/union (flatten-attachments attachment-types/Ymparisto-types))
+              (or all? (types "YL")) (set/union (flatten-attachments attachment-types/Ymparisto-types))
+              (or all? (types "YM")) (set/union (flatten-attachments attachment-types/Ymparisto-types))
+              (or all? (types "MAL")) (set/union (flatten-attachments attachment-types/Ymparisto-types))
+              (or all? (types "VVVL")) (set/union (flatten-attachments attachment-types/Ymparisto-types))))))
 
 (defn org-attachment-types [org]
   (let [org-type (re-find #"[\-].+$" org)]
     (case org-type
       "-R" (set/union (flatten-attachments attachment-types/Rakennusluvat-v2))
       "-YA" (set/union (flatten-attachments attachment-types/YleistenAlueidenLuvat-v2))
+      "-YMP" (set/union (flatten-attachments attachment-types/Ymparisto-types))
       (throw (js/Error. "Invalid organization")))))
 
 (defn find-result [id results]
