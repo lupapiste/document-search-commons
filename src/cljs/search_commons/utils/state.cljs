@@ -145,18 +145,18 @@
       (cond-> document-types
               (or all? (types "R"))  (set/union (flatten-attachments attachment-types/Rakennusluvat-v2))
               (or all? (types "YA")) (set/union (flatten-attachments attachment-types/YleistenAlueidenLuvat-v2))
-              (or all? (types "YI")) (set/union (flatten-attachments attachment-types/Ymparisto-types))
-              (or all? (types "YL")) (set/union (flatten-attachments attachment-types/Ymparisto-types))
-              (or all? (types "YM")) (set/union (flatten-attachments attachment-types/Ymparisto-types))
-              (or all? (types "MAL")) (set/union (flatten-attachments attachment-types/Ymparisto-types))
-              (or all? (types "VVVL")) (set/union (flatten-attachments attachment-types/Ymparisto-types))))))
+              (or all? (types "YI")) (set/union (flatten-attachments attachment-types/Ymparisto-types-v2))
+              (or all? (types "YL")) (set/union (flatten-attachments attachment-types/Ymparisto-types-v2))
+              (or all? (types "YM")) (set/union (flatten-attachments attachment-types/Ymparisto-types-v2))
+              (or all? (types "MAL")) (set/union (flatten-attachments attachment-types/Ymparisto-types-v2))
+              (or all? (types "VVVL")) (set/union (flatten-attachments attachment-types/Ymparisto-types-v2))))))
 
 (defn org-attachment-types [org]
   (let [org-type (re-find #"[\-].+$" org)]
     (case org-type
       "-R" (set/union (flatten-attachments attachment-types/Rakennusluvat-v2))
       "-YA" (set/union (flatten-attachments attachment-types/YleistenAlueidenLuvat-v2))
-      "-YMP" (set/union (flatten-attachments attachment-types/Ymparisto-types))
+      "-YMP" (set/union (flatten-attachments attachment-types/Ymparisto-types-v2))
       (throw (js/Error. "Invalid organization")))))
 
 (defn find-result [id results]
