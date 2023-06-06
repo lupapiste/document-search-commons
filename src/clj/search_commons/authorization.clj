@@ -1,5 +1,5 @@
 (ns search-commons.authorization
-  (:require [clojure.set :refer [intersection]]
+  (:require [lupapiste-commons.ring.session-timeout :as commons-session-timeout]
             [search-commons.i18n :refer [t]]))
 
 
@@ -27,8 +27,9 @@
 (defn wrap-user-authorization [handler tr-data required-roles & [redirect-path]]
   (fn [request]
     (let [lang (or (keyword (get-in request [:headers "Accept-Language"])) :fi)]
-      (if-let [user (or (get-in request [:session :user])
-                        (:autologin-user request))]
+      (if-let [user (and (not (commons-session-timeout/session-expired? request))
+                         (or (get-in request [:session :user])
+                             (:autologin-user request)))]
         (if (not (every? nil? (mapv (fn [role] (user-is-authorized? user role)) required-roles)))
           (let [response (-> (assoc request :user user)
                              (handler))]
