@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "sass:watch": "sass -w scss:resources/public/css",
+    "sass:once": "sass scss:resources/public/css",
+    "sass:prod": "sass -s compressed --no-source-map scss:resources/public/css"
+  },
+  "devDependencies": {
+    "sass": "^1.66.1"
+  }
+}

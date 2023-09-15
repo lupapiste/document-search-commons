@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 /* breakpoints*/
 $breakpoint5:  $cols6;
 $breakpoint6:  $cols7;
@@ -14,15 +16,15 @@ $breakpoint14: $cols15;
 /* baseline & margins */
 $baseline: 24px;
 $marginL: $baseline;
-$marginM: $baseline/2;
-$marginS: $baseline/4;
+$marginM: math.div($baseline, 2);
+$marginS: math.div($baseline, 4);
 
-$application-max-width: 1280px;
-$application-min-width:  640px;
+$application-max-width: 1660px;
+$application-min-width:  320px;
 
 $footer-min-padding: 320px;
-$footer-max-padding: 420px;
-
+$footer-mid-padding: 420px;
+$footer-max-padding: 520px;
 
 @mixin width-wrapper {
   margin:0 auto;
@@ -32,11 +34,11 @@ $footer-max-padding: 420px;
 }
 
 html {
-    background:#fff;
-    -webkit-font-smoothing: antialiased;
-    /* Inflate text size on mobiles by full increments only */
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
+  background:#fff;
+  -webkit-font-smoothing: antialiased;
+  /* Inflate text size on mobiles by full increments only */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
 }
 
 html.no-scroll {
@@ -44,24 +46,24 @@ html.no-scroll {
 }
 
 body {
-  min-width: 820px;
+  //min-width: 820px;
   min-height: 100%;
   height: 100%;
-  &.applicant, &.authority, &.authority-admin, &.welcome, &.admin, &.oir, &.neighbor, &.hashbang, &.bulletins {
+  &.applicant, &.authority, &.authority-admin, &.welcome, &.admin, &.oir, &.neighbor, &.hashbang, &.bulletins, &.local-bulletins, &.financial-authority{
     min-height: 100vh;
     padding-bottom: $footer-min-padding;
     position: relative;
     margin-bottom: 0;
   }
 
-  &.admin {
-    margin-top: 100px;
+  &.admin, &.authority-admin {
+    margin-top: 106px;
   }
 
 }
 .container {
   box-sizing: border-box;
-  padding: $marginM $marginS 0 $marginS;
+  padding: $marginM $marginL 0 $marginL;
   width: 100%;
   max-width: $application-max-width;
   min-width: $application-min-width;
@@ -78,10 +80,6 @@ body {
     width: 18%;
   }
 
- }
- .page {
-  display: none;
-  margin-top: 60px;
 }
 
 .clear {
@@ -90,6 +88,10 @@ body {
 
 .spacerM {
   margin-bottom: $marginM;
+}
+
+.spacerL {
+  margin-bottom: $marginL;
 }
 
 .right {
@@ -110,4 +112,9 @@ body {
     content: '';
     display: table;
   }
+}
+
+.inline-col {
+  position: relative;
+  display: inline-block;
 }

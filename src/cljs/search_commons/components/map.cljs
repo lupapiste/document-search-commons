@@ -1,43 +1,37 @@
 (ns search-commons.components.map
-  (:require [ol]
-            [ol.Attribution]
-            [ol.Collection]
-            [ol.control]
-            [ol.control.Control]
-            [ol.Map]
-            [ol.View]
-            [ol.extent]
-            [ol.interaction.DragPan]
-            [ol.interaction.Draw]
-            [ol.interaction.MouseWheelZoom]
-            [ol.interaction.Select]
-            [ol.layer.Tile]
-            [ol.layer.Vector]
-            [ol.proj]
-            [ol.source.Vector]
-            [ol.source.WMTS]
-            [ol.source.Cluster]
-            [ol.style.Circle]
-            [ol.style.Fill]
-            [ol.style.Stroke]
-            [ol.style.Style]
-            [ol.style.Text]
-            [ol.style.Icon]
-            [ol.tilegrid.WMTS]
+  (:require ["ol/control/Attribution" :default Attribution]
+            ["ol/Collection" :default Collection]
+            ["ol/Feature" :default Feature]
+            ["ol/control" :as ol.control]
+            ["ol/control/Control$default" :as Control]
+            ["ol/geom/Point" :default Point]
+            ["ol/geom/Polygon" :default Polygon]
+            ["ol/Map" :default Map]
+            ["ol/View" :default View]
+            ["ol/extent" :as ol.extent]
+            ["ol/interaction" :refer (DragPan Draw MouseWheelZoom Select)]
+            ["ol/layer/Tile" :default TileLayer]
+            ["ol/layer/Vector" :default VectorLayer]
+            ["ol/proj/Projection" :default Projection]
+            ["ol/source/Vector" :default VectorSource]
+            ["ol/source/WMTS" :default WMTS]
+            ["ol/source/Cluster" :default Cluster]
+            ["ol/style" :refer (Circle Fill Icon Stroke Style Text)]
+            ["ol/tilegrid/WMTS" :default WMTSTileGrid]
             [ajax.core :refer [GET]]
             [clojure.string :as s]
             [reagent.core :as reagent]
+            [search-commons.routing :as routing]
             [search-commons.utils.i18n :refer [t]]
-            [search-commons.utils.state :as state]
-            [search-commons.routing :as routing]))
+            [search-commons.utils.state :as state]))
 
 (def suomen-extent
   "Suomalaisissa kartoissa olevan projektion raja-arvot."
   [-548576.000000, 6291456.000000, 1548576.000000, 8388608.000000])
 
-(def projektio (ol.proj/Projection. #js {:code "EPSG:3067"
-                                         :extent (clj->js suomen-extent)
-                                         :unit "m"}))
+(def projektio (Projection. #js {:code "EPSG:3067"
+                                 :extent (clj->js suomen-extent)
+                                 :unit "m"}))
 
 (def db-property-id-regex #"(\d{1,3})(\d{1,3})(\d{1,4})(\d{1,4})")
 
@@ -54,7 +48,7 @@
         (let [optiot (clj->js {:origin (ol.extent/getTopLeft (.getExtent projektio))
                                :resolutions (clj->js resoluutiot)
                                :matrixIds (clj->js matrix-idt)})]
-          (ol.tilegrid.WMTS. optiot))
+          (WMTSTileGrid. optiot))
         (recur (conj resoluutiot (/ koko (Math/pow 2 i)))
                (conj matrix-idt i)
                (inc i))))))
@@ -79,44 +73,46 @@
   (get-property-id (-> event .-coordinate js->clj)))
 
 (defn make-features []
-  (map (fn [{id :id [x y] :location}] (ol.Feature. #js {:geometry (ol.geom.Point. #js [x y])
+  (map (fn [{id :id [x y] :location}] (Feature. #js {:geometry (Point. #js [x y])
                                                         :file-id id})) @state/results-for-map))
 
 (defn make-cluster-source []
-  (let [point-features (ol.Collection. (clj->js (make-features)))
-        point-source (ol.source.Vector. #js {:features point-features})]
-    (ol.source.Cluster. #js {:distance 40
+  (let [point-features (Collection. (clj->js (make-features)))
+        point-source (VectorSource. #js {:features point-features})]
+    (Cluster. #js {:distance 40
                              :source point-source})))
 
 (def style-cache (atom {}))
 
 (defn single-item-style []
-  {:image (ol.style.Icon. #js {:src (routing/path "/img/map-marker-big.png")})})
+  {:image (Icon. #js {:src (routing/path "/img/map-marker-big.png")})})
+
+(def selected-marker-color "rgb(255,82,27)")
+(def marker-color "#4f0891")
 
 (defn cluster-style [selected? size]
-  {:image (ol.style.Circle. #js {:radius 18
-                                 :stroke (ol.style.Stroke. #js {:color "#303030" :width 3})
-                                 :fill (ol.style.Fill. #js {:color (if selected? "#FFE236" "#F79226")})})
-   :text (ol.style.Text. #js {:text (str size)
-                              :font "18px 'Source Sans Pro', sans-serif"
-                              :fill (ol.style.Fill. #js {:color "#000"})})})
+  {:image (Circle. #js {:radius 18
+                        :fill   (Fill. #js {:color (if selected? selected-marker-color marker-color)})})
+   :text  (Text. #js {:text (str size)
+                      :font "18px 'Source Sans Pro', sans-serif"
+                      :fill (Fill. #js {:color "#fff"})})})
 
 (defn get-cluster-style [selected? feature]
   (let [size (-> feature (.get "features") (.-length))
         cache-key (str size selected?)]
     (or (get @style-cache cache-key)
-        (-> (->> (ol.style.Style. (clj->js (cluster-style selected? size)))
+        (-> (->> (Style. (clj->js (cluster-style selected? size)))
                  (swap! style-cache assoc cache-key))
             (get cache-key)))))
 
-(def cluster-layer (ol.layer.Vector. #js {:source (make-cluster-source)
+(def cluster-layer (VectorLayer. #js {:source (make-cluster-source)
                                           :style  (partial get-cluster-style false)}))
 
 (def map-view-atom (atom nil))
 
 (def map-object-atom (atom nil))
 
-(defn fit-map [src view map-obj]
+(defn fit-map [^js src ^js view ^js map-obj]
   (let [source-extent (.getExtent (.getSource src))]
     (when-not (some #(#{js/Infinity 0} (.abs js/Math %)) source-extent)
       (.fit view source-extent (.getSize map-obj) #js {:minResolution 1
@@ -132,16 +128,15 @@
 
 (def drawing-enabled? (atom true))
 
-(defn selected-ids-to-state [event]
-  (->> (-> event .-target)
-       (.getArray)
+(defn selected-ids-to-state [^js event]
+  (->> (.getArray (.-target event))
        (map #(js->clj (.get % "features")))
        (flatten)
        (map #(.get % "file-id"))
        (set)
        (reset! state/map-selected-result-ids)))
 
-(def selected-features (doto (ol.Collection.)
+(def selected-features (doto (Collection.)
                          (.on "add" selected-ids-to-state)
                          (.on "remove" selected-ids-to-state)))
 
@@ -165,9 +160,9 @@
   (reagent/create-class
     {:component-did-mount
      (fn [this]
-       (let [map-layer (ol.layer.Tile. #js {:source (ol.source.WMTS.
+       (let [map-layer (TileLayer. #js {:source (WMTS.
                                                       #js {:url             (proxy-url "wmts/maasto")
-                                                           :attributions    #js [(ol.Attribution. #js {:html "MML"})]
+                                                           :attributions    #js [(Attribution. #js {:html "MML"})]
                                                            :matrixSet       "ETRS-TM35FIN"
                                                            :style           "default"
                                                            :projection      "EPSG:3067"
@@ -175,9 +170,9 @@
                                                            :tileGrid        (make-tilegrid)
                                                            :layer           "taustakartta"
                                                            :requestEncoding "KVP"})})
-             map-layer-kiinteisto (ol.layer.Tile. #js {:source        (ol.source.WMTS.
+             map-layer-kiinteisto (TileLayer. #js {:source        (WMTS.
                                                                         #js {:url             (proxy-url "wmts/kiinteisto")
-                                                                             :attributions    #js [(ol.Attribution. #js {:html "MML"})] :matrixSet "ETRS-TM35FIN"
+                                                                             :attributions    #js [(Attribution. #js {:html "MML"})] :matrixSet "ETRS-TM35FIN"
                                                                              :style           "default"
                                                                              :projection      "EPSG:3067"
                                                                              :format          "image/png"
@@ -186,17 +181,17 @@
                                                                              :requestEncoding "KVP"})
                                                        :maxResolution 4})
 
-             drawing-source (ol.source.Vector. #js {:wrapX    false
-                                                    :features #js [(ol.Feature. #js {:geometry (ol.geom.Polygon. (clj->js (:coordinates @state/search-query)))})]})
+             drawing-source (VectorSource. #js {:wrapX    false
+                                                    :features #js [(Feature. #js {:geometry (Polygon. (clj->js (:coordinates @state/search-query)))})]})
 
-             drawing-layer (ol.layer.Vector. #js {:source drawing-source
-                                                  :style  (ol.style.Style. #js {:fill   (ol.style.Fill. #js {:color "rgba(255, 255, 255, 0.2)"})
-                                                                                :stroke (ol.style.Stroke. #js {:color "#ffcc33" :width 2})
-                                                                                :image  (ol.style.Circle. #js {:radius 7 :fill (ol.style.Fill. #js {:color "#ffcc33"})})})})
-             features (doto (ol.Collection.)
-                        (.on "add" (fn [event]
-                                     (let [new-coords (-> event
-                                                          .-element
+             drawing-layer (VectorLayer. #js {:source drawing-source
+                                                  :style  (Style. #js {:fill   (Fill. #js {:color "rgba(255, 255, 255, 0.2)"})
+                                                                                :stroke (Stroke. #js {:color marker-color :width 4})
+                                                                                :image  (Circle. #js {:radius 7 :fill (Fill. #js {:color marker-color})})})})
+             features (doto (Collection.)
+                        (.on "add" (fn [^js event]
+                                     (let [feature ^js (.-element event)
+                                           new-coords (-> feature
                                                           .getGeometry
                                                           .getCoordinates
                                                           js->clj
@@ -205,22 +200,22 @@
                                        (swap! state/search-query update-in [:coordinates] conj new-coords))
                                      (.preventDefault event))))
 
-             drawing-interaction (ol.interaction.Draw. #js {:source   drawing-source
+             drawing-interaction (Draw. #js {:source   drawing-source
                                                             :type     "Polygon"
                                                             :features features
                                                             ; This checks that the drawing tool does not prevent clicking
                                                             ; on a search result (cluster) marker
-                                                            :condition #(not (.hasFeatureAtPixel @map-object-atom
+                                                            :condition #(not (.hasFeatureAtPixel ^js @map-object-atom
                                                                                                  (.-pixel %)
                                                                                                  #js {:layerFilter (fn [layer-candidate]
                                                                                                                      (= layer-candidate cluster-layer))}))})
 
-             select-interaction (ol.interaction.Select. #js {:multi true
+             select-interaction (Select. #js {:multi true
                                                              :layers #js [cluster-layer]
                                                              :style (partial get-cluster-style true)
                                                              :features selected-features})
 
-             interactions (ol.Collection. #js [(ol.interaction.DragPan.) (ol.interaction.MouseWheelZoom.) select-interaction drawing-interaction])
+             interactions (Collection. #js [(DragPan.) (MouseWheelZoom.) select-interaction drawing-interaction])
 
              custom-buttons (let [class (.createAttribute js/document "class")
                                   iclass (.createAttribute js/document "class")
@@ -250,12 +245,12 @@
                               div)
              cluster-source (make-cluster-source)]
          (.setSource cluster-layer cluster-source)
-         (reset! map-view-atom (ol.View. #js {:center     (clj->js (map-center))
+         (reset! map-view-atom (View. #js {:center     (clj->js (map-center))
                                               :minZoom    2
                                               :maxZoom    14
                                               :zoom       8
                                               :projection projektio}))
-         (reset! map-object-atom (ol/Map. #js {:controls     (-> (ol.control.defaults) (.extend (clj->js [(ol.control.Control. #js {"element" custom-buttons})])))
+         (reset! map-object-atom (Map. #js {:controls     (-> (ol.control/defaults) (.extend (clj->js [(Control. #js {"element" custom-buttons})])))
                                                :target       "map"
                                                :view         @map-view-atom
                                                :layers       #js [map-layer map-layer-kiinteisto drawing-layer cluster-layer]
@@ -264,12 +259,12 @@
          (doto @map-object-atom
            (.on "singleclick" (fn [event]
                                 (when-not (or @drawing-enabled?
-                                              (.hasFeatureAtPixel @map-object-atom (.-pixel event) (fn [layer-candidate] (= layer-candidate cluster-layer))))
+                                              (.hasFeatureAtPixel ^js @map-object-atom (.-pixel event) (fn [layer-candidate] (= layer-candidate cluster-layer))))
                                   (map-click event))))
            (.on "pointermove" (fn [event]
                                 (let [pixel (.-pixel event)
-                                      hit (.hasFeatureAtPixel @map-object-atom pixel (fn [layer-candidate] (= layer-candidate cluster-layer)))
-                                      target (.getElementById js/document (.getTarget @map-object-atom))]
+                                      hit (.hasFeatureAtPixel ^js @map-object-atom pixel (fn [layer-candidate] (= layer-candidate cluster-layer)))
+                                      target (.getElementById js/document (.getTarget ^js @map-object-atom))]
                                   (set! (-> target .-style .-cursor) (if hit "pointer" ""))))))
 
          (fit-map cluster-source @map-view-atom @map-object-atom)))

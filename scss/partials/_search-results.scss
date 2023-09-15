@@ -22,11 +22,12 @@
     margin-left: 255px;
     div {
       display: inline-block;
-      padding: 3px 0 3px 5px;
-      background-color: $orange-light;
-      color: $gray85;
+      padding: 5px 2px 5px 5px;
+      background-color: $violet-100;
+      color: white;
       margin: 0 5px 5px 0;
       font-size: 14px;
+      border-radius: 5px;
       i {
         cursor: pointer;
       }
@@ -35,11 +36,10 @@
   button {
     float: right;
     margin-left: 4px;
-    width: 16.4%;
   }
 }
 
-$result-highlight: $orange-light;
+$result-highlight: $violet-100;
 
 .result-list-and-item {
   @include clearfix;
@@ -66,6 +66,7 @@ $result-highlight: $orange-light;
         background-color: $gray246;
         &.selected {
           background-color: $result-highlight;
+          color: white;
         }
         &.multi-select-mode {
           background-color: $gray246;
@@ -87,9 +88,10 @@ $result-highlight: $orange-light;
           text-align: center;
           font-size: 16px;
           float: left;
+          color: black;
 
           .seen-icon {
-            color: $lp-green;
+            color: $green;
             i {
               margin: 0;
             }
@@ -107,8 +109,23 @@ $result-highlight: $orange-light;
             width: 100%;
             height: 100%;
             padding-left: 5px;
+            z-index: 0;
+            overflow: hidden;
+            &:not(:hover) {
+              .document-contents {
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+              }
+            }
             &:hover {
               height: auto;
+              z-index: 1;
+              padding-bottom: 8px;
+              border-radius: 8px;
+              .document-contents {
+                margin-bottom: 4px;
+              }
             }
           }
         }
@@ -135,10 +152,10 @@ $result-highlight: $orange-light;
         margin-right: 55px;
         font-size: 18px;
         font-weight: normal;
-        background-color: $gray85;
-        color: $gray246;
+        background-color: $black;
+        color: white;
         a {
-          color: $gray246;
+          color: white;
           text-decoration: none;
           &:hover {
             text-decoration: underline;
@@ -175,7 +192,7 @@ $result-highlight: $orange-light;
   position: relative;
   margin-left: 51%;
   padding-top: 15px;
-  @media (min-width: $application-max-width) {
+  @media (min-width: 1200px) {
     margin-left: 560px;
   }
 
@@ -220,23 +237,7 @@ $result-highlight: $orange-light;
         float: left;
 
         .dropdown {
-          display: inline-block;
-          position: relative;
-
-          .select-arrow {
-            position: absolute;
-            right: 1px;
-            bottom: 1px;
-            color: $orange-dark;
-            pointer-events: none;
-
-            // show white box behind selector arrow to hide default select arrows on IE9
-            background-color: #fff;
-            height: $grid-input-height - 2px;
-            width: 30px;
-            line-height: $grid-input-height - 2px;
-            vertical-align: middle;
-          }
+          @include combobox-like;
 
           .dropdown-input {
               width: 100%;
@@ -294,12 +295,12 @@ $result-highlight: $orange-light;
         float: left;
         width: 50%;
         .preview-image {
+          position: relative;
           cursor: pointer;
           min-height: 30px;
-          max-height: 500px;
-          margin-bottom: -20px;
           img {
             max-width: 100%;
+            max-height: 600px;
           }
           .btn {
             top: -31px;
@@ -356,7 +357,7 @@ $result-highlight: $orange-light;
           }
 
           .error {
-              color: $error-text;
+              color: $red-dark;
               display: block;
           }
 
@@ -457,7 +458,7 @@ $result-highlight: $orange-light;
   .document-view-header {
     height: 40px;
     padding: 7px 10px 0 10px;
-    background-color: $gray85;
+    background-color: $black;
     color: #ffffff;
     font-size: 18px;
     .document-view-exit {

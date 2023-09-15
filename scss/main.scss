@@ -11,29 +11,80 @@
   }
 }
 
+/* inter-200 - latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 200;
+  src: local(''),
+  url('../fonts/inter-v12-latin-200.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  url('../fonts/inter-v12-latin-200.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* inter-300 - latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  src: local(''),
+  url('../fonts/inter-v12-latin-300.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  url('../fonts/inter-v12-latin-300.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* inter-regular - latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+  url('../fonts/inter-v12-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  url('../fonts/inter-v12-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* inter-600 - latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  src: local(''),
+  url('../fonts/inter-v12-latin-600.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  url('../fonts/inter-v12-latin-600.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* inter-700 - latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  src: local(''),
+  url('../fonts/inter-v12-latin-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  url('../fonts/inter-v12-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+
 @import "partials/lupapiste/_reset";
-
 @import "partials/lupapiste/_base";
-
+@import "partials/lupapiste/_colors";
+@import "partials/lupapiste/_responsive";
 @import "partials/lupapiste/_theme";
 @import "partials/lupapiste/_typography";
 @import "partials/lupapiste/_lupicons";
 @import "partials/lupapiste/_buttons";
+@import "partials/lupapiste/_inputs";
 @import "partials/lupapiste/_forms";
 @import "partials/lupapiste/_responsive";
 @import "partials/lupapiste/_metadata-editor";
-@import "partials/lupapiste/_autocomplete";
+@import "partials/_autocomplete";
 
 @import "partials/lupapiste/_header";
 @import "partials/lupapiste/_footer";
 
-@import "partials/_theme";
 @import "partials/_icons";
 @import "partials/_animation";
+@import "partials/_combobox";
 @import "partials/_search-form";
 @import "partials/_search-results";
 @import "partials/_mass-operations";
-@import "partials/_combobox";
 @import "partials/_time";
 
 @import "partials/_map.scss";
@@ -49,15 +100,9 @@ body {
 
 .app-container {
   position: relative;
+  margin-top: 62px;
   min-height: 96vh;
   padding-bottom: 260px;
-}
-
-.wrapper {
-  @include clearfix;
-  margin: 60px auto 0 auto;
-  padding: 12px 0 0 6px;
-  max-width: $application-max-width;
 }
 
 .header-icon {
