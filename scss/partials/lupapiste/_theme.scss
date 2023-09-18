@@ -1,33 +1,4 @@
-/* colors*/
-
-$lp-green: rgb(4,199,20);
-$lp-orange: rgb(243,145,41);
-$lp-dark-grey: rgb(79,79,79);
-$lp-light-grey: rgb(246,246,246);
-$color-text: #333;
-$color-dark-bg: rgb(136,138,140);
-$grey-text: rgb(89,89,89);
-$error-text: red;
-$lp-light-green: rgb(185,254,190);
-$lp-purple: rgb(218,109,237);
-$lp-purple-light: lighten($lp-purple, 20%);
-
-$lupapisteBlue: #01BEF5;
-$borderColor: #01BEF5;
-$lupapisteLightblue: #C1E8F7;
-
-@mixin blue-background {
-  background: #30B2E5; /* Old browsers */
-  @include background( linear-gradient(top,  #49c0f0 0%, #2cafe3 100%));
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#49c0f0', endColorstr='#2cafe3',GradientType=0 ); /* IE6-9 */
-}
-
-@mixin red-background {
-  background: #febbbb; /* Old browsers */
-  @include background( linear-gradient(top, #febbbb 0%, #fe9090 45%, #ff5c5c 100%));
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#febbbb', endColorstr='#ff5c5c',GradientType=0 ); /* IE6-9 */
-}
-
+// Use these color variables below
 // Colors as specified in the visual guide
 
 $orange-darkest:  rgb(239, 118, 38);
@@ -59,7 +30,7 @@ $purple-active:   $purple-light;
 
 $green-darkest:  rgb(17, 162, 42);
 $green-dark:     rgb(44, 169, 44);
-$green:          rgb(70, 176, 45);
+//$green:          rgb(70, 176, 45);
 $green-light:    rgb(97, 183, 47);
 $green-lightest: rgb(123, 190, 48);
 $green-link:     $green-dark;
@@ -68,7 +39,7 @@ $green-active:   $green-light;
 
 $red-darkest:  rgb(219, 33, 17);
 $red-dark:     rgb(223, 50, 21);
-$red:          rgb(227, 67, 25);
+//$red:          rgb(227, 67, 25);
 $red-light:    rgb(231, 84, 29);
 $red-lightest: rgb(235, 101, 33);
 $red-link:     $red-dark;
@@ -85,21 +56,16 @@ $turqo-link:     $turqo-dark;
 $turqo-hover:    $turqo;
 $turqo-active:   $turqo-light;
 
-// Grays from the darkest to the lightest (white);
-@function make-gray( $n ) {
-  @return rgb( $n, $n, $n );
-}
-
-$gray17:  make-gray( 17 );
-$gray51:  make-gray( 51 );
-$gray85:  make-gray( 85 );
-$gray119: make-gray( 119 );
-$gray153: make-gray( 153 );
-$gray187: make-gray( 187 );
-$gray221: make-gray( 221 );
-$gray238: make-gray( 238 );
-$gray246: make-gray( 246 );
-$gray255: make-gray( 255 );
+ $gray17:  rgb(17, 17, 17);
+ $gray51:  rgb(51, 51, 51);
+ $gray85:  rgb(85, 85, 85);
+ $gray119: rgb(119, 119, 119);
+ $gray153: rgb(153, 153, 153);
+ $gray187: rgb(187, 187, 187);
+ $gray221: rgb(221, 221, 221);
+ $gray238: rgb(238, 238, 238);
+ $gray246: rgb(246, 246, 246);
+ $gray255: rgb(255, 255, 255);
 
 $grid-min-height: 40px;
 
@@ -110,20 +76,22 @@ $grid-margin: 20px;
 $grid-margin-large: 40px;
 $grid-font-size: 16px;
 
-$checkbox-color:          $gray187;
-$checkbox-selected-color: $orange-light;
+$checkbox-color: resolve-color( "checkbox", "text", "enabled");
+$checkbox-selected-color: resolve-color( "checkbox", "text", "selected");
 $checkbox-border-color:   $gray221;
+$checkbox-hover-color:    $orange-light;
 
 $radio-color:          $checkbox-color;
 $radio-selected-color: $checkbox-selected-color;
 $radio-border-color:   $checkbox-border-color;
+$radio-hover-color:    $checkbox-hover-color;
 
 $input-color:       $gray51;
 $input-focus-color: $gray51;
 
 $input-border-color: $gray187;
 $input-disabled-border-color: $gray221;
-$input-disabled-background-color: $gray246;
+$input-disabled-background-color: $gray247;
 $input-focus-border-color: $orange-light;
 $input-required-border-color: $orange-dark;
 $input-select-disabled-icon: $gray187;
@@ -134,9 +102,18 @@ $gray-link:   $gray85;
 $gray-hover:  $gray119;
 $gray-active: $gray153;
 
+$light-gray-link:   $gray119;
+$light-gray-hover:  $gray153;
+$light-gray-active: $gray187;
+
+
 // Somewhat semantic colors.
 // These are used in "normal" circumstances.
 
-$primary:   $orange-dark;
-$positive:  $green-dark;
-$negative:  $red-dark;
+$primary-text: $black;
+
+// Legacy gray color variables
+$lp-dark-grey: $gray85;
+$lp-light-grey: $gray247;
+$lp-orange: $orange-dark;
+$color-text: $gray51;

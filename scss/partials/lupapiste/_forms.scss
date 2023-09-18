@@ -19,9 +19,7 @@ legend {
   padding-left: $marginS;
 
   // newbies
-  &.source-value-changed {
-    border: 2px solid $lp-green;
-  }
+
   &.err {
     color: red;
     border-color: red;
@@ -32,10 +30,6 @@ legend {
     border-color: red;
     border-width: 3px;
     border-radius: 2px;
-  }
-  &.tip {
-    border-color: lighten($lp-orange, 10%);
-    border-width: 1px;
   }
 }
 
@@ -84,7 +78,7 @@ input[readonly], textarea[readonly] {
   top: 20px;
   right: 8px;
   padding: $marginS;
-  color: $grey-text;
+  color: black;
   background-color: white;
   border: 1px solid $lp-light-grey;
   box-shadow: 1px 1px 2px $lp-dark-grey;
@@ -257,9 +251,6 @@ input.form-input.inline {
   &.warning {
     outline: 3px solid $lp-orange;
   }
-  &.source-value-changed {
-    outline: 2px solid $lp-green;
-  }
 }
 
 .form-input.combobox, select {
@@ -399,7 +390,7 @@ input.form-input.inline {
 }
 
 .form-input.tiny {
-  width: $cols1 / 2;
+  width: calc($cols1 / 2);
 }
 
 .form-input.short {
@@ -1330,7 +1321,7 @@ $max-columns: 12;
   .form-grid.form-grid--columns-#{$i} > .row {
     @for $j from 1 through $i {
       .col-#{$j} {
-        @include column-width(100% / $i * $j);
+        @include column-width(calc(100% / $i * $j));
       }
     }
   }

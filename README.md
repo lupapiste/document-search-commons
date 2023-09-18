@@ -2,17 +2,18 @@
 
 Common document search related code shared between lupadoku and onkalo applications.
 
-Uberjar build will recompile the SCSS sources to a compressed CSS file, but it can also be done like this:
+Sass styles are built with node sass:
 
-    lein sass4clj once
+    npm run sass:prod
 
-For development time usage, compile SCSS files to CSS uncompressed:
+During development you can watch the directory and automatically rebuild with: 
 
-    lein sass4clj once :output-style :expanded
+    npm run sass:watch
 
+You should combine this by running shadow-cljs compilation in lupadoku or onkalo, which will reload the changed CSS file.
 
 ## License
 
-Copyright © 2021 Cloudpermit Oy
+Copyright © 2023 Cloudpermit Oy
 
-Distributed under the European Union Public Licence (EUPL) version 1.1.
+Distributed under the European Union Public Licence (EUPL) version 1.2.

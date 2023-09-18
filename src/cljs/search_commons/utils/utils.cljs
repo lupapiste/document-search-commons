@@ -37,30 +37,3 @@
                             (curve y1 y2 t2)
                             (recur t0' t1' (+ (* (- t1' t0') 0.5) t0'))))
                         (curve y1 y2 t2)))))))
-
-(def is-old-ie?
-  (let [agent (.-userAgent js/navigator)
-        version (second (re-find #".*MSIE (\d+)\.0.*" agent))]
-    (and version (< version 10))))
-
-(defn setup-print-to-console!
-  "Set *print-fn* to console.log"
-  []
-  (set! *print-newline* false)
-  (set! *print-length* 42)
-  (if is-old-ie?
-    (do (set! *print-fn*
-          (fn [& args]
-            (doseq [item args]
-              (.log js/console item))))
-        (set! *print-err-fn*
-          (fn [& args]
-            (doseq [item args]
-              (.error js/console item)))))
-    (do (set! *print-fn*
-          (fn [& args]
-            (.apply (.-log js/console) js/console (into-array args))))
-        (set! *print-err-fn*
-          (fn [& args]
-            (.apply (.-error js/console) js/console (into-array args))))))
-  nil)
