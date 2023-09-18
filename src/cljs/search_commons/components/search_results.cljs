@@ -180,25 +180,36 @@
       v
       (js/parseInt (s/replace v "px" "")))))
 
-(defn animate-view-transition [node]
+(def *previous-top (atom nil))
+
+(defn animate-view-transition [^js node]
   (when node
     (let [parent-offset-top (.-offsetTop (.-parentNode (.-parentNode node)))
-          scroll-y (or (.-scrollY js/window) (.-pageYOffset js/window))
-          target-top (max (+ (- scroll-y parent-offset-top) 5) 0)
-          current-top (parse-margin (-> node .-style .-marginTop))
-          diff (- target-top current-top)
-          duration 2001.0
-          epsilon (/ 1000 60 duration 4)
-          ease-fn (utils/bezier 0.25 1 0.25 1 epsilon)]
-      (.requestAnimationFrame js/window (fn [start]
-                                          (letfn [(animate-frame [ts] (let [dt (- ts start)
-                                                                            progress (* 1.05 (/ dt duration))
-                                                                            bezier-term (ease-fn progress)
-                                                                            position (+ current-top (Math/round (* bezier-term diff)))]
-                                                                        (set! (-> node .-style .-marginTop) (str position "px"))
-                                                                        (when-not (= position target-top)
-                                                                          (.requestAnimationFrame js/window animate-frame))))]
-                                            (animate-frame start)))))))
+          scroll-y          (or (.-scrollY js/window) (.-pageYOffset js/window))
+          target-top        (-> (- scroll-y parent-offset-top)
+                                (+ 5)
+                                (max 0)
+                                Math/round)
+          current-top       (parse-margin (-> node .-style .-marginTop))
+          diff              (- target-top current-top)
+          duration          2001.0
+          epsilon           (/ 1000 60 duration 4)
+          ease-fn           (utils/bezier 0.25 1 0.25 1 epsilon)]
+      (when (not= target-top @*previous-top)
+        (reset! *previous-top target-top)
+        (.requestAnimationFrame
+          js/window
+          (fn [start]
+            (letfn [(animate-frame [ts] (let [dt          (- ts start)
+                                              progress    (* 1.05 (/ dt duration))
+                                              bezier-term (ease-fn progress)
+                                              position    (+ current-top (Math/round (* bezier-term diff)))]
+                                          (set! (-> node .-style .-marginTop) (str position "px"))
+                                          (when (and (not= position target-top)
+                                                     ;; stop this animation "thread" if target changes
+                                                     (= target-top @*previous-top))
+                                            (.requestAnimationFrame js/window animate-frame))))]
+              (animate-frame start))))))))
 
 (def div-content (reagent/atom {:id   nil
                                 :text nil}))
