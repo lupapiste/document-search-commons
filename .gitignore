@@ -16,3 +16,5 @@ pom.xml.asc
 resources/public/css/main.css.map
 .idea
 .DS_Store
+.clj-kondo/.cache
+.lsp/.cache
