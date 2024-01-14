@@ -1,8 +1,8 @@
-(defproject lupapiste/document-search-commons "2.0.6"
+(defproject lupapiste/document-search-commons "2.0.7"
   :description "Common document search related code shared between lupadoku and onkalo applications"
   :url "https://www.lupapiste.fi"
-  :license {:name "European Union Public License"
-            :url "https://joinup.ec.europa.eu/community/eupl/og_page/european-union-public-licence-eupl-v11"
+  :license {:name         "European Union Public License"
+            :url          "https://joinup.ec.europa.eu/community/eupl/og_page/european-union-public-licence-eupl-v11"
             :distribution :repo}
   :scm {:url "https://github.com/lupapiste/document-search-commons"}
   :repositories [["osgeo" {:url "https://repo.osgeo.org/repository/release/"}]]
@@ -25,7 +25,8 @@
                  [cljs-pikaday "0.1.4" :exclusions [cljsjs/pikaday]]
                  [tailrecursion/cljson "1.0.7"]
                  [alandipert/storage-atom "2.0.1"]]
-  :profiles {:provided {:dependencies [[lupapiste/commons "5.1.5" :exclusions [commons-logging commons-codec]]]}}
+  :profiles {:provided {:dependencies [[lupapiste/commons "5.2.11"
+                                        :exclusions [commons-logging commons-codec]]]}}
   :source-paths ["src/clj" "src/cljc" "src/cljs"]
   :test-paths ["test/clj" "test/cljc"]
   :clean-targets ^{:protect false} ["resources/public/css/main.css.map"
