@@ -17,7 +17,7 @@
 
 (defn redirect-response [redirect-path]
   {:status  302
-   :headers {"Location" "/login/fi/"}
+   :headers {"Location" "/login/fi"}
    :session {:redirect-after-login redirect-path}})
 
 (defn user-is-authorized? [user required-role]
