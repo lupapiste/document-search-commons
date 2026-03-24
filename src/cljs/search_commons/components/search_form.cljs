@@ -1,14 +1,12 @@
 (ns search-commons.components.search-form
-  (:require [cljs.pprint :refer [pprint]]
-            [clojure.string :as string]
-            [search-commons.domain :as domain]
-            [search-commons.utils.i18n :refer [t]]
-            [search-commons.utils.state :as state]
-            [search-commons.components.time :as time]
+  (:require [clojure.string :as s]
+            [lupapiste-commons.usage-types :as usages]
             [search-commons.components.combobox :as cb]
             [search-commons.components.map :as map]
-            [lupapiste-commons.usage-types :as usages]
-            [reagent.ratom :refer [make-reaction]])
+            [search-commons.components.time :as time]
+            [search-commons.domain :as domain]
+            [search-commons.utils.i18n :refer [t]]
+            [search-commons.utils.state :as state])
   (:require-macros [search-commons.utils.macros :refer [handler-fn]]))
 
 (defn toggle-query-field
@@ -31,21 +29,25 @@
              :on-change #(toggle-query-field property-kw (.. % -target -checked))}]
     [:span (t property-kw)]]])
 
-(defn generate-available-name [name-map text suffix]
-  (let [key (str text " (" suffix ")")]
-    (if (contains? name-map key)
-      (generate-available-name name-map text (inc suffix))
-      key)))
-
-(defn type-map [available-attachment-types]
+(defn type-map
+  "Returns map where each key is localized friendly attachment name and values are type
+  vectors (group and usually type). Name conflicts (e.g., Asemapiirros) are resolved by
+  adding group name suffix (e.g., Asemapiirros (Pääpiirustus))."
+  [available-attachment-types]
   (->> available-attachment-types
-       (reduce (fn [acc type-vec]
-                 (let [text (->> (map name type-vec) (string/join ".") t)
-                       key (if (contains? acc text)
-                             (generate-available-name acc text 2)
-                             text)]
-                   (assoc acc key type-vec)))
-               {})))
+       (map (fn [type-vec]
+              ;; `type-vec` can have one or two items: [type-id] or [group-id type-id].
+              {:text     (t (s/join "." (mapv name type-vec)))
+               :type-vec type-vec}))
+       (group-by :text)
+       vals
+       (mapcat (fn [xs]
+                 (cond->> xs
+                   (> (count xs) 1)
+                   (map (fn [{:keys [type-vec] :as m}]
+                          (update m :text str " (" (t (first type-vec)) ")"))))))
+       (map (juxt :text :type-vec))
+       (into {})))
 
 (defn attachment-type-filter []
   [:div.filter-option
