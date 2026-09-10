@@ -1,4 +1,4 @@
-(defproject lupapiste/document-search-commons "2.0.18"
+(defproject lupapiste/document-search-commons "3.0.0"
   :description "Common document search related code shared between lupadoku and onkalo applications"
   :url "https://www.lupapiste.fi"
   :license {:name         "European Union Public License"
@@ -6,27 +6,30 @@
             :distribution :repo}
   :scm {:url "https://github.com/lupapiste/document-search-commons"}
   :repositories [["osgeo" {:url "https://repo.osgeo.org/repository/release/"}]]
-  :dependencies [[org.clojure/clojure "1.11.1"]
+  :dependencies [[org.clojure/clojure "1.12.6"]
 
                  ;; Coordinate tools
-                 [org.eclipse.emf/org.eclipse.emf.common "2.29.0"]
-                 [org.eclipse.emf/org.eclipse.emf.ecore "2.35.0" :exclusions [org.eclipse.emf/org.eclipse.emf.common]]
-                 [org.geotools/gt-main "29.2" :exclusions [org.eclipse.emf/org.eclipse.emf.common
+                 [org.eclipse.emf/org.eclipse.emf.common "2.46.0"]
+                 [org.eclipse.emf/org.eclipse.emf.ecore "2.43.0" :exclusions [org.eclipse.emf/org.eclipse.emf.common]]
+                 [org.geotools/gt-main "35.1" :exclusions [org.eclipse.emf/org.eclipse.emf.common
                                                            org.eclipse.emf/org.eclipse.emf.ecore]]
-                 [org.geotools/gt-referencing "29.2" :exclusions [org.eclipse.emf/org.eclipse.emf.common
+                 [org.geotools/gt-referencing "35.1" :exclusions [org.eclipse.emf/org.eclipse.emf.common
                                                                   org.eclipse.emf/org.eclipse.emf.ecore]]
-                 [org.geotools/gt-epsg-wkt "29.2" :exclusions [org.eclipse.emf/org.eclipse.emf.common
+                 [org.geotools/gt-epsg-wkt "35.1" :exclusions [org.eclipse.emf/org.eclipse.emf.common
                                                                org.eclipse.emf/org.eclipse.emf.ecore]]
 
                  ;; ClojureScript
-                 [org.clojure/clojurescript "1.11.60"]
-                 [reagent "1.2.0" :exclusions [org.clojure/clojurescript]]
-                 [cljs-ajax "0.8.4"]
+                 [org.clojure/clojurescript "1.12.145"]
+                 [reagent "2.0.1" :exclusions [org.clojure/clojurescript]]
+                 [cljs-ajax "0.8.4" :exclusions [cheshire
+                                                 org.apache.httpcomponents/httpcore
+                                                 org.apache.httpcomponents/httpasyncclient
+                                                 com.cognitect/transit-clj]]
                  [cljs-pikaday "0.1.4" :exclusions [cljsjs/pikaday]]
                  [tailrecursion/cljson "1.0.7"]
                  [alandipert/storage-atom "2.0.1"]]
-  :profiles {:provided {:dependencies [[lupapiste/commons "5.2.11"
-                                        :exclusions [commons-logging commons-codec]]]}}
+  :profiles {:provided {:dependencies [[lupapiste/commons "5.3.32"
+                                        :exclusions [commons-logging commons-io commons-codec]]]}}
   :source-paths ["src/clj" "src/cljc" "src/cljs"]
   :test-paths ["test/clj" "test/cljc"]
   :clean-targets ^{:protect false} ["resources/public/css/main.css.map"

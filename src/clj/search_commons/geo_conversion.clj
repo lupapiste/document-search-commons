@@ -1,18 +1,19 @@
 (ns search-commons.geo-conversion
-  (:import [org.geotools.referencing.crs DefaultGeographicCRS]
+  (:import [java.math RoundingMode]
+           [org.geotools.api.referencing.crs CoordinateReferenceSystem]
+           [org.geotools.referencing.crs DefaultGeographicCRS]
            [org.geotools.referencing CRS]
-           [org.geotools.geometry GeneralDirectPosition]))
+           [org.geotools.geometry GeneralPosition]))
 
 (defn- round-to [n acc]
-  (.setScale n acc BigDecimal/ROUND_HALF_UP))
+  (.setScale n acc RoundingMode/HALF_UP))
 
-(defn convert [source-CRS to-CRS coord-array]
+(defn convert [^CoordinateReferenceSystem source-CRS ^CoordinateReferenceSystem to-CRS coord-array]
   (let [math-transform (CRS/findMathTransform source-CRS to-CRS true)
-        direct-pos (->> coord-array
-                        (map (comp #(.doubleValue %) bigdec))
-                        (into-array Double/TYPE)
-                        GeneralDirectPosition.)
-        result-point  (. math-transform transform direct-pos nil)]
+        direct-pos     (->> coord-array
+                            ^doubles (into-array Double/TYPE)
+                            GeneralPosition.)
+        result-point   (.transform math-transform direct-pos nil)]
     (->> result-point
          .getCoordinate
          (map (comp #(.doubleValue %) #(round-to % 6) bigdec)))))
